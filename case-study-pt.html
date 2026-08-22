@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solving the Right Problem for the Wrong User — Babar Sattar</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #F7F7F5;
+      --bg-card: #FFFFFF;
+      --teal: #165B60;
+      --teal-light: #E4EEF0;
+      --text-primary: #1A1A1A;
+      --text-secondary: #5C5C5C;
+      --text-tertiary: #8A8A8A;
+      --border: #E4E4E2;
+      --radius: 12px;
+      --radius-pill: 100px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-width: 1200px;
+      --content-width: 680px;
+      --section-gap: 80px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container-wide {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .container-narrow {
+      max-width: var(--content-width);
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247, 247, 245, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-back {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-back:hover { color: var(--teal); }
+
+    /* ===== HERO ===== */
+    .case-hero {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .case-meta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .case-tldr {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .case-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    /* ===== METADATA BAR ===== */
+    .meta-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: var(--section-gap);
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-item-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .meta-item-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ===== NEXT UP ===== */
+    .next-up {
+      padding-top: var(--section-gap);
+    }
+
+    .next-up-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .next-up-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(22,91,96,0.1), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .next-up-card:hover .next-up-title {
+      color: var(--teal);
+    }
+
+    .next-up-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .next-up-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .next-up-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .next-up-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .next-up-image {
+      background: linear-gradient(145deg, #eef3f3, #dce6e7, #e8eeef);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      min-height: 220px;
+    }
+
+    /* ===== LAPTOP MOCKUP ===== */
+    .laptop-mockup {
+      background: linear-gradient(145deg, #eef3f3, #dce6e7, #e8eeef);
+      border-radius: var(--radius);
+      padding: 36px 36px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .laptop-frame {
+      width: 100%;
+      background: #2a2a2a;
+      border-radius: 6px 6px 0 0;
+      padding: 3px 3px 0;
+      border: 1px solid #d0d0d0;
+    }
+
+    .laptop-screen {
+      border-radius: 3px 3px 0 0;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+
+    .laptop-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+    }
+
+    .laptop-bottom {
+      width: 105%;
+      height: 12px;
+      background: linear-gradient(to bottom, #333, #2a2a2a);
+      border-radius: 0 0 4px 4px;
+      position: relative;
+    }
+
+    .laptop-bottom::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 4px;
+      background: #444;
+      border-radius: 2px;
+    }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .case-section {
+      padding-top: var(--section-gap);
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .section-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: var(--content-width);
+    }
+
+    .section-text + .section-text { margin-top: 16px; }
+    .section-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== QUOTES ===== */
+    .quote-block {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .quote {
+      background: var(--bg-card);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .quote-source {
+      font-style: normal;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ===== PROTOTYPE ===== */
+    .prototype-wrapper {
+      margin-top: 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .prototype-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+
+    .prototype-caption {
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .prototype-caption a {
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .prototype-caption a:hover { text-decoration: underline; }
+
+    /* ===== IMPACT ===== */
+    .impact-block {
+      margin-top: var(--section-gap);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .impact-number {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 64px);
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .impact-label { font-size: 16px; color: var(--text-secondary); }
+    .impact-sub { font-size: 14px; color: var(--text-tertiary); margin-top: 4px; }
+
+    /* ===== REFLECTION BAND ===== */
+    .reflection-band {
+      background: var(--teal);
+      margin-top: var(--section-gap);
+      padding: 64px 48px;
+    }
+
+    .reflection-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .reflection-band .section-label {
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+
+    .reflection-band .section-heading {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .reflection-band .section-text {
+      color: rgba(255,255,255,0.85);
+      max-width: var(--content-width);
+    }
+
+    .reflection-band .section-text strong {
+      color: #fff;
+    }
+
+    /* ===== FOOTER ===== */
+    .case-footer {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .back-link {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: 1.5px solid var(--teal);
+      border-radius: var(--radius-pill);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .back-link:hover { background: var(--teal); color: white; }
+
+    /* ===== FADE ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .container-wide { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .quote-block { grid-template-columns: 1fr; }
+      .case-hero { padding-top: 110px; }
+      .reflection-band { padding: 48px 24px; }
+      .meta-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .next-up-card { grid-template-columns: 1fr; }
+      .reflection-box { padding: 28px; }
+      .impact-block { padding: 36px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .case-hero { padding-top: 100px; }
+      .laptop-mockup { padding: 24px 24px 20px; }
+      .prototype-wrapper iframe { height: 450px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Babar Sattar</a>
+      <a href="index.html" class="nav-back">← Back to work</a>
+    </div>
+  </nav>
+
+  <section class="case-hero">
+    <div class="container-wide">
+      <div class="hero-grid">
+        <div>
+          <p class="case-meta">ProgressTeaching · B2B SaaS · EdTech</p>
+          <h1 class="case-title">Solving the Right Problem for the Wrong User</h1>
+          <p class="case-tldr">A feature I designed and shipped end-to-end that addressed a real user problem, and taught me the cost of designing for only one user.</p>
+          <div class="case-pills">
+            <span class="pill">User Research</span>
+            <span class="pill">Product Design</span>
+            <span class="pill">Shipped Feature</span>
+            <span class="pill">Jira</span>
+          </div>
+        </div>
+        <div class="laptop-mockup">
+          <div class="laptop-frame">
+            <div class="laptop-screen">
+              <img src="pt-hero.png" alt="ProgressTeaching observation form interface">
+            </div>
+          </div>
+          <div class="laptop-bottom"></div>
+        </div>
+      </div>
+      <div class="meta-bar fade-in">
+        <div>
+          <p class="meta-item-label">Timeline</p>
+          <p class="meta-item-value">2023</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Role</p>
+          <p class="meta-item-value">Product & UX Lead</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Company</p>
+          <p class="meta-item-value">ProgressTeaching</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Outcome</p>
+          <p class="meta-item-value">70% adoption</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The signal</p>
+        <h2 class="section-heading">Schools kept telling us the same thing, independently.</h2>
+        <p class="section-text">
+          ProgressTeaching is an EdTech platform used by UK schools to log and analyse lesson observations. The observation form was static, meaning every type of observation showed the same sections, even when most of them weren't relevant.
+        </p>
+        <p class="section-text">
+          Schools of different types and sizes were independently reporting the same frustration. Observers wanted dynamic forms that only showed what was relevant to the observation they were conducting.
+        </p>
+        <div class="quote-block">
+          <blockquote class="quote">
+            "We do book looks every half term but the form shows everything. Most of it isn't relevant."
+            <span class="quote-source">SLT member, Primary school</span>
+          </blockquote>
+          <blockquote class="quote">
+            "Our observers have to ignore half the form depending on what type of observation they're doing."
+            <span class="quote-source">SLT member, Secondary school</span>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The solution</p>
+        <h2 class="section-heading">I removed the irrelevant sections entirely.</h2>
+        <p class="section-text">
+          I considered collapsing irrelevant sections by default, but they could still be expanded and filled out, which risked confusing observers. Instead, I chose to remove them entirely with conditional logic tied to the observation type.
+        </p>
+        <p class="section-text">
+          I documented the solution in Jira with annotated screenshots and walked the engineer through the problem and intended outcome.
+        </p>
+      </div>
+      <div class="prototype-wrapper fade-in">
+        <iframe src="pt-prototype.html" title="Conditional Forms before and after prototype"></iframe>
+        <p class="prototype-caption">Toggle to see the feature in action. <a href="https://babar-sattar.github.io/PT-Prototype/" target="_blank" rel="noopener">Explore the full prototype →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-wide">
+    <div class="impact-block fade-in">
+      <p class="impact-number">70%</p>
+      <p class="impact-label">of existing schools adopted Conditional Forms within a year</p>
+      <p class="impact-sub">Almost every new school onboarded after launch used it as standard.</p>
+    </div>
+  </div>
+
+  <section class="reflection-band">
+    <div class="reflection-inner">
+      <p class="section-label fade-in">The blind spot</p>
+      <h2 class="section-heading fade-in">I designed for the observer. I forgot about the person setting it up.</h2>
+      <p class="section-text fade-in">
+        Conditional Forms solved the observer's problem. The signal was consistent, the solution worked, and the adoption numbers proved it.
+      </p>
+      <p class="section-text fade-in">
+        But I never thought about who would <strong>configure</strong> the forms. The setup process was convoluted enough that almost every school relied on me to create and manage their forms manually. I'd shipped a feature that worked for its users but created an operational problem because I didn't ask <strong>"who else touches this, and what does their experience look like?"</strong>
+      </p>
+      <p class="section-text fade-in">
+        That's the question I'd now ask at the start of every project. Not just "who uses the output" but "who configures it, who maintains it, and what does their workflow look like?"
+      </p>
+    </div>
+  </section>
+
+  <section class="next-up">
+    <div class="container-wide">
+      <p class="section-label fade-in">Next up</p>
+      <a href="case-study-halo.html" class="next-up-card fade-in">
+        <div class="next-up-body">
+          <p class="next-up-label">Halo Forge · Personal Project</p>
+          <h3 class="next-up-title">When Your Hypothesis is Wrong</h3>
+          <p class="next-up-description">A playtesting case study where I measured a pacing problem, built five prototypes, and discovered the real issues only after putting my design in front of real users.</p>
+        </div>
+        <div class="next-up-image">
+          <div class="card-monitor-frame" style="width:80%; max-width:320px; background:#2a2a2a; border-radius:4px 4px 0 0; padding:2px 2px 0; border:1px solid #d0d0d0;">
+            <div style="border-radius:2px 2px 0 0; overflow:hidden; aspect-ratio:16/9;">
+              <img src="halo-hero.png" alt="Halo Forge map" style="width:100%; display:block;">
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="case-footer">
+    <div class="container-wide">
+      <a href="index.html" class="back-link">← Back to all work</a>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Your Hypothesis is Wrong — Babar Sattar</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #F7F7F5;
+      --bg-card: #FFFFFF;
+      --teal: #165B60;
+      --teal-light: #E4EEF0;
+      --text-primary: #1A1A1A;
+      --text-secondary: #5C5C5C;
+      --text-tertiary: #8A8A8A;
+      --border: #E4E4E2;
+      --radius: 12px;
+      --radius-pill: 100px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-width: 1200px;
+      --content-width: 680px;
+      --section-gap: 80px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container-wide {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247, 247, 245, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-back {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-back:hover { color: var(--teal); }
+
+    /* ===== HERO ===== */
+    .case-hero { padding-top: 140px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .case-meta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .case-tldr {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .case-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    /* ===== METADATA BAR ===== */
+    .meta-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: var(--section-gap);
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-item-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .meta-item-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ===== NEXT UP ===== */
+    .next-up {
+      padding-top: var(--section-gap);
+    }
+
+    .next-up-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .next-up-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(22,91,96,0.1), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .next-up-card:hover .next-up-title {
+      color: var(--teal);
+    }
+
+    .next-up-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .next-up-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .next-up-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .next-up-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .next-up-image {
+      background: linear-gradient(145deg, #eef3f3, #dce6e7, #e8eeef);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      min-height: 220px;
+    }
+
+    /* ===== MONITOR MOCKUP ===== */
+    .monitor-mockup {
+      background: linear-gradient(145deg, #eef3f3, #dce6e7, #e8eeef);
+      border-radius: var(--radius);
+      padding: 36px 36px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .monitor-frame {
+      width: 100%;
+      background: #2a2a2a;
+      border-radius: 6px 6px 0 0;
+      padding: 3px 3px 0;
+      border: 1px solid #d0d0d0;
+    }
+
+    .monitor-screen {
+      border-radius: 3px 3px 0 0;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+    }
+
+    .monitor-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .monitor-stand {
+      width: 50px;
+      height: 18px;
+      background: linear-gradient(to bottom, #333, #2a2a2a);
+    }
+
+    .monitor-base {
+      width: 100px;
+      height: 5px;
+      background: #333;
+      border-radius: 0 0 3px 3px;
+    }
+
+    /* ===== CONTENT ===== */
+    .case-section { padding-top: var(--section-gap); }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .section-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: var(--content-width);
+    }
+
+    .section-text + .section-text { margin-top: 16px; }
+    .section-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== QUOTES ===== */
+    .quote-block {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .quote {
+      background: var(--bg-card);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .quote-source {
+      font-style: normal;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ===== IMAGES ===== */
+    .case-image {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-image .img-wrapper {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      cursor: zoom-in;
+    }
+
+    .case-image .img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .case-image .img-wrapper.padded {
+      padding: 12px;
+    }
+
+    .case-image .img-wrapper.padded img {
+      object-fit: contain;
+    }
+
+    .case-image-caption {
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .image-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ===== BEFORE/AFTER ===== */
+    .before-after {
+      margin-top: 32px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .ba-images {
+      position: relative;
+      user-select: none;
+      cursor: ew-resize;
+    }
+
+    .ba-after { display: block; width: 100%; }
+
+    .ba-before {
+      position: absolute;
+      top: 0; left: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .ba-before img {
+      display: block;
+      width: 0;
+      min-width: 0;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    .ba-slider {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: white;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+      z-index: 2;
+      left: 50%;
+    }
+
+    .ba-slider::after {
+      content: '⟷';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-secondary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .ba-label {
+      position: absolute;
+      top: 12px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: white;
+      background: rgba(0,0,0,0.5);
+      padding: 4px 10px;
+      border-radius: 6px;
+      z-index: 1;
+    }
+
+    .ba-label-before { left: 12px; }
+    .ba-label-after { right: 12px; z-index: 0; }
+
+    .ba-caption {
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    /* ===== IMPACT ===== */
+    .impact-block {
+      margin-top: var(--section-gap);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+    }
+
+    .impact-block .section-label { text-align: center; }
+
+    .impact-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .impact-stat { text-align: center; }
+
+    .impact-number {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .impact-label { font-size: 14px; color: var(--text-secondary); }
+    .impact-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+
+    .impact-quotes {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ===== REFLECTION BAND ===== */
+    .reflection-band {
+      background: var(--teal);
+      margin-top: var(--section-gap);
+      padding: 64px 48px;
+    }
+
+    .reflection-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .reflection-band .section-label {
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+
+    .reflection-band .section-heading {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .reflection-band .section-text {
+      color: rgba(255,255,255,0.85);
+      max-width: 680px;
+    }
+
+    .reflection-band .section-text strong {
+      color: #fff;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      cursor: zoom-out;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .lightbox.active { opacity: 1; visibility: visible; }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .lightbox.active img { transform: scale(1); }
+
+    /* ===== FOOTER ===== */
+    .case-footer { padding: 80px 0; text-align: center; }
+
+    .back-link {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: 1.5px solid var(--teal);
+      border-radius: var(--radius-pill);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .back-link:hover { background: var(--teal); color: white; }
+
+    /* ===== FADE ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .container-wide { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .quote-block { grid-template-columns: 1fr; }
+      .image-grid { grid-template-columns: 1fr; }
+      .impact-stats { grid-template-columns: 1fr; gap: 20px; }
+      .impact-quotes { grid-template-columns: 1fr; }
+      .case-hero { padding-top: 110px; }
+      .reflection-band { padding: 48px 24px; }
+      .meta-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .next-up-card { grid-template-columns: 1fr; }
+      .reflection-box { padding: 28px; }
+      .impact-block { padding: 36px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .case-hero { padding-top: 100px; }
+      .monitor-mockup { padding: 24px 24px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Babar Sattar</a>
+      <a href="index.html" class="nav-back">← Back to work</a>
+    </div>
+  </nav>
+
+  <section class="case-hero">
+    <div class="container-wide">
+      <div class="hero-grid">
+        <div>
+          <p class="case-meta">Halo Forge · Game Design · Personal Project</p>
+          <h1 class="case-title">When Your Hypothesis is Wrong</h1>
+          <p class="case-tldr">I designed a custom map to fix a pacing problem for our group. I thought I knew exactly what was wrong. The playtests told a different story.</p>
+          <div class="case-pills">
+            <span class="pill">User Research</span>
+            <span class="pill">Prototyping</span>
+            <span class="pill">Data Analysis</span>
+            <span class="pill">Figma</span>
+          </div>
+        </div>
+        <div class="monitor-mockup">
+          <div class="monitor-frame">
+            <div class="monitor-screen">
+              <img src="halo-hero.png" alt="Final Halo Forge map design">
+            </div>
+          </div>
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+        </div>
+      </div>
+      <div class="meta-bar fade-in">
+        <div>
+          <p class="meta-item-label">Timeline</p>
+          <p class="meta-item-value">2026</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Role</p>
+          <p class="meta-item-value">Designer & Researcher</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Type</p>
+          <p class="meta-item-value">Personal Project</p>
+        </div>
+        <div>
+          <p class="meta-item-label">Outcome</p>
+          <p class="meta-item-value">96% pacing improvement</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The problem</p>
+        <h2 class="section-heading">Our matches felt slow. The data confirmed it.</h2>
+        <p class="section-text">
+          Halo is a game where players battle in small arenas called maps. My group of four plays in-person on split-screen, but the maps that come with the game are built for eight players. Our matches felt slow and unsatisfying.
+        </p>
+        <p class="section-text">
+          I measured time-to-encounter and match length against an eight-player baseline. Both roughly doubled in our four-player sessions.
+        </p>
+        <div class="quote-block">
+          <blockquote class="quote">
+            "I can't find anyone."
+            <span class="quote-source">Player, during 4-player session</span>
+          </blockquote>
+          <blockquote class="quote">
+            "I don't know where I'm going."
+            <span class="quote-source">Player, during 4-player session</span>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The process</p>
+        <h2 class="section-heading">Five sketches, five prototypes, measured against bots, iterated repeatedly.</h2>
+        <p class="section-text">
+          I researched popular Halo maps to understand what made them work, then sketched five designs, wireframed them in Figma, and built low-fidelity prototypes in Forge.
+        </p>
+        <p class="section-text">
+          I playtested each prototype with AI bots, measuring time-to-encounter against the baseline. I also built a web app that visualised player death locations as a heatmap overlaid on the wireframes.
+        </p>
+      </div>
+
+      <div class="image-grid fade-in">
+        <div class="case-image">
+          <div class="img-wrapper">
+            <img src="halo-sketch.jpg" alt="Paper sketch of a map design concept">
+          </div>
+          <p class="case-image-caption">Paper sketch of a design concept</p>
+        </div>
+        <div class="case-image">
+          <div class="img-wrapper">
+            <img src="halo-prototype.png" alt="Low-fidelity prototype built in Forge">
+          </div>
+          <p class="case-image-caption">Low-fidelity prototype in Forge</p>
+        </div>
+      </div>
+
+      <div class="image-grid fade-in">
+        <div class="case-image">
+          <div class="img-wrapper">
+            <img src="time-to-encounter.svg" alt="Chart showing time-to-encounter across five prototype designs">
+          </div>
+          <p class="case-image-caption">Time-to-encounter across five designs</p>
+        </div>
+        <div class="case-image">
+          <div class="img-wrapper padded">
+            <img src="halo-heatmap.png" alt="Heatmap showing even distribution of player deaths">
+          </div>
+          <p class="case-image-caption">Heatmap showing good map coverage</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The surprise</p>
+        <h2 class="section-heading">My users saw problems I never considered.</h2>
+        <p class="section-text">
+          I playtested the winning design with my group, expecting feedback on navigation. Instead, two unexpected themes emerged: <strong>weapon familiarity</strong> and <strong>visual noise</strong>. Players didn't recognise newer weapons, causing confusion mid-fight. And the map was hard to read at a glance because key routes weren't visually distinct enough.
+        </p>
+        <div class="quote-block">
+          <blockquote class="quote">
+            "How does this weapon work?"
+            <span class="quote-source">Player, during playtest</span>
+          </blockquote>
+          <blockquote class="quote">
+            "I can't tell where to go."
+            <span class="quote-source">Player, during playtest</span>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <p class="section-text" style="margin-top: 28px;">
+          These findings directly shaped two changes to the final design:
+        </p>
+        <p class="section-text">
+          <strong>Visual hierarchy</strong> — I used lighting and colour contrast as navigational cues, guiding players toward key routes.
+        </p>
+        <p class="section-text">
+          <strong>Sandbox clarity</strong> — I swapped unfamiliar weapons for classic equivalents players would recognise immediately.
+        </p>
+      </div>
+
+      <div class="before-after fade-in" data-ba>
+        <div class="ba-images">
+          <img class="ba-after" src="halo-after.png" alt="After: improved visual hierarchy">
+          <span class="ba-label ba-label-after">After</span>
+          <div class="ba-before">
+            <img src="halo-before.png" alt="Before: cluttered visual design">
+            <span class="ba-label ba-label-before">Before</span>
+          </div>
+          <div class="ba-slider"></div>
+        </div>
+        <p class="ba-caption">Drag to compare before and after</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-wide">
+    <div class="impact-block fade-in">
+      <p class="section-label">Outcome</p>
+      <div class="impact-stats">
+        <div class="impact-stat">
+          <p class="impact-number">5.8s</p>
+          <p class="impact-label">Time to encounter</p>
+          <p class="impact-sub">Down from 9.5s · Target: 4.8s</p>
+        </div>
+        <div class="impact-stat">
+          <p class="impact-number">156s</p>
+          <p class="impact-label">Match time</p>
+          <p class="impact-sub">Down from 318s · Target: 150s</p>
+        </div>
+      </div>
+      <div class="impact-quotes">
+        <blockquote class="quote">
+          "This map is much better than the others we've played. It was far easier to find players, and know where to go."
+          <span class="quote-source">Player, after final playtest</span>
+        </blockquote>
+        <blockquote class="quote">
+          "The map was pretty easy to learn after one session."
+          <span class="quote-source">Player, after final playtest</span>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+  <section class="reflection-band">
+    <div class="reflection-inner">
+      <p class="section-label fade-in">The real lesson</p>
+      <h2 class="section-heading fade-in">I projected my own familiarity onto my users.</h2>
+      <p class="section-text fade-in">
+        I knew the weapons and designed the map looking at a full screen. My users were playing on a quarter of the screen with weapons they weren't familiar with.
+      </p>
+      <p class="section-text fade-in">
+        The data and the prototypes got me close to a good design.
+      </p>
+      <p class="section-text fade-in">
+        <strong>But the real problems only appeared when real users touched it.</strong>
+      </p>
+      <p class="section-text fade-in">
+        The only thing that surfaced these gaps was putting the map in front of people who weren't me.
+      </p>
+    </div>
+  </section>
+
+  <section class="next-up">
+    <div class="container-wide">
+      <p class="section-label fade-in">Next up</p>
+      <a href="case-study-pt.html" class="next-up-card fade-in">
+        <div class="next-up-body">
+          <p class="next-up-label">ProgressTeaching · B2B SaaS</p>
+          <h3 class="next-up-title">Solving the Right Problem for the Wrong User</h3>
+          <p class="next-up-description">A feature I designed and shipped end-to-end that addressed a real user problem, and taught me the cost of designing for only one user.</p>
+        </div>
+        <div class="next-up-image">
+          <div style="width:80%; max-width:320px; background:#2a2a2a; border-radius:4px 4px 0 0; padding:2px 2px 0; border:1px solid #d0d0d0;">
+            <div style="border-radius:2px 2px 0 0; overflow:hidden; aspect-ratio:16/10;">
+              <img src="pt-hero.png" alt="ProgressTeaching interface" style="width:100%; display:block;">
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="case-footer">
+    <div class="container-wide">
+      <a href="index.html" class="back-link">← Back to all work</a>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="">
+  </div>
+
+  <script>
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+
+    document.querySelectorAll('.image-grid .img-wrapper').forEach((wrapper) => {
+      wrapper.addEventListener('click', () => {
+        const img = wrapper.querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+    });
+
+    // Scroll fade
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // Before/after slider
+    document.querySelectorAll('[data-ba]').forEach((wrapper) => {
+      const container = wrapper.querySelector('.ba-images');
+      const beforeLayer = container.querySelector('.ba-before');
+      const beforeImg = beforeLayer.querySelector('img');
+      const slider = container.querySelector('.ba-slider');
+      let isDragging = false;
+
+      function setBeforeImageWidth() {
+        beforeImg.style.width = container.offsetWidth + 'px';
+        beforeImg.style.minWidth = container.offsetWidth + 'px';
+      }
+
+      setBeforeImageWidth();
+      window.addEventListener('resize', setBeforeImageWidth);
+
+      function updatePosition(x) {
+        const rect = container.getBoundingClientRect();
+        let pos = (x - rect.left) / rect.width;
+        pos = Math.max(0, Math.min(1, pos));
+        beforeLayer.style.width = (pos * 100) + '%';
+        slider.style.left = (pos * 100) + '%';
+      }
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        updatePosition(e.clientX);
+        e.preventDefault();
+      });
+      window.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e.clientX); });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      container.addEventListener('touchstart', (e) => { isDragging = true; updatePosition(e.touches[0].clientX); });
+      container.addEventListener('touchmove', (e) => { if (isDragging) { updatePosition(e.touches[0].clientX); e.preventDefault(); } });
+      container.addEventListener('touchend', () => { isDragging = false; });
+    });
+  </script>
+
+</body>
+</html>
