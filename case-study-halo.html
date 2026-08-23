@@ -180,8 +180,12 @@
     }
 
     .next-up-card:hover {
-      transform: translateY(-3px) scale(1.01);
+      transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(22,91,96,0.1), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .next-up-card.fade-in.visible:hover {
+      transform: translateY(-3px) scale(1.01);
     }
 
     .next-up-card:hover .next-up-title {
@@ -427,7 +431,7 @@
     }
 
     .ba-slider::after {
-      content: '⟷';
+      content: '◂ ▸';
       position: absolute;
       top: 50%;
       left: 50%;
@@ -438,7 +442,8 @@
       border-radius: 50%;
       text-align: center;
       line-height: 36px;
-      font-size: 16px;
+      font-size: 10px;
+      letter-spacing: 2px;
       color: var(--text-secondary);
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }

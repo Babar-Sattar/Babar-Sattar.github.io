@@ -187,8 +187,12 @@
     }
 
     .next-up-card:hover {
-      transform: translateY(-3px) scale(1.01);
+      transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(22,91,96,0.1), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .next-up-card.fade-in.visible:hover {
+      transform: translateY(-3px) scale(1.01);
     }
 
     .next-up-card:hover .next-up-title {
