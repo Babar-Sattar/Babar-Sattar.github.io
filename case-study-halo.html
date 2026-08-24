@@ -75,7 +75,13 @@
       letter-spacing: -0.02em;
     }
 
-    .nav-back {
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 500;
@@ -84,7 +90,7 @@
       transition: color 0.2s ease;
     }
 
-    .nav-back:hover { color: var(--teal); }
+    .nav-links a:hover { color: var(--teal); }
 
     /* ===== HERO ===== */
     .case-hero { padding-top: 140px; }
@@ -134,15 +140,19 @@
       color: var(--teal);
     }
 
-    /* ===== METADATA BAR ===== */
+    /* ===== METADATA BAND ===== */
+    .meta-band {
+      background: var(--teal);
+      margin-top: 48px;
+      padding: 24px 48px;
+    }
+
     .meta-bar {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
-      margin-top: var(--section-gap);
-      padding: 28px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .meta-item-label {
@@ -151,14 +161,14 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-tertiary);
+      color: rgba(255,255,255,0.5);
       margin-bottom: 6px;
     }
 
     .meta-item-value {
       font-size: 14px;
       font-weight: 500;
-      color: var(--text-primary);
+      color: #fff;
     }
 
     /* ===== NEXT UP ===== */
@@ -431,21 +441,20 @@
     }
 
     .ba-slider::after {
-      content: '◂ ▸';
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      text-align: center;
-      line-height: 36px;
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text-secondary);
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M14 13l-5 7 5 7' stroke='%235C5C5C' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 13l5 7-5 7' stroke='%235C5C5C' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 40px 40px;
     }
 
     .ba-label {
@@ -515,7 +524,7 @@
       gap: 16px;
     }
 
-    /* ===== REFLECTION BAND ===== */
+    /* ===== REFLECTION ===== */
     .reflection-band {
       background: var(--teal);
       margin-top: var(--section-gap);
@@ -616,6 +625,7 @@
       .case-hero { padding-top: 110px; }
       .reflection-band { padding: 48px 24px; }
       .meta-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .meta-band { padding: 20px 24px; }
       .next-up-card { grid-template-columns: 1fr; }
       .reflection-box { padding: 28px; }
       .impact-block { padding: 36px 24px; }
@@ -639,7 +649,11 @@
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-name">Babar Sattar</a>
-      <a href="index.html" class="nav-back">← Back to work</a>
+      <ul class="nav-links">
+        <li><a href="index.html">← Back to work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -667,26 +681,29 @@
           <div class="monitor-base"></div>
         </div>
       </div>
-      <div class="meta-bar fade-in">
-        <div>
-          <p class="meta-item-label">Timeline</p>
-          <p class="meta-item-value">2026</p>
-        </div>
-        <div>
-          <p class="meta-item-label">Role</p>
-          <p class="meta-item-value">Designer & Researcher</p>
-        </div>
-        <div>
-          <p class="meta-item-label">Type</p>
-          <p class="meta-item-value">Personal Project</p>
-        </div>
-        <div>
-          <p class="meta-item-label">Outcome</p>
-          <p class="meta-item-value">96% pacing improvement</p>
-        </div>
-      </div>
     </div>
   </section>
+
+  <div class="meta-band fade-in">
+    <div class="meta-bar">
+      <div>
+        <p class="meta-item-label">Timeline</p>
+        <p class="meta-item-value">2026</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Role</p>
+        <p class="meta-item-value">Designer & Researcher</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Type</p>
+        <p class="meta-item-value">Personal Project</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Outcome</p>
+        <p class="meta-item-value">96% pacing improvement</p>
+      </div>
+    </div>
+  </div>
 
   <section class="case-section">
     <div class="container-wide">
@@ -830,6 +847,7 @@
           <span class="quote-source">Player, after final playtest</span>
         </blockquote>
       </div>
+      <p style="font-size:14px; color:#5C5C5C; margin-top:20px; text-align:center;">It became the map we played more than any other.</p>
     </div>
   </div>
 
@@ -867,6 +885,7 @@
               <img src="pt-hero.jpg" alt="ProgressTeaching interface" style="width:100%; display:block;">
             </div>
           </div>
+          <div style="width:85%; max-width:350px; height:8px; background:linear-gradient(to bottom, #333, #2a2a2a); border-radius:0 0 3px 3px;"></div>
         </div>
       </a>
     </div>
