@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Babar Sattar - Product Designer</title>
+  <meta name="description" content="Five platform papercuts identified, prototyped and shipped to production from the customer seat, using Claude Code.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #F7F7F5;
+      --bg-card: #FFFFFF;
+      --teal: #165B60;
+      --teal-light: #E4EEF0;
+      --text-primary: #1A1A1A;
+      --text-secondary: #5C5C5C;
+      --text-tertiary: #8A8A8A;
+      --border: #E4E4E2;
+      --radius: 12px;
+      --radius-pill: 100px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-width: 1200px;
+      --content-width: 680px;
+      --section-gap: 80px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container-wide {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .container-narrow {
+      max-width: var(--content-width);
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247, 247, 245, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ===== HERO ===== */
+    .case-hero {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .case-meta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .case-tldr {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .case-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    /* ===== LAPTOP MOCKUP ===== */
+    .laptop-mockup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .laptop-frame {
+      width: 100%;
+      background: #2a2a2a;
+      border-radius: 6px 6px 0 0;
+      padding: 3px 3px 0;
+      border: 1px solid #d0d0d0;
+    }
+
+    .laptop-screen {
+      border-radius: 3px 3px 0 0;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+
+    .laptop-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+    }
+
+    .laptop-bottom {
+      width: 105%;
+      height: 12px;
+      background: linear-gradient(to bottom, #333, #2a2a2a);
+      border-radius: 0 0 4px 4px;
+      position: relative;
+    }
+
+    .laptop-bottom::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 4px;
+      background: #444;
+      border-radius: 2px;
+    }
+
+    /* ===== METADATA BAND ===== */
+    .meta-band {
+      background: var(--teal);
+      margin-top: 48px;
+      padding: 24px 48px;
+    }
+
+    .meta-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .meta-item-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 6px;
+    }
+
+    .meta-item-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .case-section {
+      padding-top: var(--section-gap);
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .section-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: var(--content-width);
+    }
+
+    .section-text + .section-text { margin-top: 16px; }
+    .section-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== BEFORE/AFTER ===== */
+    .before-after {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .ba-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .ba-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ba-label.before { color: var(--text-tertiary); }
+    .ba-label.after { color: var(--teal); }
+
+    .ba-panel img {
+      width: 100%;
+      display: block;
+    }
+
+    .ba-caption {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    /* ===== DEEP DIVE (larger) ===== */
+    .deep-dive-ba {
+      margin-top: 32px;
+    }
+
+    .deep-dive-ba .ba-panel {
+      margin-bottom: 16px;
+    }
+
+    .deep-dive-ba .ba-panel img {
+      max-height: 400px;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    /* ===== GALLERY (smaller pairs) ===== */
+    .gallery-item {
+      margin-top: 40px;
+    }
+
+    .gallery-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .gallery-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      max-width: var(--content-width);
+    }
+
+    .gallery-ba {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .gallery-ba .ba-panel img {
+      max-height: 300px;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    /* ===== PROCESS LIST ===== */
+    .process-list {
+      margin-top: 24px;
+      list-style: none;
+      counter-reset: process;
+      max-width: var(--content-width);
+    }
+
+    .process-list li {
+      counter-increment: process;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .process-list li:last-child { border-bottom: none; }
+
+    .process-list li::before {
+      content: counter(process);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--teal);
+      min-width: 20px;
+    }
+
+    /* ===== REFLECTION ===== */
+    .reflection-band {
+      background: var(--teal);
+      margin-top: var(--section-gap);
+      padding: 64px 48px;
+    }
+
+    .reflection-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .reflection-band .section-label {
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+
+    .reflection-band .section-heading {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .reflection-band .section-text {
+      color: rgba(255,255,255,0.85);
+      max-width: var(--content-width);
+    }
+
+    .reflection-band .section-text strong {
+      color: #fff;
+    }
+
+    /* ===== NEXT UP ===== */
+    .next-up {
+      padding-top: var(--section-gap);
+    }
+
+    .next-up-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .next-up-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(22,91,96,0.1), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .next-up-card.fade-in.visible:hover {
+      transform: translateY(-3px) scale(1.01);
+    }
+
+    .next-up-card:hover .next-up-title {
+      color: var(--teal);
+    }
+
+    .next-up-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .next-up-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .next-up-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .next-up-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .next-up-image {
+      background: linear-gradient(145deg, #eef3f3, #dce6e7, #e8eeef);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 24px;
+      min-height: 220px;
+    }
+
+    /* ===== FOOTER ===== */
+    .case-footer {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .back-link {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: 1.5px solid var(--teal);
+      border-radius: var(--radius-pill);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .back-link:hover { background: var(--teal); color: white; }
+
+    /* ===== FADE ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .container-wide { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .case-hero { padding-top: 110px; }
+      .reflection-band { padding: 48px 24px; }
+      .meta-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .meta-band { padding: 20px 24px; }
+      .next-up-card { grid-template-columns: 1fr; }
+      .before-after { grid-template-columns: 1fr; }
+      .gallery-ba { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .case-hero { padding-top: 100px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Babar Sattar</a>
+      <ul class="nav-links">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="case-hero">
+    <div class="container-wide">
+      <div class="hero-grid">
+        <div>
+          <p class="case-meta">Gearset · B2B SaaS · Developer Tooling</p>
+          <h1 class="case-title">Five Platform Papercuts, Shipped from the Customer Seat</h1>
+          <p class="case-tldr">Small UX fixes I identified, prototyped and shipped to production using Claude Code, all from my role as a Customer Success Manager.</p>
+          <div class="case-pills">
+            <span class="pill">Product Judgment</span>
+            <span class="pill">Claude Code</span>
+            <span class="pill">Shipped to Production</span>
+            <span class="pill">Self-initiated</span>
+          </div>
+        </div>
+        <div class="laptop-mockup">
+          <div class="laptop-frame">
+            <div class="laptop-screen">
+              <img src="delegate-after.png" alt="Gearset delegate access table after redesign">
+            </div>
+          </div>
+          <div class="laptop-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="meta-band fade-in">
+    <div class="meta-bar">
+      <div>
+        <p class="meta-item-label">Timeline</p>
+        <p class="meta-item-value">2026</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Role</p>
+        <p class="meta-item-value">CSM (self-initiated)</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Company</p>
+        <p class="meta-item-value">Gearset</p>
+      </div>
+      <div>
+        <p class="meta-item-label">Outcome</p>
+        <p class="meta-item-value">5 fixes in production</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: The pattern -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The pattern</p>
+        <h2 class="section-heading">I'm in the product every day. That's how I found these.</h2>
+        <p class="section-text">
+          I'm in Gearset every day, and I'm in it differently to the people who build it. Customer calls, live troubleshooting, walkthroughs, expansions. That means I hit the same small frictions our users hit.
+        </p>
+        <p class="section-text">
+          Most of the time, logging a ticket isn't enough. So I went and got the access. A Claude Code licence and the codebase, both of which took approval and persistence. Then I learned the workflows, partly from the UX team, mostly self-taught.
+        </p>
+        <p class="section-text">
+          Five of those fixes are now in production.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Deep dive -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">Deep dive</p>
+        <h2 class="section-heading">Delegate org access: a table that wouldn't scale.</h2>
+        <p class="section-text">
+          I joined a few product Slack channels that had nothing to do with my job. I wanted to see how the product team talked about the platform.
+        </p>
+        <p class="section-text">
+          That's where I saw a thread about Gearset's largest ever customer. A new enterprise account with a team of over a hundred users, and they were already hitting problems the platform hadn't been built for. Bulk licence assignment was the first one. PMs and designers moved on it quickly, because that account mattered.
+        </p>
+        <p class="section-text">
+          I couldn't help with that one. But it stuck with me.
+        </p>
+        <p class="section-text">
+          About five weeks later I was in Staging, looking through the admin area with that thread still in my head. Not looking for something annoying. Looking for something that would break at a hundred users.
+        </p>
+      </div>
+
+      <div class="deep-dive-ba fade-in">
+        <div class="before-after">
+          <div class="ba-panel">
+            <p class="ba-label before">Before</p>
+            <img src="delegate-before.png" alt="Delegate access page showing 31 users in a full list with no visible Save button">
+            <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
+          </div>
+          <div class="ba-panel">
+            <p class="ba-label after">After</p>
+            <img src="delegate-after.png" alt="Delegate access page showing 126 users in a scrollable table with Save button visible">
+            <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in" style="margin-top: 32px;">
+        <p class="section-text">
+          The delegate org access page listed every user on the team. One long list. To save, you scrolled past all of them.
+        </p>
+        <p class="section-text">
+          Fine at ten users. Not fine at a hundred and twenty six.
+        </p>
+        <p class="section-text">
+          My first attempt was pagination, fifty per page. There was precedent elsewhere in the platform, so it felt safe. It wasn't. The last page had fewer rows than the others, so paging back and forth made the layout jump.
+        </p>
+        <p class="section-text">
+          I could have shipped it. Instead I sent a UX designer the screenshots and asked whether the jump was bad enough to matter, or whether I was overthinking it.
+        </p>
+        <p class="section-text">
+          He suggested reusing a table component from elsewhere in the platform.
+        </p>
+        <p class="section-text">
+          I raised the PR. In Staging I noticed text bleeding into adjacent columns, something I'd missed locally, so I reverted, fixed it, and raised it again. It's in production now.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Gallery -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The other fixes</p>
+        <h2 class="section-heading">Two more, caught from daily use.</h2>
+
+        <div class="gallery-item">
+          <p class="gallery-title">Search term highlighting, What's New</p>
+          <p class="gallery-desc">I searched for a release note and then had to scan the results to find my own search term. Now matches are highlighted.</p>
+          <div class="gallery-ba">
+            <div class="ba-panel">
+              <p class="ba-label before">Before</p>
+              <img src="search-before.png" alt="What's New search results with no highlighting of the search term">
+            </div>
+            <div class="ba-panel">
+              <p class="ba-label after">After</p>
+              <img src="search-after.png" alt="What's New search results with search term highlighted throughout">
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <p class="gallery-title">Clickable card area, Observability</p>
+          <p class="gallery-desc">The card looked clickable but only part of it was, so clicks landed on dead space. Now the whole card is a target.</p>
+          <div class="gallery-ba">
+            <div class="ba-panel">
+              <p class="ba-label before">Before</p>
+              <img src="observability-before.png" alt="Observability error monitoring card with dead space annotation">
+            </div>
+            <div class="ba-panel">
+              <p class="ba-label after">After</p>
+              <img src="observability-after.png" alt="Observability error monitoring card fully clickable">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Process -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">The process</p>
+        <h2 class="section-heading">How a CSM ships code at Gearset.</h2>
+        <ol class="process-list">
+          <li>Log the papercut as a ticket in Shortcut, self-assigned</li>
+          <li>Pull the latest from Main, branch off it</li>
+          <li>Run backend and frontend locally</li>
+          <li>Build the change with Claude Code, iterate until I'm happy with it</li>
+          <li>Raise the PR</li>
+          <li>Work through automated review comments</li>
+          <li>Work through a front-end engineer's review, usually HTML and CSS questions</li>
+          <li>Merge, then verify in Staging</li>
+          <li>Ship to production</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Reflection -->
+  <section class="reflection-band">
+    <div class="reflection-inner">
+      <p class="section-label fade-in">The ceiling</p>
+      <h2 class="section-heading fade-in">I've found the limit of what this seat allows.</h2>
+      <p class="section-text fade-in">
+        Every fix in this case study is small. That's not modesty, it's the constraint. From the customer seat I can spot friction and I can ship a fix, but I can't take on the problems that would need weeks of research, or a team, or a mandate.
+      </p>
+      <p class="section-text fade-in">
+        I've found the ceiling of what this seat allows. The work I want to do is on the other side of it.
+      </p>
+    </div>
+  </section>
+
+  <!-- Next up -->
+  <section class="next-up">
+    <div class="container-wide">
+      <p class="section-label fade-in">Next up</p>
+      <a href="case-study-pt.html" class="next-up-card fade-in">
+        <div class="next-up-body">
+          <p class="next-up-label">ProgressTeaching · B2B SaaS</p>
+          <h3 class="next-up-title">Redesigning Observation Forms, 70% Adoption in Year One</h3>
+          <p class="next-up-description">A feature I designed and shipped end-to-end that addressed a real user problem, and taught me the cost of designing for only one user.</p>
+        </div>
+        <div class="next-up-image">
+          <div style="width:80%; max-width:320px; background:#2a2a2a; border-radius:4px 4px 0 0; padding:2px 2px 0; border:1px solid #d0d0d0;">
+            <div style="border-radius:2px 2px 0 0; overflow:hidden; aspect-ratio:16/9;">
+              <img src="pt-hero.jpg" alt="ProgressTeaching observation form" style="width:100%; display:block;">
+            </div>
+          </div>
+          <div style="width:36px; height:14px; background:linear-gradient(to bottom, #333, #2a2a2a);"></div>
+          <div style="width:72px; height:4px; background:#333; border-radius:0 0 2px 2px;"></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="case-footer">
+    <div class="container-wide">
+      <a href="index.html" class="back-link">← Back to all work</a>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>
