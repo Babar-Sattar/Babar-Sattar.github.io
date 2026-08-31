@@ -319,9 +319,8 @@
     }
 
     .deep-dive-ba .ba-panel img {
-      max-height: 400px;
-      object-fit: cover;
-      object-position: top left;
+      flex: 0 0 auto;
+      object-fit: contain;
     }
 
     /* ===== GALLERY (smaller pairs) ===== */
@@ -619,10 +618,10 @@
         <p class="section-label">The pattern</p>
         <h2 class="section-heading">I'm in the product every day. That's how I found these.</h2>
         <p class="section-text">
-          I'm in Gearset every day, and I'm in it differently to the people who build it. Customer calls, live troubleshooting, walkthroughs, expansions. That means I hit the same small frictions our users hit.
+          I'm in Gearset every day, and I'm in it differently to the people who build it. Customer calls, live troubleshooting, and walkthroughs of different product areas. That means I hit the same small frictions our users hit.
         </p>
         <p class="section-text">
-          Most of the time, logging a ticket isn't enough. So I went and got the access. A Claude Code licence and the codebase, both of which took approval and persistence. Then I learned the workflows, partly from the UX team, mostly self-taught.
+          Most of the time, logging a ticket isn't enough. So I went and got access to Claude Code and Gearset's codebase, both of which took approval and persistence. Then I learned the workflows, partly from the UX team, mostly self-taught.
         </p>
         <p class="section-text">
           Five of those fixes are now in production.
@@ -638,7 +637,7 @@
         <p class="section-label">Deep dive</p>
         <h2 class="section-heading">Delegate org access: a table that wouldn't scale.</h2>
         <p class="section-text">
-          I joined a few product Slack channels that had nothing to do with my job. I wanted to see how the product team talked about the platform.
+          I joined a few product Slack channels that had nothing to do with my job. I wanted to see how the product team talked and went about improving the platform.
         </p>
         <p class="section-text">
           That's where I saw a thread about Gearset's largest ever customer. A new enterprise account with a team of over a hundred users, and they were already hitting problems the platform hadn't been built for. Bulk licence assignment was the first one. PMs and designers moved on it quickly, because that account mattered.
@@ -668,7 +667,7 @@
 
       <div class="fade-in" style="margin-top: 32px;">
         <p class="section-text">
-          The delegate org access page listed every user on the team. One long list. To save, you scrolled past all of them.
+          The delegate org access page listed every user on the team in one long list. To save, you scrolled past all of them.
         </p>
         <p class="section-text">
           Fine at ten users. Not fine at a hundred and twenty six.
@@ -677,7 +676,7 @@
           My first attempt was pagination, fifty per page. There was precedent elsewhere in the platform, so it felt safe. It wasn't. The last page had fewer rows than the others, so paging back and forth made the layout jump.
         </p>
         <p class="section-text">
-          I could have shipped it. Instead I sent a UX designer the screenshots and asked whether the jump was bad enough to matter, or whether I was overthinking it.
+          I sent a UX designer the screenshots and asked whether the jump was bad enough to matter, or whether I was overthinking it.
         </p>
         <p class="section-text">
           He suggested reusing a table component from elsewhere in the platform.
@@ -775,13 +774,16 @@
           <p class="next-up-description">A feature I designed and shipped end-to-end that addressed a real user problem, and taught me the cost of designing for only one user.</p>
         </div>
         <div class="next-up-image">
-          <div style="width:80%; max-width:320px; background:#2a2a2a; border-radius:4px 4px 0 0; padding:2px 2px 0; border:1px solid #d0d0d0;">
-            <div style="border-radius:2px 2px 0 0; overflow:hidden; aspect-ratio:16/9;">
-              <img src="pt-hero.jpg" alt="ProgressTeaching observation form" style="width:100%; display:block;">
+          <div style="width:80%; max-width:320px;">
+            <div style="background:#2a2a2a; border-radius:6px 6px 0 0; padding:3px 3px 0; border:1px solid #d0d0d0;">
+              <div style="border-radius:3px 3px 0 0; overflow:hidden; aspect-ratio:16/10;">
+                <img src="pt-hero.jpg" alt="ProgressTeaching observation form" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+            </div>
+            <div style="width:105%; margin-left:-2.5%; height:12px; background:linear-gradient(to bottom, #333, #2a2a2a); border-radius:0 0 4px 4px; position:relative;">
+              <div style="position:absolute; top:3px; left:50%; transform:translateX(-50%); width:50px; height:4px; background:#444; border-radius:2px;"></div>
             </div>
           </div>
-          <div style="width:36px; height:14px; background:linear-gradient(to bottom, #333, #2a2a2a);"></div>
-          <div style="width:72px; height:4px; background:#333; border-radius:0 0 2px 2px;"></div>
         </div>
       </a>
     </div>
