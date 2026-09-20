@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delegate Access Prototype</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      font-size: 14px;
+      padding: 32px 40px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .dropdown-btn .arrow {
+      font-size: 10px;
+      color: #999;
+    }
+
+    .results-count {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 7px 16px;
+      border: 1px solid #d0d0d0;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover { background: #f9f9f9; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      background: #fff;
+      min-width: 160px;
+    }
+
+    .search-box .search-icon { flex-shrink: 0; }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #999;
+      background: transparent;
+      width: 100%;
+    }
+
+    /* Assign section */
+    .assign-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #f0f0f0;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+
+    .assign-bar span {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .assign-bar .chevron {
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Table container */
+    .table-wrapper {
+      position: relative;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .table-scroll {
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .table-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .table-scroll::-webkit-scrollbar-track {
+      background: #f5f5f5;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #fff;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+      color: #555;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e0e0e0;
+      white-space: nowrap;
+    }
+
+    th.sortable {
+      cursor: pointer;
+    }
+
+    th .sort-arrow {
+      font-size: 10px;
+      margin-left: 4px;
+      color: #999;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+      color: #333;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* Avatar */
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      font-size: 13px;
+      color: #333;
+    }
+
+    /* Username cell */
+    .username-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #666;
+    }
+
+    .username-cell .person-icon {
+      color: #999;
+      font-size: 13px;
+    }
+
+    .username-cell span {
+      color: #4a7eff;
+      font-size: 13px;
+    }
+
+    /* User type */
+    .user-type { color: #333; font-size: 13px; }
+
+    /* Give access dropdown */
+    .access-dropdown {
+      padding: 6px 28px 6px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      min-width: 120px;
+    }
+
+    /* Save button */
+    .save-container {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 12px 16px;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .save-btn {
+      padding: 8px 24px;
+      background: #3C74C2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .save-btn:hover { background: #2F5FA0; }
+  </style>
+</head>
+<body>
+
+  <h2 class="header-title">2. Delegate access</h2>
+  <div class="header">
+    <div class="header-left">
+      <button class="dropdown-btn">All user types <span class="arrow">▾</span></button>
+      <span class="results-count">Showing 126 results</span>
+    </div>
+    <div class="header-right">
+      <button class="filter-btn">Delegated access</button>
+      <button class="filter-btn">No access</button>
+      <div class="search-box">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5.5" cy="5.5" r="4.5" stroke="#999" stroke-width="1.5"/>
+          <line x1="9" y1="9" x2="13" y2="13" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="text" placeholder="Filter...">
+      </div>
+    </div>
+  </div>
+
+  <div class="assign-bar">
+    <span>Assign multiple team members access to org</span>
+    <span class="chevron">▾</span>
+  </div>
+
+  <div class="table-wrapper">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable" style="width:25%;">Display name <span class="sort-arrow">▲</span></th>
+            <th style="width:35%;">Username</th>
+            <th style="width:15%;">User type</th>
+            <th style="width:25%;">Give access</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <div class="save-container">
+      <button class="save-btn">Save</button>
+    </div>
+  </div>
+
+  <script>
+    const colors = [
+      '#4CAF50', '#9C27B0', '#8B9A2E', '#2E7D32', '#C2185B',
+      '#00897B', '#7B1FA2', '#558B2F', '#6A1B9A', '#388E3C',
+      '#AD1457', '#689F38', '#7B1FA2', '#43A047', '#AB47BC'
+    ];
+
+    const people = [
+      { name: 'Adam Reynolds', email: 'adam.reynolds@acmecorp.com', type: 'Owner' },
+      { name: 'Alice Chen', email: 'alice.chen@acmecorp.com', type: 'Owner' },
+      { name: 'Amira Hassan', email: 'amira.hassan@acmecorp.com', type: 'Owner' },
+      { name: 'Ben Crawford', email: 'ben.crawford@acmecorp.com', type: 'Owner' },
+      { name: 'Beth Turner', email: 'beth.turner@acmecorp.com', type: 'Owner' },
+      { name: 'Carlos Mendez', email: 'carlos.mendez@acmecorp.com', type: 'Owner' },
+      { name: 'Charlotte Wells', email: 'charlotte.wells@acmecorp.com', type: 'Member', access: 'Validation' },
+      { name: 'Chris Lambert', email: 'chris.lambert@acmecorp.com', type: 'Owner' },
+      { name: 'Clara Okonkwo', email: 'clara.okonkwo@acmecorp.com', type: 'Owner' },
+      { name: 'Daniel Fischer', email: 'daniel.fischer@acmecorp.com', type: 'Owner' },
+      { name: 'David Kowalski', email: 'david.kowalski@acmecorp.com', type: 'Owner' },
+      { name: 'Diana Reeves', email: 'diana.reeves@acmecorp.com', type: 'Member', access: 'None' },
+      { name: 'Elena Petrov', email: 'elena.petrov@acmecorp.com', type: 'Owner' },
+      { name: 'Emma Gallagher', email: 'emma.gallagher@acmecorp.com', type: 'Owner' },
+      { name: 'Ethan Brooks', email: 'ethan.brooks@acmecorp.com', type: 'Owner' },
+      { name: 'Fatima Al-Rashid', email: 'fatima.alrashid@acmecorp.com', type: 'Owner' },
+      { name: 'Felix Andersen', email: 'felix.andersen@acmecorp.com', type: 'Owner' },
+      { name: 'Fiona McCarthy', email: 'fiona.mccarthy@acmecorp.com', type: 'Member', access: 'Comparison' },
+      { name: 'Gabriel Santos', email: 'gabriel.santos@acmecorp.com', type: 'Owner' },
+      { name: 'Grace Whitfield', email: 'grace.whitfield@acmecorp.com', type: 'Owner' },
+      { name: 'Hannah Liu', email: 'hannah.liu@acmecorp.com', type: 'Owner' },
+      { name: 'Harry Dunn', email: 'harry.dunn@acmecorp.com', type: 'Owner' },
+      { name: 'Ibrahim Yusuf', email: 'ibrahim.yusuf@acmecorp.com', type: 'Member', access: 'None' },
+      { name: 'Isla Brennan', email: 'isla.brennan@acmecorp.com', type: 'Owner' },
+      { name: 'Jack Morrison', email: 'jack.morrison@acmecorp.com', type: 'Owner' },
+      { name: 'James Thornton', email: 'james.thornton@acmecorp.com', type: 'Owner' },
+      { name: 'Jane Nakamura', email: 'jane.nakamura@acmecorp.com', type: 'Owner' },
+      { name: 'Jessica Palmer', email: 'jessica.palmer@acmecorp.com', type: 'Owner' },
+      { name: 'Joe Hartley', email: 'joe.hartley@acmecorp.com', type: 'Owner' },
+      { name: 'Julia Engström', email: 'julia.engstrom@acmecorp.com', type: 'Owner' },
+      { name: 'Karen Mitchell', email: 'karen.mitchell@acmecorp.com', type: 'Member', access: 'Validation' },
+      { name: 'Kenji Watanabe', email: 'kenji.watanabe@acmecorp.com', type: 'Owner' },
+      { name: 'Laura Fitzpatrick', email: 'laura.fitzpatrick@acmecorp.com', type: 'Owner' },
+      { name: 'Leo Magnusson', email: 'leo.magnusson@acmecorp.com', type: 'Owner' },
+      { name: 'Liam O\'Brien', email: 'liam.obrien@acmecorp.com', type: 'Owner' },
+      { name: 'Lucy Chan', email: 'lucy.chan@acmecorp.com', type: 'Owner' },
+      { name: 'Marcus Webb', email: 'marcus.webb@acmecorp.com', type: 'Owner' },
+      { name: 'Maria Gonzalez', email: 'maria.gonzalez@acmecorp.com', type: 'Member', access: 'None' },
+      { name: 'Mark Spencer', email: 'mark.spencer@acmecorp.com', type: 'Owner' },
+      { name: 'Maya Reddy', email: 'maya.reddy@acmecorp.com', type: 'Owner' },
+      { name: 'Megan Hurst', email: 'megan.hurst@acmecorp.com', type: 'Owner' },
+      { name: 'Michael Quinn', email: 'michael.quinn@acmecorp.com', type: 'Owner' },
+      { name: 'Nadia Bowen', email: 'nadia.bowen@acmecorp.com', type: 'Owner' },
+      { name: 'Nathan Cross', email: 'nathan.cross@acmecorp.com', type: 'Owner' },
+      { name: 'Niamh Kelly', email: 'niamh.kelly@acmecorp.com', type: 'Member', access: 'Comparison' },
+      { name: 'Noah Eriksson', email: 'noah.eriksson@acmecorp.com', type: 'Owner' },
+      { name: 'Olivia Grant', email: 'olivia.grant@acmecorp.com', type: 'Owner' },
+      { name: 'Oscar De Luca', email: 'oscar.deluca@acmecorp.com', type: 'Owner' },
+      { name: 'Patricia Simmons', email: 'patricia.simmons@acmecorp.com', type: 'Owner' },
+      { name: 'Paul Jennings', email: 'paul.jennings@acmecorp.com', type: 'Owner' },
+      { name: 'Priya Sharma', email: 'priya.sharma@acmecorp.com', type: 'Member', access: 'None' },
+      { name: 'Rachel Foster', email: 'rachel.foster@acmecorp.com', type: 'Owner' },
+      { name: 'Raj Patel', email: 'raj.patel@acmecorp.com', type: 'Owner' },
+      { name: 'Rebecca Long', email: 'rebecca.long@acmecorp.com', type: 'Owner' },
+      { name: 'Reuben Clarke', email: 'reuben.clarke@acmecorp.com', type: 'Owner' },
+      { name: 'Rosie Blackwood', email: 'rosie.blackwood@acmecorp.com', type: 'Owner' },
+      { name: 'Ryan Holland', email: 'ryan.holland@acmecorp.com', type: 'Owner' },
+      { name: 'Samir Johal', email: 'samir.johal@acmecorp.com', type: 'Owner' },
+      { name: 'Samuel Vickers', email: 'samuel.vickers@acmecorp.com', type: 'Member', access: 'Validation' },
+      { name: 'Sarah Donovan', email: 'sarah.donovan@acmecorp.com', type: 'Owner' },
+      { name: 'Sasha Volkov', email: 'sasha.volkov@acmecorp.com', type: 'Owner' },
+      { name: 'Sean Gallagher', email: 'sean.gallagher@acmecorp.com', type: 'Owner' },
+      { name: 'Sofia Bergman', email: 'sofia.bergman@acmecorp.com', type: 'Owner' },
+      { name: 'Sophie Harris', email: 'sophie.harris@acmecorp.com', type: 'Owner' },
+      { name: 'Stefan Mueller', email: 'stefan.mueller@acmecorp.com', type: 'Owner' },
+      { name: 'Thomas Ashworth', email: 'thomas.ashworth@acmecorp.com', type: 'Owner' },
+      { name: 'Tom Eastwood', email: 'tom.eastwood@acmecorp.com', type: 'Member', access: 'None' },
+      { name: 'Vanessa Park', email: 'vanessa.park@acmecorp.com', type: 'Owner' },
+      { name: 'Victoria Hale', email: 'victoria.hale@acmecorp.com', type: 'Owner' },
+      { name: 'Will Chambers', email: 'will.chambers@acmecorp.com', type: 'Owner' },
+      { name: 'Yasmin Chowdhury', email: 'yasmin.chowdhury@acmecorp.com', type: 'Owner' },
+      { name: 'Zara Hussain', email: 'zara.hussain@acmecorp.com', type: 'Owner' },
+    ];
+
+    function getInitials(name) {
+      const parts = name.split(' ');
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function getColor(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return colors[Math.abs(hash) % colors.length];
+    }
+
+    const tbody = document.getElementById('table-body');
+
+    people.forEach(person => {
+      const tr = document.createElement('tr');
+
+      const initials = getInitials(person.name);
+      const color = getColor(person.name);
+
+      let accessCell = '';
+      if (person.type === 'Member') {
+        accessCell = `<select class="access-dropdown">
+          <option ${person.access === 'None' ? 'selected' : ''}>None</option>
+          <option ${person.access === 'Comparison' ? 'selected' : ''}>Comparison</option>
+          <option ${person.access === 'Validation' ? 'selected' : ''}>Validation</option>
+        </select>`;
+      }
+
+      tr.innerHTML = `
+        <td>
+          <div class="user-cell">
+            <div class="avatar" style="background:${color}">${initials}</div>
+            <span class="user-name">${person.name}</span>
+          </div>
+        </td>
+        <td>
+          <div class="username-cell">
+            <span class="person-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="#999" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="4" r="3"/><path d="M1.5 13c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg></span>
+            <span>${person.email}</span>
+          </div>
+        </td>
+        <td class="user-type">${person.type}</td>
+        <td>${accessCell}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  </script>
+
+</body>
+</html>
