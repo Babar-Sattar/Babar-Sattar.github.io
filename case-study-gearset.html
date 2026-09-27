@@ -292,6 +292,15 @@
     .ba-label.before { color: var(--text-tertiary); }
     .ba-label.after { color: var(--teal); }
 
+    .ba-label-sub {
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text-tertiary);
+      margin-left: 2px;
+    }
+
     .ba-panel img {
       width: 100%;
       display: block;
@@ -310,9 +319,21 @@
       margin-top: auto;
     }
 
+    /* ===== CALLOUT ===== */
+    .callout {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-top: 24px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
     /* ===== DEEP DIVE (larger) ===== */
     .deep-dive-ba {
-      margin-top: 32px;
+      margin-top: 24px;
     }
 
     .deep-dive-ba .ba-panel {
@@ -357,34 +378,72 @@
       object-position: top left;
     }
 
-    /* ===== PROCESS LIST ===== */
-    .process-list {
-      margin-top: 24px;
-      list-style: none;
-      counter-reset: process;
-      max-width: var(--content-width);
-    }
-
-    .process-list li {
-      counter-increment: process;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 15px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: baseline;
+    /* ===== PROCESS CARDS ===== */
+    .process-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
+      margin-top: 32px;
     }
 
-    .process-list li:last-child { border-bottom: none; }
+    .process-card {
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
 
-    .process-list li::before {
-      content: counter(process);
+    .process-card:nth-child(1) { background: #E4EEF0; }
+    .process-card:nth-child(2) { background: #D2E4E6; }
+    .process-card:nth-child(3) { background: #C0DADC; }
+
+    .process-card-icon {
+      width: 28px;
+      height: 28px;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .process-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .process-card-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--teal);
+      margin-bottom: 0;
+      line-height: 1.25;
+    }
+
+    .process-card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .process-card-number {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 13px;
-      color: var(--teal);
-      min-width: 20px;
+      font-size: 180px;
+      line-height: 1;
+      color: rgba(22, 91, 96, 0.1);
+      position: absolute;
+      bottom: -10px;
+      right: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .process-cards { grid-template-columns: 1fr; }
     }
 
     /* ===== REFLECTION ===== */
@@ -648,13 +707,13 @@
         <p class="section-label">The pattern</p>
         <h2 class="section-heading">I'm in the product every day. That's how I found these.</h2>
         <p class="section-text">
-          I'm in Gearset every day, and I'm in it differently to the people who build it. Customer calls, live troubleshooting, and walkthroughs of different product areas. That means I hit the same small frictions our users hit.
+          I'm in Gearset every day, customer calls, live troubleshooting, and walkthroughs of different product areas. That means I hit the same small frictions our users hit.
         </p>
         <p class="section-text">
-          Most of the time, logging a ticket isn't enough. So I went and got access to Claude Code and Gearset's codebase, both of which took approval and persistence. Then I learned the workflows, partly from the UX team, mostly self-taught.
+          To address these issues, I went and got access to Claude Code and Gearset's codebase (which took approval and persistence).
         </p>
         <p class="section-text">
-          Five of those fixes are now in production.
+          I learned the workflows used by the UX team, then built and shipped five fixes to production.
         </p>
       </div>
     </div>
@@ -666,53 +725,38 @@
       <div class="fade-in">
         <p class="section-label">Deep dive</p>
         <h2 class="section-heading">Delegate org access: a table that wouldn't scale.</h2>
-        <p class="section-text">
-          I joined a few product Slack channels that had nothing to do with my job. I wanted to see how the product team talked and went about improving the platform.
-        </p>
-        <p class="section-text">
-          That's where I saw a thread about Gearset's largest ever customer. A new enterprise account with a team of over a hundred users, and they were already hitting problems the platform hadn't been built for. Bulk licence assignment was the first one. PMs and designers moved on it quickly, because that account mattered.
-        </p>
-        <p class="section-text">
-          I couldn't help with that one. But it stuck with me.
-        </p>
-        <p class="section-text">
-          About five weeks later I was in Staging, looking through the admin area with that thread still in my head. Searching for something that would break at a hundred users.
-        </p>
       </div>
 
       <div class="deep-dive-ba fade-in">
         <div class="before-after">
           <div class="ba-panel">
-            <p class="ba-label before">Before</p>
+            <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden at the bottom of the table</span></p>
             <img src="delegate-before.png" alt="Delegate access page showing 31 users in a full list with no visible Save button">
             <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
           </div>
           <div class="ba-panel">
-            <p class="ba-label after">After</p>
-            <img src="delegate-after.png" alt="Delegate access page showing 126 users in a scrollable table with Save button visible">
+            <p class="ba-label after">After <span class="ba-label-sub">Save button always visible</span></p>
+            <video autoplay loop muted playsinline style="width:100%; display:block; flex:1; object-fit:cover; object-position:top left;">
+              <source src="delegate-after-prototype-video.mp4" type="video/mp4">
+            </video>
             <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
           </div>
         </div>
       </div>
 
-      <div class="fade-in" style="margin-top: 32px;">
+      <div class="fade-in">
+        <p class="callout">Fine at ten users. Not fine at a hundred and twenty six.</p>
+      </div>
+
+      <div class="fade-in" style="margin-top: 24px;">
         <p class="section-text">
-          The delegate org access page listed every user on the team in one long list. To save, you scrolled past all of them.
+          In our product Slack channels I saw that Gearset's largest customer was hitting problems the platform hadn't been designed for (such as assigning licences for a team over 100 people).
         </p>
         <p class="section-text">
-          Fine at ten users. Not fine at a hundred and twenty six.
+          Later, I independently noticed the delegate org access page listed every user on the team in one long list. To save, you scrolled past all of them.
         </p>
         <p class="section-text">
-          My first attempt was pagination, fifty per page. This existed in other parts of the platform, so I thought it would work here. But it didn't. The last page had fewer rows than the others, so paging back and forth made the layout jump.
-        </p>
-        <p class="section-text">
-          I sent a UX designer the screenshots and asked whether the jump was bad enough to matter, or whether I was overthinking it.
-        </p>
-        <p class="section-text">
-          He suggested reusing a table component from elsewhere in the platform.
-        </p>
-        <p class="section-text">
-          I raised the PR. In Staging I noticed text bleeding into adjacent columns, something I'd missed locally, so I reverted, fixed it, and raised it again. It's in production now.
+          I found an existing table component in the platform and reused it here. I raised the PR, worked with Engineering on some small UI tweaks, and it's in production now.
         </p>
       </div>
     </div>
@@ -723,19 +767,21 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">The other fixes</p>
-        <h2 class="section-heading">Two more, caught from daily use.</h2>
+        <h2 class="section-heading">Three more, caught from daily use.</h2>
 
         <div class="gallery-item">
           <p class="gallery-title">Search term highlighting, What's New</p>
           <p class="gallery-desc">I searched for a release note and then had to scan the results to find my own search term. Now matches are highlighted.</p>
           <div class="gallery-ba">
             <div class="ba-panel">
-              <p class="ba-label before">Before</p>
+              <p class="ba-label before">Before <span class="ba-label-sub">Search results weren't highlighted and hard to find</span></p>
               <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
             </div>
             <div class="ba-panel">
-              <p class="ba-label after">After</p>
-              <img src="search-before.png" alt="What's New search results with search term highlighted throughout">
+              <p class="ba-label after">After <span class="ba-label-sub">Search results highlighted and immediately identifiable</span></p>
+              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
+                <source src="search-after-video.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
         </div>
@@ -745,12 +791,31 @@
           <p class="gallery-desc">The card looked clickable but only part of it was, so clicks landed on dead space. Now the whole card is a target.</p>
           <div class="gallery-ba">
             <div class="ba-panel">
-              <p class="ba-label before">Before</p>
+              <p class="ba-label before">Before <span class="ba-label-sub">Unclickable dead space on the card</span></p>
               <img src="observability-before.png" alt="Observability error monitoring card with dead space annotation">
             </div>
             <div class="ba-panel">
-              <p class="ba-label after">After</p>
-              <img src="observability-after.png" alt="Observability error monitoring card fully clickable">
+              <p class="ba-label after">After <span class="ba-label-sub">Full card is clickable</span></p>
+              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
+                <source src="observability-after-video.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <p class="gallery-title">Agent resizing handle</p>
+          <p class="gallery-desc">The agent window was resizable but the interaction was hidden. Now it's discoverable.</p>
+          <div class="gallery-ba">
+            <div class="ba-panel">
+              <p class="ba-label before">Before <span class="ba-label-sub">Resizing is completely hidden</span></p>
+              <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
+            </div>
+            <div class="ba-panel">
+              <p class="ba-label after">After <span class="ba-label-sub">Resizing handle is discoverable and has a hover state</span></p>
+              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:center;">
+                <source src="agent-resize-after.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
         </div>
@@ -764,17 +829,32 @@
       <div class="fade-in">
         <p class="section-label">The process</p>
         <h2 class="section-heading">How a CSM ships code at Gearset.</h2>
-        <ol class="process-list">
-          <li>Log the papercut as a ticket in Shortcut, self-assigned</li>
-          <li>Pull the latest from Main, branch off it</li>
-          <li>Run backend and frontend locally</li>
-          <li>Build the change with Claude Code, iterate until I'm happy with it</li>
-          <li>Raise the PR</li>
-          <li>Work through automated review comments</li>
-          <li>Work through a front-end engineer's review, usually HTML and CSS questions</li>
-          <li>Merge, then verify in Staging</li>
-          <li>Ship to production</li>
-        </ol>
+        <div class="process-cards">
+          <div class="process-card">
+            <div class="process-card-title-row">
+              <p class="process-card-title">Spot it.</p>
+              <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <p class="process-card-desc">I identify friction from daily product use, log a ticket in Shortcut, and self-assign it.</p>
+            <span class="process-card-number">1</span>
+          </div>
+          <div class="process-card">
+            <div class="process-card-title-row">
+              <p class="process-card-title">Build it.</p>
+              <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            </div>
+            <p class="process-card-desc">I create a feature branch, prototype different approaches with Claude Code, and raise a PR.</p>
+            <span class="process-card-number">2</span>
+          </div>
+          <div class="process-card">
+            <div class="process-card-title-row">
+              <p class="process-card-title">Ship it.</p>
+              <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <p class="process-card-desc">I work through Engineering's code review, test in Staging, iterate, and ship to production.</p>
+            <span class="process-card-number">3</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -785,10 +865,10 @@
       <p class="section-label fade-in">The ceiling</p>
       <h2 class="section-heading fade-in">I've found the limit of what my CSM role allows.</h2>
       <p class="section-text fade-in">
-        Every fix in this case study is small. That's the constraint. From my CSM role I can spot friction and I can ship a fix, but I can't take on more meaningful and higher-impact problems that would need weeks of research, or a team, or a mandate.
+        From my CSM role I can spot friction and ship a fix, but I can't take on more meaningful and higher-impact problems.
       </p>
       <p class="section-text fade-in">
-        I've found the ceiling of what I can do as a CSM. The work I want to do is on the other side of it.
+        I've found the limit of what I can do as a CSM, the work I want to do is that of a dedicated Product Designer.
       </p>
     </div>
   </section>
