@@ -345,37 +345,164 @@
       object-fit: contain;
     }
 
-    /* ===== GALLERY (smaller pairs) ===== */
-    .gallery-item {
-      margin-top: 40px;
+    /* ===== CAROUSEL ===== */
+    .carousel-wrapper {
+      position: relative;
+      margin-top: 32px;
+      background: var(--teal);
+      border-radius: 16px;
+      padding: 40px 64px;
     }
 
-    .gallery-title {
+    .carousel-stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-stack {
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-track {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(60px) scale(0.97);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .carousel-slide.active {
+      position: relative;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0) scale(1);
+    }
+
+    .carousel-slide.exit-left {
+      transform: translateX(-60px) scale(0.97);
+      opacity: 0;
+    }
+
+    .carousel-slide.enter-right {
+      transform: translateX(60px) scale(0.97);
+    }
+
+    .carousel-slide.exit-right {
+      transform: translateX(60px) scale(0.97);
+      opacity: 0;
+    }
+
+    .carousel-slide.enter-left {
+      transform: translateX(-60px) scale(0.97);
+    }
+
+    .carousel-slide-title {
       font-family: var(--font-display);
       font-size: 18px;
       font-weight: 600;
       letter-spacing: -0.01em;
       margin-bottom: 6px;
+      color: #fff;
     }
 
-    .gallery-desc {
+    .carousel-slide-desc {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: rgba(255,255,255,0.75);
       line-height: 1.6;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       max-width: var(--content-width);
     }
 
-    .gallery-ba {
+    .carousel-wrapper .ba-label {
+      color: var(--text-primary);
+      border-bottom-color: var(--border);
+    }
+
+    .carousel-wrapper .ba-label.before { color: var(--text-tertiary); }
+    .carousel-wrapper .ba-label.after { color: var(--teal); }
+    .carousel-wrapper .ba-label-sub { color: var(--text-secondary); }
+
+    .carousel-ba {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
 
-    .gallery-ba .ba-panel img {
+    .carousel-ba .ba-panel {
+      background: #fff;
+      border-color: var(--border);
+    }
+
+    .carousel-ba .ba-panel img {
       max-height: 300px;
       object-fit: cover;
       object-position: top left;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .carousel-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .carousel-arrow.prev { left: -52px; }
+    .carousel-arrow.next { right: -52px; }
+
+    .carousel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: #fff;
     }
 
     /* ===== PROCESS CARDS ===== */
@@ -626,7 +753,12 @@
       .meta-band { padding: 20px 24px; }
       .next-up-card { grid-template-columns: 1fr; }
       .before-after { grid-template-columns: 1fr; }
-      .gallery-ba { grid-template-columns: 1fr; }
+      .carousel-ba { grid-template-columns: 1fr; }
+      .carousel-wrapper { padding: 28px 48px; }
+      .carousel-arrow.prev { left: -44px; }
+      .carousel-arrow.next { right: -44px; }
+      .carousel-arrow { width: 36px; height: 36px; }
+      .carousel-track { min-height: 480px; }
     }
 
     @media (max-width: 600px) {
@@ -769,54 +901,76 @@
         <p class="section-label">The other fixes</p>
         <h2 class="section-heading">Three more, caught from daily use.</h2>
 
-        <div class="gallery-item">
-          <p class="gallery-title">Search term highlighting, What's New</p>
-          <p class="gallery-desc">I searched for a release note and then had to scan the results to find my own search term. Now matches are highlighted.</p>
-          <div class="gallery-ba">
-            <div class="ba-panel">
-              <p class="ba-label before">Before <span class="ba-label-sub">Search results weren't highlighted and hard to find</span></p>
-              <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
-            </div>
-            <div class="ba-panel">
-              <p class="ba-label after">After <span class="ba-label-sub">Search results highlighted and immediately identifiable</span></p>
-              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
-                <source src="search-after-video.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-        </div>
+        <div class="carousel-wrapper" id="fixesCarousel">
+          <div class="carousel-stage">
+            <button class="carousel-arrow prev" onclick="changeSlide(-1)" aria-label="Previous fix">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
 
-        <div class="gallery-item">
-          <p class="gallery-title">Clickable card area, Observability</p>
-          <p class="gallery-desc">The card looked clickable but only part of it was, so clicks landed on dead space. Now the whole card is a target.</p>
-          <div class="gallery-ba">
-            <div class="ba-panel">
-              <p class="ba-label before">Before <span class="ba-label-sub">Unclickable dead space on the card</span></p>
-              <img src="observability-before.png" alt="Observability error monitoring card with dead space annotation">
-            </div>
-            <div class="ba-panel">
-              <p class="ba-label after">After <span class="ba-label-sub">Full card is clickable</span></p>
-              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
-                <source src="observability-after-video.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-        </div>
+            <div class="carousel-stack">
+              <div class="carousel-track">
+                <div class="carousel-slide active">
+                  <p class="carousel-slide-title">1. Search term highlighting, What's New</p>
+                  <p class="carousel-slide-desc">I searched for a release note and then had to scan the results to find my own search term. Now matches are highlighted.</p>
+                  <div class="carousel-ba">
+                    <div class="ba-panel">
+                      <p class="ba-label before">Before <span class="ba-label-sub">Search results weren't highlighted and hard to find</span></p>
+                      <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
+                    </div>
+                    <div class="ba-panel">
+                      <p class="ba-label after">After <span class="ba-label-sub">Search results highlighted and immediately identifiable</span></p>
+                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
+                        <source src="search-after-video.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="gallery-item">
-          <p class="gallery-title">Agent resizing handle</p>
-          <p class="gallery-desc">The agent window was resizable but the interaction was hidden. Now it's discoverable.</p>
-          <div class="gallery-ba">
-            <div class="ba-panel">
-              <p class="ba-label before">Before <span class="ba-label-sub">Resizing is completely hidden</span></p>
-              <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
+                <div class="carousel-slide">
+                  <p class="carousel-slide-title">2. Clickable card area, Observability</p>
+                  <p class="carousel-slide-desc">The card looked clickable but only part of it was, so clicks landed on dead space. Now the whole card is a target.</p>
+                  <div class="carousel-ba">
+                    <div class="ba-panel">
+                      <p class="ba-label before">Before <span class="ba-label-sub">Unclickable dead space on the card</span></p>
+                      <img src="observability-before.png" alt="Observability error monitoring card with dead space annotation">
+                    </div>
+                    <div class="ba-panel">
+                      <p class="ba-label after">After <span class="ba-label-sub">Full card is clickable</span></p>
+                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
+                        <source src="observability-after-video.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="carousel-slide">
+                  <p class="carousel-slide-title">3. Agent resizing handle</p>
+                  <p class="carousel-slide-desc">The agent window was resizable but the interaction was hidden. Now it's discoverable.</p>
+                  <div class="carousel-ba">
+                    <div class="ba-panel">
+                      <p class="ba-label before">Before <span class="ba-label-sub">Resizing is completely hidden</span></p>
+                      <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
+                    </div>
+                    <div class="ba-panel">
+                      <p class="ba-label after">After <span class="ba-label-sub">Resizing handle is discoverable and has a hover state</span></p>
+                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:center;">
+                        <source src="agent-resize-after.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="ba-panel">
-              <p class="ba-label after">After <span class="ba-label-sub">Resizing handle is discoverable and has a hover state</span></p>
-              <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:center;">
-                <source src="agent-resize-after.mp4" type="video/mp4">
-              </video>
-            </div>
+
+            <button class="carousel-arrow next" onclick="changeSlide(1)" aria-label="Next fix">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <div class="carousel-footer">
+            <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="Fix 1"></button>
+            <button class="carousel-dot" onclick="goToSlide(1)" aria-label="Fix 2"></button>
+            <button class="carousel-dot" onclick="goToSlide(2)" aria-label="Fix 3"></button>
           </div>
         </div>
       </div>
@@ -926,6 +1080,55 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
+
+    // Carousel
+    let currentSlide = 0;
+    let isAnimating = false;
+    const slides = document.querySelectorAll('#fixesCarousel .carousel-slide');
+    const dots = document.querySelectorAll('#fixesCarousel .carousel-dot');
+
+    function goToSlide(index, dir) {
+      if (isAnimating) return;
+      const prev = currentSlide;
+      const next = (index + slides.length) % slides.length;
+      if (prev === next) return;
+      if (dir === undefined) dir = next > prev ? 1 : -1;
+
+      isAnimating = true;
+
+      // Set up incoming slide starting position
+      slides[next].classList.add(dir > 0 ? 'enter-right' : 'enter-left');
+      slides[next].style.position = 'absolute';
+      slides[next].style.opacity = '0';
+      slides[next].style.pointerEvents = 'none';
+
+      // Force reflow so the starting transform is applied
+      slides[next].offsetHeight;
+
+      // Animate outgoing slide
+      slides[prev].classList.add(dir > 0 ? 'exit-left' : 'exit-right');
+      slides[prev].classList.remove('active');
+
+      // Animate incoming slide
+      slides[next].classList.remove('enter-right', 'enter-left');
+      slides[next].classList.add('active');
+      slides[next].style.position = '';
+      slides[next].style.opacity = '';
+      slides[next].style.pointerEvents = '';
+
+      dots[prev].classList.remove('active');
+      dots[next].classList.add('active');
+      currentSlide = next;
+
+      setTimeout(() => {
+        slides[prev].classList.remove('exit-left', 'exit-right');
+        isAnimating = false;
+      }, 420);
+    }
+
+    function changeSlide(dir) {
+      goToSlide(currentSlide + dir, dir);
+    }
 
     // Scroll fade
     const observer = new IntersectionObserver(
