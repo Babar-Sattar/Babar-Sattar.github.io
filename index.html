@@ -597,6 +597,615 @@
       }
     }
 
+    /* ===== FUN MODE ===== */
+    .fun-toggle {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .fun-toggle:hover {
+      color: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .fun-toggle.active {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    body.fun-mode {
+      cursor: none;
+    }
+
+    body.fun-mode a,
+    body.fun-mode button {
+      cursor: none;
+    }
+
+    body.fun-mode .work-card {
+      filter: grayscale(0.7) brightness(0.7);
+      opacity: 0.5;
+      pointer-events: none;
+      transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Custom crosshair with gap */
+    .fun-crosshair {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -50%);
+    }
+    body.fun-mode .fun-crosshair { display: block; }
+
+    .crosshair-line {
+      position: absolute;
+      background: rgba(0,0,0,0.85);
+      box-shadow: 0 0 1px rgba(255,255,255,0.4);
+      transition: background 0.08s ease;
+    }
+    .fun-crosshair.bloom .crosshair-line {
+      background: rgba(255,210,60,0.95);
+      box-shadow: 0 0 4px rgba(255,200,40,0.6);
+    }
+    /* Top */
+    .crosshair-line.ch-t { width: 2px; height: 7px; left: 11px; top: 0; }
+    /* Bottom */
+    .crosshair-line.ch-b { width: 2px; height: 7px; left: 11px; bottom: 0; }
+    /* Left */
+    .crosshair-line.ch-l { width: 7px; height: 2px; top: 11px; left: 0; }
+    /* Right */
+    .crosshair-line.ch-r { width: 7px; height: 2px; top: 11px; right: 0; }
+
+    /* Bloom — lines move outward */
+    .fun-crosshair.bloom .ch-t { animation: chBloomT 0.12s ease-out forwards; }
+    .fun-crosshair.bloom .ch-b { animation: chBloomB 0.12s ease-out forwards; }
+    .fun-crosshair.bloom .ch-l { animation: chBloomL 0.12s ease-out forwards; }
+    .fun-crosshair.bloom .ch-r { animation: chBloomR 0.12s ease-out forwards; }
+
+    @keyframes chBloomT { 0% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+    @keyframes chBloomB { 0% { transform: translateY(5px); } 100% { transform: translateY(0); } }
+    @keyframes chBloomL { 0% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
+    @keyframes chBloomR { 0% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+    /* Character */
+    .fun-character {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      width: 40px;
+      height: 48px;
+      pointer-events: none;
+      transition: none;
+    }
+
+    body.fun-mode .fun-character {
+      display: block;
+    }
+
+    /* Body — asymmetric bean, red colour scheme */
+    .char-body {
+      position: absolute;
+      top: 0;
+      left: 3px;
+      width: 34px;
+      height: 40px;
+      background: linear-gradient(170deg, #e83030 0%, #cc2020 30%, #a51a1a 70%, #8a1515 100%);
+      clip-path: path('M19 0 C27 0 33 6 34 15 C35 22 34 28 32 34 C30 38 25 40 21 40 L13 40 C9 40 5 38 3 34 C1 28 1 22 2 15 C3 7 9 1 19 0 Z');
+      overflow: visible;
+    }
+
+    /* Shadow layer behind body */
+    .char-body-shadow {
+      position: absolute;
+      top: 1px;
+      left: 4px;
+      width: 34px;
+      height: 40px;
+      background: rgba(0,0,0,0.15);
+      clip-path: path('M19 0 C27 0 33 6 34 15 C35 22 34 28 32 34 C30 38 25 40 21 40 L13 40 C9 40 5 38 3 34 C1 28 1 22 2 15 C3 7 9 1 19 0 Z');
+      filter: blur(3px);
+      z-index: -1;
+    }
+
+    /* Legs — tucked up under body so no gap */
+    .char-leg {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 10px;
+      background: linear-gradient(180deg, #a51a1a 0%, #8a1515 60%, #701010 100%);
+      border-radius: 2px 2px 3px 3px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      transition: none;
+      top: 35px;
+    }
+    .char-leg-l { left: 10px; }
+    .char-leg-r { left: 22px; }
+
+    /* Visor — outside char-body, consistent dark grey rim */
+    .char-visor {
+      position: absolute;
+      top: 5px;
+      left: 16px;
+      width: 24px;
+      height: 18px;
+      background: linear-gradient(160deg, #d0e8ef 0%, #96c0d0 30%, #6a9aaa 65%, #4a7a8a 100%);
+      border-radius: 12px;
+      border: 2.5px solid #3a3a3a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+      z-index: 2;
+    }
+
+    /* Idle — quick snap-bob on body only */
+    .fun-character.idle .char-body {
+      animation: charIdle 1.4s step-end infinite;
+    }
+
+    @keyframes charIdle {
+      0%, 75% { transform: translateY(0); }
+      80% { transform: translateY(2px); }
+      85%, 100% { transform: translateY(0); }
+    }
+
+    /* Walk cycle */
+    .fun-character.walking .char-body {
+      animation: charWalkBob 0.22s ease-in-out infinite;
+    }
+    .fun-character.walking .char-leg-l {
+      animation: legStepL 0.22s ease-in-out infinite;
+    }
+    .fun-character.walking .char-leg-r {
+      animation: legStepR 0.22s ease-in-out infinite;
+    }
+
+    @keyframes charWalkBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    @keyframes legStepL {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(3px) translateY(-3px); }
+    }
+    @keyframes legStepR {
+      0%, 100% { transform: translateX(0) translateY(-3px); }
+      50% { transform: translateX(-3px) translateY(0); }
+    }
+
+    /* Enemies — cyan beans */
+    .fun-enemy {
+      position: fixed;
+      z-index: 199;
+      width: 40px;
+      height: 48px;
+      pointer-events: none;
+      display: none;
+    }
+    body.fun-mode .fun-enemy { display: block; }
+
+    .fun-enemy .char-body {
+      background: linear-gradient(170deg, #20b8c8 0%, #1a9aaa 30%, #158090 70%, #106a78 100%);
+    }
+    .fun-enemy .char-body-shadow {
+      background: rgba(0,0,0,0.15);
+    }
+    .fun-enemy .char-leg {
+      background: linear-gradient(180deg, #158090 0%, #106a78 60%, #0c5560 100%);
+    }
+    .fun-enemy .char-visor {
+      background: linear-gradient(160deg, #f5d0d0 0%, #e09090 30%, #c06060 65%, #a04040 100%);
+    }
+
+    /* Enemy walking */
+    .fun-enemy.walking .char-body {
+      animation: charWalkBob 0.28s ease-in-out infinite;
+    }
+    .fun-enemy.walking .char-leg-l {
+      animation: legStepL 0.28s ease-in-out infinite;
+    }
+    .fun-enemy.walking .char-leg-r {
+      animation: legStepR 0.28s ease-in-out infinite;
+    }
+
+    /* Health bar — hidden by default, shown when damaged */
+    .enemy-hp-bar {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 4px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .fun-enemy.damaged .enemy-hp-bar {
+      opacity: 1;
+    }
+    .enemy-hp-fill {
+      height: 100%;
+      width: 100%;
+      background: #4ade80;
+      border-radius: 2px;
+      transition: width 0.15s ease, background 0.15s ease;
+    }
+
+    /* Enemy hit flash */
+    .fun-enemy.hit .char-body {
+      filter: brightness(2.5);
+    }
+
+    /* Enemy death */
+    @keyframes enemyDeath {
+      0% { transform: scale(1); opacity: 1; }
+      30% { transform: scale(1.15); opacity: 0.8; }
+      100% { transform: scale(0.3) rotate(45deg); opacity: 0; }
+    }
+    .fun-enemy.dying {
+      animation: enemyDeath 0.35s ease-in forwards;
+      pointer-events: none;
+    }
+
+    /* Death overlay */
+    .death-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(120, 0, 0, 0);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: background 0.4s ease;
+    }
+    .death-overlay.visible {
+      display: flex;
+      background: rgba(120, 0, 0, 0.65);
+    }
+    .death-text {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: scale(0.8);
+      animation: deathTextIn 0.4s ease-out 0.15s forwards;
+    }
+    .death-subtext {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 12px;
+      opacity: 0;
+      animation: deathTextIn 0.3s ease-out 0.5s forwards;
+    }
+    @keyframes deathTextIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Kill counter */
+    .kill-counter {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 202;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.5px;
+    }
+    body.fun-mode .kill-counter { display: block; }
+
+    /* Gun — CSS drawn */
+    .fun-gun {
+      display: none;
+      position: fixed;
+      z-index: 201;
+      width: 28px;
+      height: 14px;
+      pointer-events: none;
+      transform-origin: 4px center;
+    }
+
+    body.fun-mode .fun-gun {
+      display: block;
+    }
+
+    .gun-barrel {
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      width: 20px;
+      height: 6px;
+      background: linear-gradient(180deg, #5a5a5a 0%, #3a3a3a 40%, #2a2a2a 100%);
+      border-radius: 1px 3px 3px 1px;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.12),
+        0 1px 2px rgba(0,0,0,0.25);
+    }
+
+    .gun-barrel::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 3px;
+      height: 4px;
+      background: #222;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .gun-handle {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 6px;
+      height: 9px;
+      background: linear-gradient(135deg, #4a4a4a, #333, #2a2a2a);
+      border-radius: 1px 1px 2px 2px;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    }
+    /* Floating hand gripping the handle — on the body-facing side */
+    .gun-hand {
+      position: absolute;
+      top: 3px;
+      left: -5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #e83030 0%, #cc2020 60%, #a51a1a 100%);
+      box-shadow:
+        inset -1px -1px 3px rgba(0,0,0,0.2),
+        inset 1px 1px 2px rgba(255,255,255,0.08),
+        0 1px 2px rgba(0,0,0,0.15);
+    }
+
+    /* Tutorial overlay */
+    .fun-tutorial {
+      display: none;
+      position: fixed;
+      z-index: 250;
+      background: rgba(0,0,0,0.85);
+      border-radius: 12px;
+      padding: 24px 32px;
+      pointer-events: none;
+      animation: tutorialIn 0.3s ease-out;
+    }
+
+    .fun-tutorial.visible {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @keyframes tutorialIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes tutorialOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .tutorial-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tutorial-keys {
+      display: grid;
+      grid-template-columns: repeat(3, 28px);
+      grid-template-rows: repeat(2, 28px);
+      gap: 3px;
+    }
+
+    .tutorial-key {
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      transition: all 0.15s ease;
+    }
+
+    .tutorial-key.highlight {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    .tutorial-mouse {
+      width: 36px;
+      height: 52px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tutorial-mouse-btn {
+      width: 14px;
+      height: 16px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      border-radius: 0 0 2px 0;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: background 0.15s ease;
+    }
+
+    .tutorial-mouse-btn.highlight {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .tutorial-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Bullet holes */
+    .bullet-hole {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,30,30,0.7) 0%, rgba(30,30,30,0.3) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 150;
+      animation: holeAppear 0.1s ease-out;
+    }
+
+    @keyframes holeAppear {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    /* Muzzle flash */
+    .muzzle-flash {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,240,160,0.95) 0%, rgba(255,200,80,0.7) 30%, rgba(255,140,40,0.3) 60%, transparent 75%);
+      pointer-events: none;
+      z-index: 201;
+      animation: flashPop 0.15s ease-out forwards;
+    }
+
+    @keyframes flashPop {
+      0% { transform: scale(0.4); opacity: 1; }
+      40% { transform: scale(1.8); opacity: 0.8; }
+      100% { transform: scale(2.8); opacity: 0; }
+    }
+
+    /* Projectile bullet */
+    .fun-bullet {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffe680, #ffcc00, #cc9900);
+      box-shadow: 0 0 5px rgba(255,200,80,0.7), 0 0 10px rgba(255,160,40,0.35);
+      pointer-events: none;
+      z-index: 199;
+    }
+
+    /* Impact sparks */
+    .impact-spark {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 201;
+      animation: sparkFly 0.35s ease-out forwards;
+    }
+
+    @keyframes sparkFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
+    }
+
+    /* Gun kickback */
+    .fun-gun.kick {
+      animation: gunKick 0.12s ease-out forwards;
+    }
+
+    @keyframes gunKick {
+      0% { margin-left: 0; margin-top: 0; }
+      30% { margin-left: -6px; margin-top: -4px; }
+      100% { margin-left: 0; margin-top: 0; }
+    }
+
+    /* Impact dust */
+    .impact-dust {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 150;
+      animation: dustFade 0.5s ease-out forwards;
+    }
+
+    @keyframes dustFade {
+      0% { opacity: 0.6; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(2.5); }
+    }
+
+    /* Shell casing */
+    .shell-casing {
+      position: fixed;
+      width: 4px;
+      height: 7px;
+      background: linear-gradient(135deg, #d4a843, #b8902e, #d4a843);
+      border-radius: 1px 1px 2px 2px;
+      pointer-events: none;
+      z-index: 202;
+      animation: shellFly var(--shell-dur, 0.7s) ease-in forwards;
+    }
+
+    @keyframes shellFly {
+      0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+      40% { opacity: 1; transform: translate(var(--sx), var(--sy1)) rotate(var(--rot1)); }
+      55% { opacity: 1; transform: translate(var(--sx2), var(--sy2)) rotate(var(--rot2)); }
+      75% { opacity: 0.8; transform: translate(var(--sx3), var(--sy3)) rotate(var(--rot3)); }
+      100% { opacity: 0; transform: translate(var(--sx4), var(--sy4)) rotate(var(--rot4)); }
+    }
+
+    /* Link hit glow */
+    .link-hit-glow {
+      outline: 2px solid rgba(22, 91, 96, 0.6);
+      outline-offset: 4px;
+      border-radius: 4px;
+      animation: glowPulse 0.4s ease-out;
+    }
+
+    @keyframes glowPulse {
+      0% { outline-color: rgba(255,200,80,0.8); outline-offset: 0px; }
+      50% { outline-color: rgba(22,91,96,0.6); outline-offset: 6px; }
+      100% { outline-color: rgba(22,91,96,0); outline-offset: 8px; }
+    }
+
     /* ===== REDUCED MOTION ===== */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -617,6 +1226,7 @@
         <li><a href="#work">Work</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><button class="fun-toggle" id="funToggle">Fun Mode</button></li>
       </ul>
     </div>
   </nav>
@@ -871,6 +1481,593 @@
       }
 
       draw();
+    })();
+
+    // ===== FUN MODE =====
+    (function() {
+      const toggle = document.getElementById('funToggle');
+      if (!toggle) return;
+
+      let active = false;
+      let charX = 0, charY = 0;
+      let keys = { w: false, a: false, s: false, d: false };
+      const speed = 7.8;
+      let gameLoop = null;
+      let mouseX = 0, mouseY = 0;
+      let facingLeft = false;
+
+      // Create character element — CSS drawn
+      const character = document.createElement('div');
+      character.className = 'fun-character idle';
+      character.innerHTML = '<div class="char-body-shadow"></div><div class="char-leg char-leg-l"></div><div class="char-leg char-leg-r"></div><div class="char-body"></div><div class="char-visor"></div>';
+      document.body.appendChild(character);
+
+      // Create gun element — CSS drawn
+      const gun = document.createElement('div');
+      gun.className = 'fun-gun';
+      gun.innerHTML = '<div class="gun-barrel"></div><div class="gun-handle"><div class="gun-hand"></div></div>';
+      document.body.appendChild(gun);
+
+      // Enemy system
+      let enemies = [];
+      let enemySpawnTimer = null;
+      let kills = 0;
+      let dead = false;
+      const ENEMY_HP = 3;
+      const ENEMY_SPEED = 2.2;
+      const ENEMY_SPAWN_INTERVAL = 2800;
+      const ENEMY_COLLISION_DIST = 28;
+
+      // Kill counter UI
+      const killCounter = document.createElement('div');
+      killCounter.className = 'kill-counter';
+      killCounter.textContent = 'KILLS: 0';
+      document.body.appendChild(killCounter);
+
+      // Death overlay
+      const deathOverlay = document.createElement('div');
+      deathOverlay.className = 'death-overlay';
+      deathOverlay.innerHTML = '<div class="death-text">YOU DIED</div><div class="death-subtext">Restarting...</div>';
+      document.body.appendChild(deathOverlay);
+
+      function createEnemyEl() {
+        const el = document.createElement('div');
+        el.className = 'fun-enemy walking';
+        el.innerHTML = '<div class="enemy-hp-bar"><div class="enemy-hp-fill"></div></div><div class="char-body-shadow"></div><div class="char-leg char-leg-l"></div><div class="char-leg char-leg-r"></div><div class="char-body"></div><div class="char-visor"></div>';
+        document.body.appendChild(el);
+        return el;
+      }
+
+      function spawnEnemy() {
+        if (!active || dead) return;
+        // Spawn from a random edge of the viewport
+        const edge = Math.floor(Math.random() * 4);
+        let ex, ey;
+        const margin = 60;
+        if (edge === 0) { ex = -margin; ey = Math.random() * window.innerHeight; }
+        else if (edge === 1) { ex = window.innerWidth + margin; ey = Math.random() * window.innerHeight; }
+        else if (edge === 2) { ex = Math.random() * window.innerWidth; ey = -margin; }
+        else { ex = Math.random() * window.innerWidth; ey = window.innerHeight + margin; }
+
+        const el = createEnemyEl();
+        enemies.push({ el: el, x: ex, y: ey, hp: ENEMY_HP, maxHp: ENEMY_HP });
+      }
+
+      function startEnemySpawns() {
+        if (enemySpawnTimer) clearInterval(enemySpawnTimer);
+        // First enemy after a short delay
+        setTimeout(() => { if (active && !dead) spawnEnemy(); }, 1200);
+        enemySpawnTimer = setInterval(spawnEnemy, ENEMY_SPAWN_INTERVAL);
+      }
+
+      function clearEnemies() {
+        enemies.forEach(e => e.el.remove());
+        enemies = [];
+        if (enemySpawnTimer) { clearInterval(enemySpawnTimer); enemySpawnTimer = null; }
+      }
+
+      function updateEnemies() {
+        if (dead) return;
+        const playerCX = charX + 20;
+        const playerCY = (charY - window.scrollY) + 24;
+
+        for (let i = enemies.length - 1; i >= 0; i--) {
+          const e = enemies[i];
+          const dx = playerCX - e.x;
+          const dy = playerCY - e.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+          // Move toward player
+          e.x += (dx / dist) * ENEMY_SPEED;
+          e.y += (dy / dist) * ENEMY_SPEED;
+
+          // Face player
+          const facingL = dx < 0;
+          e.el.style.left = e.x + 'px';
+          e.el.style.top = e.y + 'px';
+          e.el.style.transform = facingL ? 'scaleX(-1)' : 'scaleX(1)';
+
+          // Collision check
+          if (dist < ENEMY_COLLISION_DIST) {
+            playerDeath();
+            return;
+          }
+        }
+      }
+
+      // Projectile system
+      let bullets = [];
+      const BULLET_SPEED = 16.8;
+      const BULLET_SPREAD = 3.5; // degrees of random spread
+      const BULLET_RADIUS = 3;
+      const ENEMY_HIT_RADIUS = 22;
+
+      function damageEnemy(e) {
+        e.hp--;
+        e.el.classList.add('damaged');
+        const fill = e.el.querySelector('.enemy-hp-fill');
+        const pct = Math.max(0, e.hp / e.maxHp) * 100;
+        fill.style.width = pct + '%';
+        if (pct <= 33) fill.style.background = '#ef4444';
+        else if (pct <= 66) fill.style.background = '#facc15';
+        e.el.classList.add('hit');
+        setTimeout(() => e.el.classList.remove('hit'), 80);
+        if (e.hp <= 0) {
+          e.el.classList.remove('walking');
+          e.el.classList.add('dying');
+          const idx = enemies.indexOf(e);
+          if (idx !== -1) enemies.splice(idx, 1);
+          setTimeout(() => e.el.remove(), 400);
+          kills++;
+          killCounter.textContent = 'KILLS: ' + kills;
+        }
+      }
+
+      function spawnBulletImpact(x, y) {
+        // Sparks
+        for (let i = 0; i < 6; i++) {
+          const spark = document.createElement('div');
+          spark.className = 'impact-spark';
+          const a = Math.random() * Math.PI * 2;
+          const d = 10 + Math.random() * 20;
+          spark.style.left = x + 'px';
+          spark.style.top = y + 'px';
+          spark.style.setProperty('--sx', Math.cos(a) * d + 'px');
+          spark.style.setProperty('--sy', Math.sin(a) * d + 'px');
+          spark.style.background = Math.random() > 0.5 ? 'rgba(255,200,80,0.9)' : 'rgba(255,255,255,0.7)';
+          document.body.appendChild(spark);
+          setTimeout(() => spark.remove(), 350);
+        }
+        // Dust
+        for (let i = 0; i < 3; i++) {
+          const dust = document.createElement('div');
+          dust.className = 'impact-dust';
+          const a = Math.random() * Math.PI * 2;
+          const d = 6 + Math.random() * 12;
+          dust.style.left = (x - 4) + 'px';
+          dust.style.top = (y - 4) + 'px';
+          dust.style.setProperty('--dx', Math.cos(a) * d + 'px');
+          dust.style.setProperty('--dy', Math.sin(a) * d + 'px');
+          dust.style.background = 'rgba(160,150,140,' + (0.3 + Math.random() * 0.3) + ')';
+          document.body.appendChild(dust);
+          setTimeout(() => dust.remove(), 500);
+        }
+        // Bullet hole
+        const hole = document.createElement('div');
+        hole.className = 'bullet-hole';
+        hole.style.left = (x - 6) + 'px';
+        hole.style.top = (y + window.scrollY - 6) + 'px';
+        hole.style.position = 'absolute';
+        document.body.appendChild(hole);
+        setTimeout(() => {
+          hole.style.transition = 'opacity 1s ease';
+          hole.style.opacity = '0';
+          setTimeout(() => hole.remove(), 1000);
+        }, 3000);
+      }
+
+      function updateBullets() {
+        for (let i = bullets.length - 1; i >= 0; i--) {
+          const b = bullets[i];
+          b.x += b.vx;
+          b.y += b.vy;
+          b.el.style.left = b.x + 'px';
+          b.el.style.top = b.y + 'px';
+
+          // Off-screen check
+          if (b.x < -20 || b.x > window.innerWidth + 20 || b.y < -20 || b.y > window.innerHeight + 20) {
+            b.el.remove();
+            bullets.splice(i, 1);
+            continue;
+          }
+
+          // Enemy collision
+          let hitSomething = false;
+          for (let j = enemies.length - 1; j >= 0; j--) {
+            const e = enemies[j];
+            const ecx = e.x + 20;
+            const ecy = e.y + 24;
+            const dx = b.x - ecx;
+            const dy = b.y - ecy;
+            if (dx * dx + dy * dy < ENEMY_HIT_RADIUS * ENEMY_HIT_RADIUS) {
+              damageEnemy(e);
+              spawnBulletImpact(b.x, b.y);
+              b.el.remove();
+              bullets.splice(i, 1);
+              hitSomething = true;
+              break;
+            }
+          }
+          if (hitSomething) continue;
+
+          // Wall collision — check element under bullet
+          b.dist += BULLET_SPEED;
+          if (b.dist > 80) { // skip first few frames so bullet clears the player
+            character.style.display = 'none';
+            gun.style.display = 'none';
+            const hitEl = document.elementFromPoint(b.x, b.y);
+            character.style.display = '';
+            gun.style.display = '';
+            if (hitEl) {
+              const link = hitEl.closest('a[href]');
+              if (link && link.href && !link.closest('.nav-links')) {
+                spawnBulletImpact(b.x, b.y);
+                b.el.remove();
+                bullets.splice(i, 1);
+                link.classList.add('link-hit-glow');
+                setTimeout(() => {
+                  link.classList.remove('link-hit-glow');
+                  const href = link.getAttribute('href');
+                  if (href.startsWith('#')) {
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+                  } else if (href.startsWith('mailto:')) {
+                    window.location.href = href;
+                  } else {
+                    window.location.href = href;
+                  }
+                }, 400);
+              }
+            }
+          }
+        }
+      }
+
+      function clearBullets() {
+        bullets.forEach(b => b.el.remove());
+        bullets = [];
+      }
+
+      function playerDeath() {
+        dead = true;
+        character.style.display = 'none';
+        gun.style.display = 'none';
+        deathOverlay.classList.add('visible');
+
+        clearEnemies();
+        clearBullets();
+
+        // Restart after a beat
+        setTimeout(() => {
+          deathOverlay.classList.remove('visible');
+          dead = false;
+          kills = 0;
+          killCounter.textContent = 'KILLS: 0';
+          character.style.display = '';
+          gun.style.display = '';
+          spawnCharacter();
+          // Clean up bullet holes
+          document.querySelectorAll('.bullet-hole').forEach(h => h.remove());
+          startEnemySpawns();
+        }, 1800);
+      }
+
+      // Custom crosshair
+      const crosshair = document.createElement('div');
+      crosshair.className = 'fun-crosshair';
+      crosshair.innerHTML = '<div class="crosshair-line ch-t"></div><div class="crosshair-line ch-b"></div><div class="crosshair-line ch-l"></div><div class="crosshair-line ch-r"></div>';
+      document.body.appendChild(crosshair);
+
+      // Track mouse for gun aiming + crosshair
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        crosshair.style.left = mouseX + 'px';
+        crosshair.style.top = mouseY + 'px';
+      });
+
+      // Tutorial element
+      const tutorial = document.createElement('div');
+      tutorial.className = 'fun-tutorial';
+      tutorial.innerHTML = `
+        <div class="tutorial-group">
+          <div class="tutorial-keys">
+            <div></div>
+            <div class="tutorial-key" data-key="w">W</div>
+            <div></div>
+            <div class="tutorial-key" data-key="a">A</div>
+            <div class="tutorial-key" data-key="s">S</div>
+            <div class="tutorial-key" data-key="d">D</div>
+          </div>
+          <span class="tutorial-label">Move</span>
+        </div>
+        <div class="tutorial-group">
+          <div class="tutorial-mouse">
+            <div class="tutorial-mouse-btn"></div>
+          </div>
+          <span class="tutorial-label">Shoot</span>
+        </div>
+      `;
+      document.body.appendChild(tutorial);
+
+      // Tutorial animation
+      function playTutorial() {
+        tutorial.classList.add('visible');
+        // Position near character
+        tutorial.style.left = (charX + 64) + 'px';
+        tutorial.style.top = (charY - 20) + 'px';
+
+        const tutKeys = tutorial.querySelectorAll('.tutorial-key');
+        const mouseBtn = tutorial.querySelector('.tutorial-mouse-btn');
+
+        // Animate WASD sequence
+        const sequence = ['w', 'd', 's', 'a'];
+        let step = 0;
+        const keyInterval = setInterval(() => {
+          tutKeys.forEach(k => k.classList.remove('highlight'));
+          if (step < sequence.length) {
+            const key = tutorial.querySelector('[data-key="' + sequence[step] + '"]');
+            if (key) key.classList.add('highlight');
+            step++;
+          } else if (step === sequence.length) {
+            // Mouse click
+            mouseBtn.classList.add('highlight');
+            step++;
+          } else {
+            mouseBtn.classList.remove('highlight');
+            clearInterval(keyInterval);
+            // Fade out
+            setTimeout(() => {
+              tutorial.style.animation = 'tutorialOut 0.3s ease-out forwards';
+              setTimeout(() => {
+                tutorial.classList.remove('visible');
+                tutorial.style.animation = '';
+              }, 300);
+            }, 400);
+          }
+        }, 350);
+      }
+
+      // Spawn character near the hero name
+      function spawnCharacter() {
+        const heroName = document.querySelector('.hero-name');
+        const rect = heroName.getBoundingClientRect();
+        charX = rect.left + rect.width + 16;
+        charY = rect.top + rect.height / 2 - 24 + window.scrollY;
+        // Convert to page coordinates for fixed positioning
+        character.style.left = charX + 'px';
+        character.style.top = (charY - window.scrollY) + 'px';
+      }
+
+      // Activate
+      function startFunMode() {
+        active = true;
+        document.body.classList.add('fun-mode');
+        toggle.classList.add('active');
+
+        spawnCharacter();
+
+        setTimeout(() => playTutorial(), 300);
+
+        kills = 0;
+        killCounter.textContent = 'KILLS: 0';
+        dead = false;
+        startEnemySpawns();
+
+        gameLoop = requestAnimationFrame(updateCharacter);
+      }
+
+      // Deactivate
+      function stopFunMode() {
+        active = false;
+        document.body.classList.remove('fun-mode');
+        toggle.classList.remove('active');
+        tutorial.classList.remove('visible');
+
+        if (gameLoop) cancelAnimationFrame(gameLoop);
+
+        clearEnemies();
+        clearBullets();
+        dead = false;
+        deathOverlay.classList.remove('visible');
+
+        // Clean up bullet holes
+        document.querySelectorAll('.bullet-hole').forEach(h => h.remove());
+      }
+
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (active) stopFunMode();
+        else startFunMode();
+      });
+
+      // WASD input
+      document.addEventListener('keydown', (e) => {
+        if (!active) return;
+        const k = e.key.toLowerCase();
+        if (keys.hasOwnProperty(k)) {
+          keys[k] = true;
+          e.preventDefault();
+        }
+      });
+
+      document.addEventListener('keyup', (e) => {
+        if (!active) return;
+        const k = e.key.toLowerCase();
+        if (keys.hasOwnProperty(k)) keys[k] = false;
+      });
+
+      // Character movement loop
+      function updateCharacter() {
+        if (!active) return;
+        if (dead) { gameLoop = requestAnimationFrame(updateCharacter); return; }
+
+        let dx = 0, dy = 0;
+        if (keys.w) dy -= speed;
+        if (keys.s) dy += speed;
+        if (keys.a) dx -= speed;
+        if (keys.d) dx += speed;
+
+        // Diagonal normalisation
+        if (dx !== 0 && dy !== 0) {
+          dx *= 0.707;
+          dy *= 0.707;
+        }
+
+        charX += dx;
+        charY += dy;
+
+        // Clamp to viewport
+        charX = Math.max(0, Math.min(window.innerWidth - 48, charX));
+        charY = Math.max(window.scrollY, Math.min(window.scrollY + window.innerHeight - 48, charY));
+
+        const screenY = charY - window.scrollY;
+        character.style.left = charX + 'px';
+        character.style.top = screenY + 'px';
+
+        // Animation state via CSS classes
+        const moving = dx !== 0 || dy !== 0;
+        if (moving) {
+          character.classList.remove('idle');
+          character.classList.add('walking');
+        } else {
+          character.classList.remove('walking');
+          character.classList.add('idle');
+        }
+
+        // Face movement direction when moving, otherwise face cursor
+        if (dx < 0) facingLeft = true;
+        else if (dx > 0) facingLeft = false;
+        else {
+          const charCenterX = charX + 20;
+          facingLeft = mouseX < charCenterX;
+        }
+        character.style.transform = facingLeft ? 'scaleX(-1)' : 'scaleX(1)';
+
+        // Position gun near character, pointing at mouse
+        const gunOffsetX = facingLeft ? 2 : 32;
+        const gunOffsetY = 16;
+        const gunScreenX = charX + gunOffsetX;
+        const gunScreenY = screenY + gunOffsetY;
+        gun.style.left = gunScreenX + 'px';
+        gun.style.top = gunScreenY + 'px';
+
+        // Rotate gun toward mouse
+        const gunCX = gunScreenX + 14;
+        const gunCY = gunScreenY + 14;
+        const gdx = mouseX - gunCX;
+        const gdy = mouseY - gunCY;
+        const gunAngle = Math.atan2(gdy, gdx) * (180 / Math.PI);
+        if (facingLeft) {
+          gun.style.transform = 'scaleY(-1) rotate(' + (-gunAngle) + 'deg)';
+        } else {
+          gun.style.transform = 'rotate(' + gunAngle + 'deg)';
+        }
+
+        // Update enemies and bullets
+        updateEnemies();
+        updateBullets();
+
+        gameLoop = requestAnimationFrame(updateCharacter);
+      }
+
+      // Shooting — projectile based
+      document.addEventListener('click', (e) => {
+        if (!active || dead) return;
+        if (e.target === toggle || e.target.closest('.fun-toggle')) return;
+        e.preventDefault();
+
+        const clickX = e.clientX;
+        const clickY = e.clientY;
+
+        // Muzzle position
+        const gunRect = gun.getBoundingClientRect();
+        const gunCX = gunRect.left + gunRect.width / 2;
+        const gunCY = gunRect.top + gunRect.height / 2;
+        const toClickX = clickX - gunCX;
+        const toClickY = clickY - gunCY;
+        const toClickDist = Math.sqrt(toClickX * toClickX + toClickY * toClickY) || 1;
+        const muzzleDist = 18;
+        const muzzleX = gunCX + (toClickX / toClickDist) * muzzleDist;
+        const muzzleY = gunCY + (toClickY / toClickDist) * muzzleDist;
+
+        // Aim angle with random spread
+        const baseAngle = Math.atan2(toClickY, toClickX);
+        const spread = (Math.random() - 0.5) * 2 * BULLET_SPREAD * (Math.PI / 180);
+        const aimAngle = baseAngle + spread;
+
+        // Spawn projectile
+        const bEl = document.createElement('div');
+        bEl.className = 'fun-bullet';
+        bEl.style.left = muzzleX + 'px';
+        bEl.style.top = muzzleY + 'px';
+        document.body.appendChild(bEl);
+        bullets.push({
+          el: bEl,
+          x: muzzleX,
+          y: muzzleY,
+          vx: Math.cos(aimAngle) * BULLET_SPEED,
+          vy: Math.sin(aimAngle) * BULLET_SPEED,
+          dist: 0
+        });
+
+        // Gun kickback
+        gun.classList.remove('kick');
+        void gun.offsetWidth;
+        gun.classList.add('kick');
+        setTimeout(() => gun.classList.remove('kick'), 120);
+
+        // Shell casing ejection
+        const shell = document.createElement('div');
+        shell.className = 'shell-casing';
+        shell.style.left = gunCX + 'px';
+        shell.style.top = gunCY + 'px';
+        const ejectDir = facingLeft ? 1 : -1;
+        const ejectX = ejectDir * (15 + Math.random() * 10);
+        const bounceX = ejectX * 1.3;
+        const bounceX2 = ejectX * 1.5;
+        const endX = ejectX * 1.7;
+        const rot = (200 + Math.random() * 300) * ejectDir;
+        shell.style.setProperty('--sx', ejectX + 'px');
+        shell.style.setProperty('--sy1', (-20 - Math.random() * 15) + 'px');
+        shell.style.setProperty('--rot1', rot + 'deg');
+        shell.style.setProperty('--sx2', bounceX + 'px');
+        shell.style.setProperty('--sy2', '10px');
+        shell.style.setProperty('--rot2', (rot * 1.4) + 'deg');
+        shell.style.setProperty('--sx3', bounceX2 + 'px');
+        shell.style.setProperty('--sy3', '2px');
+        shell.style.setProperty('--rot3', (rot * 1.7) + 'deg');
+        shell.style.setProperty('--sx4', endX + 'px');
+        shell.style.setProperty('--sy4', '16px');
+        shell.style.setProperty('--rot4', (rot * 2) + 'deg');
+        document.body.appendChild(shell);
+        setTimeout(() => shell.remove(), 700);
+
+        // Muzzle flash
+        const flash = document.createElement('div');
+        flash.className = 'muzzle-flash';
+        flash.style.left = (muzzleX - 9) + 'px';
+        flash.style.top = (muzzleY - 9) + 'px';
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 150);
+
+        // Crosshair bloom
+        crosshair.classList.remove('bloom');
+        void crosshair.offsetWidth;
+        crosshair.classList.add('bloom');
+        setTimeout(() => crosshair.classList.remove('bloom'), 120);
+      });
+
     })();
   </script>
 
