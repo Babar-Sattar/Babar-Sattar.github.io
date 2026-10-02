@@ -1151,16 +1151,7 @@
       100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
     }
 
-    /* Gun kickback */
-    .fun-gun.kick {
-      animation: gunKick 0.12s ease-out forwards;
-    }
-
-    @keyframes gunKick {
-      0% { margin-left: 0; margin-top: 0; }
-      30% { margin-left: -6px; margin-top: -4px; }
-      100% { margin-left: 0; margin-top: 0; }
-    }
+    /* Gun kickback (handled in JS) */
 
     /* Impact dust */
     .impact-dust {
@@ -1603,6 +1594,10 @@
 
       // Projectile system
       let bullets = [];
+      let gunKickT = 0; // 0 = no kick, counts down from 1
+      const GUN_KICK_DURATION = 120; // ms
+      const GUN_KICK_BACK = 6; // px
+      const GUN_KICK_UP = 4; // px
       const BULLET_SPEED = 16.8;
       const BULLET_SPREAD = 3.5; // degrees of random spread
       const BULLET_RADIUS = 3;
@@ -1908,9 +1903,18 @@
       });
 
       document.addEventListener('keyup', (e) => {
-        if (!active) return;
         const k = e.key.toLowerCase();
         if (keys.hasOwnProperty(k)) keys[k] = false;
+      });
+
+      // Clear stuck keys when window loses focus
+      window.addEventListener('blur', () => {
+        keys.w = false; keys.a = false; keys.s = false; keys.d = false;
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          keys.w = false; keys.a = false; keys.s = false; keys.d = false;
+        }
       });
 
       // Character movement loop
@@ -1963,10 +1967,8 @@
         // Position gun near character, pointing at mouse
         const gunOffsetX = facingLeft ? 2 : 32;
         const gunOffsetY = 16;
-        const gunScreenX = charX + gunOffsetX;
-        const gunScreenY = screenY + gunOffsetY;
-        gun.style.left = gunScreenX + 'px';
-        gun.style.top = gunScreenY + 'px';
+        let gunScreenX = charX + gunOffsetX;
+        let gunScreenY = screenY + gunOffsetY;
 
         // Rotate gun toward mouse
         const gunCX = gunScreenX + 14;
@@ -1974,10 +1976,29 @@
         const gdx = mouseX - gunCX;
         const gdy = mouseY - gunCY;
         const gunAngle = Math.atan2(gdy, gdx) * (180 / Math.PI);
+
+        // Apply kick offset along the REVERSE of the aim direction
+        if (gunKickT > 0) {
+          const kickProgress = gunKickT; // 1 → 0
+          const kickEase = kickProgress < 0.7 ? kickProgress / 0.7 : (1 - kickProgress) / 0.3;
+          const aimRad = Math.atan2(gdy, gdx);
+          gunScreenX -= Math.cos(aimRad) * GUN_KICK_BACK * kickEase;
+          gunScreenY -= Math.sin(aimRad) * GUN_KICK_BACK * kickEase;
+          gunScreenY -= GUN_KICK_UP * kickEase;
+        }
+
+        gun.style.left = gunScreenX + 'px';
+        gun.style.top = gunScreenY + 'px';
         if (facingLeft) {
           gun.style.transform = 'scaleY(-1) rotate(' + (-gunAngle) + 'deg)';
         } else {
           gun.style.transform = 'rotate(' + gunAngle + 'deg)';
+        }
+
+        // Decay gun kick
+        if (gunKickT > 0) {
+          gunKickT -= (16.67 / GUN_KICK_DURATION); // ~60fps
+          if (gunKickT < 0) gunKickT = 0;
         }
 
         // Update enemies and bullets
@@ -2027,11 +2048,8 @@
           dist: 0
         });
 
-        // Gun kickback
-        gun.classList.remove('kick');
-        void gun.offsetWidth;
-        gun.classList.add('kick');
-        setTimeout(() => gun.classList.remove('kick'), 120);
+        // Gun kickback (JS-driven)
+        gunKickT = 1;
 
         // Shell casing ejection
         const shell = document.createElement('div');
