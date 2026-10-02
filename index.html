@@ -112,16 +112,26 @@
 
     /* ===== HERO ===== */
     .hero {
+      position: relative;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 160px 48px 0;
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 60px;
-      align-items: center;
+      padding: 160px 48px 120px;
+      overflow: hidden;
+    }
+
+    .hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-content {
+      position: relative;
+      z-index: 1;
       max-width: 640px;
     }
 
@@ -176,25 +186,6 @@
     .hero-bio.animate {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    .hero-photo-wrapper {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    }
-
-    .hero-photo-wrapper.animate {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .hero-photo {
-      width: 100%;
-      max-width: 340px;
-      border-radius: var(--radius);
-      object-fit: cover;
-      display: block;
     }
 
     /* ===== SECTION CONTAINERS ===== */
@@ -428,6 +419,15 @@
     .about-inner {
       max-width: 1200px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 60px;
+      align-items: start;
     }
 
     .about-band .section-label {
@@ -449,6 +449,15 @@
     .about-text strong {
       color: #fff;
       font-weight: 600;
+    }
+
+    .about-photo {
+      width: 100%;
+      max-width: 240px;
+      border-radius: var(--radius);
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 1/1;
     }
 
     /* ===== CONTACT ===== */
@@ -522,21 +531,17 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
       .hero {
+        padding: 120px 24px 80px;
+      }
+
+      .about-body {
         grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 120px 24px 0;
+        gap: 32px;
       }
 
-      .hero-photo-wrapper {
+      .about-photo {
+        max-width: 180px;
         order: -1;
-        max-width: 200px;
-      }
-
-      .hero-photo {
-        max-width: 200px;
-        border-radius: 50%;
-        aspect-ratio: 1/1;
-        object-fit: cover;
       }
 
       .work-card,
@@ -617,7 +622,8 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="heroSection">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
     <div class="hero-content">
       <h1 class="hero-name">Babar<br>Sattar</h1>
       <p class="hero-tagline">
@@ -626,13 +632,6 @@
       <p class="hero-bio">
         Product design nerd with 8+ years experience in B2B SaaS. Currently a CSM at Gearset where I've identified 5 small UX issues, built the solutions in Claude Code, and shipped them to production.
       </p>
-    </div>
-    <div class="hero-photo-wrapper">
-      <img
-        src="1698172054787-modified.jpg"
-        alt="Portrait of Babar Sattar"
-        class="hero-photo"
-      >
     </div>
   </section>
 
@@ -716,16 +715,23 @@
   <section id="about" class="about-band">
     <div class="about-inner">
       <p class="section-label fade-in">About</p>
-      <div class="about-text fade-in">
-        <p>
-          I'm a Customer Success Manager at Gearset, but the work that energises me has always been the same: figuring out how something should work for a user, and then building it.
-        </p>
-        <p>
-          At ProgressTeaching, I designed and shipped seven features end-to-end. At Gearset, I've been shipping small UX improvements directly into the codebase. Outside of work, I build things like vibe-coded dice trackers and game maps because I can't leave friction alone.
-        </p>
-        <p>
-          <strong>I'm not pivoting into UX, I've been doing UX thinking from a different role.</strong> I want to do it full-time.
-        </p>
+      <div class="about-body fade-in">
+        <div class="about-text">
+          <p>
+            I'm a Customer Success Manager at Gearset, but the work that energises me has always been the same: figuring out how something should work for a user, and then building it.
+          </p>
+          <p>
+            At ProgressTeaching, I designed and shipped seven features end-to-end. At Gearset, I've been shipping small UX improvements directly into the codebase. Outside of work, I build things like vibe-coded dice trackers and game maps because I can't leave friction alone.
+          </p>
+          <p>
+            <strong>I'm not pivoting into UX, I've been doing UX thinking from a different role.</strong> I want to do it full-time.
+          </p>
+        </div>
+        <img
+          src="1698172054787-modified.jpg"
+          alt="Portrait of Babar Sattar"
+          class="about-photo"
+        >
       </div>
     </div>
   </section>
@@ -772,15 +778,100 @@
       const name = document.querySelector('.hero-name');
       const tagline = document.querySelector('.hero-tagline');
       const bio = document.querySelector('.hero-bio');
-      const photo = document.querySelector('.hero-photo-wrapper');
       const nav = document.querySelector('nav');
 
       setTimeout(() => name.classList.add('animate'), 50);
-      setTimeout(() => photo.classList.add('animate'), 150);
-      setTimeout(() => tagline.classList.add('animate'), 300);
-      setTimeout(() => bio.classList.add('animate'), 450);
-      setTimeout(() => nav.classList.add('animate'), 600);
+      setTimeout(() => tagline.classList.add('animate'), 250);
+      setTimeout(() => bio.classList.add('animate'), 400);
+      setTimeout(() => nav.classList.add('animate'), 550);
     });
+
+    // Particle afterglow
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const canvas = document.getElementById('heroCanvas');
+      const hero = document.getElementById('heroSection');
+      if (!canvas || !hero) return;
+      const ctx = canvas.getContext('2d');
+
+      let particles = [];
+      let mouseX = -100, mouseY = -100;
+      let isHovering = false;
+      let raf;
+
+      function resize() {
+        const rect = hero.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.scale(dpr, dpr);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+
+      hero.style.pointerEvents = 'auto';
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+        isHovering = true;
+
+        // Spawn a small cluster on each move
+        for (let i = 0; i < 2; i++) {
+          particles.push({
+            x: mouseX + (Math.random() - 0.5) * 10,
+            y: mouseY + (Math.random() - 0.5) * 10,
+            vx: (Math.random() - 0.5) * 0.48,
+            vy: (Math.random() - 0.5) * 0.48 - 0.18,
+            life: 1,
+            decay: 0.008 + Math.random() * 0.008,
+            size: 2 + Math.random() * 3,
+            hue: 174 + Math.random() * 12, // teal range
+          });
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        isHovering = false;
+      });
+
+      function draw() {
+        const rect = hero.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= p.decay;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          const alpha = p.life * 0.35;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = 'hsla(' + p.hue + ', 55%, 40%, ' + alpha + ')';
+          ctx.fill();
+        }
+
+        // Cap particles for performance
+        if (particles.length > 300) {
+          particles = particles.slice(-300);
+        }
+
+        raf = requestAnimationFrame(draw);
+      }
+
+      draw();
+    })();
   </script>
 
 </body>
