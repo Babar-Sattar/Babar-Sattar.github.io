@@ -59,7 +59,34 @@
       top: 0;
       z-index: 100;
       background: var(--bg);
-      transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .pill-bar-wrap.entered {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tab-divider {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .tab-divider.entered {
+      opacity: 1;
+    }
+
+    .tab-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .tab-content.entered {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .pill-bar-inner {
@@ -1892,7 +1919,9 @@
         document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelector('.tab-link[data-tab="' + tab + '"]').classList.add('active');
-        document.getElementById('tab-' + tab).classList.add('active');
+        var newTab = document.getElementById('tab-' + tab);
+        newTab.classList.add('active');
+        newTab.classList.add('entered');
       }
     })();
 
@@ -2194,6 +2223,15 @@
       setTimeout(() => name.classList.add('animate'), 100);
       setTimeout(() => tagline.classList.add('animate'), 500);
       setTimeout(() => bio.classList.add('animate'), 800);
+
+      // After hero, reveal pills and cards
+      setTimeout(() => {
+        document.querySelector('.pill-bar-wrap').classList.add('entered');
+        document.querySelector('.tab-divider').classList.add('entered');
+      }, 1100);
+      setTimeout(() => {
+        document.querySelector('.tab-content.active').classList.add('entered');
+      }, 1300);
     });
 
     // Sticky pill bar shadow
