@@ -481,15 +481,112 @@
 
     .solution-card-image {
       border-top: 1px solid var(--border);
-      background: var(--bg);
-      padding: 24px;
+      background: var(--teal);
+      padding: 32px 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 200px;
+      min-height: 240px;
       color: var(--text-tertiary);
       font-size: 13px;
+      overflow: hidden;
     }
+
+    .solution-card-image svg {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+    }
+
+    /* Animation 1: Conditional forms — fade and collapse simultaneously */
+    @keyframes cf-fade-1 {
+      0%, 28% { opacity: 1; }
+      36%, 82% { opacity: 0; }
+      90%, 100% { opacity: 1; }
+    }
+    @keyframes cf-fade-2 {
+      0%, 31% { opacity: 1; }
+      39%, 82% { opacity: 0; }
+      90%, 100% { opacity: 1; }
+    }
+    @keyframes cf-collapse {
+      0%, 30% { transform: translateY(0); }
+      48%, 78% { transform: translateY(-96px); }
+      90%, 100% { transform: translateY(0); }
+    }
+    .cf-remove-1 { animation: cf-fade-1 3.5s ease-in-out infinite; }
+    .cf-remove-2 { animation: cf-fade-2 3.5s ease-in-out infinite; }
+    .cf-shift-up { animation: cf-collapse 3.5s ease-in-out infinite; }
+
+    /* Animation 2: Help text — icon appears, cursor moves, clicks, text expands */
+    @keyframes ht-icon-in {
+      0%, 8% { opacity: 0; transform: scale(0.5); }
+      18% { opacity: 1; transform: scale(1); }
+      88%, 100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes ht-cursor-move {
+      0%, 22% { transform: translate(60px, -10px); opacity: 0; }
+      30% { transform: translate(60px, -10px); opacity: 1; }
+      46% { transform: translate(0, 0); opacity: 1; }
+      50% { transform: translate(0, 2px) scale(0.92); opacity: 1; }
+      54% { transform: translate(0, 0) scale(1); opacity: 1; }
+      88%, 100% { transform: translate(0, 0); opacity: 1; }
+    }
+    @keyframes ht-icon-press {
+      0%, 48% { transform: scale(1); }
+      50% { transform: scale(0.85); }
+      54% { transform: scale(1.05); }
+      58%, 100% { transform: scale(1); }
+    }
+    @keyframes ht-expand {
+      0%, 54% { transform: scaleY(0); opacity: 0; }
+      68% { transform: scaleY(1); opacity: 1; }
+      88%, 100% { transform: scaleY(1); opacity: 1; }
+    }
+    .ht-icon {
+      transform-origin: center;
+      animation: ht-icon-in 4.5s ease-in-out infinite, ht-icon-press 4.5s ease-in-out infinite;
+    }
+    .ht-cursor {
+      animation: ht-cursor-move 4.5s ease-in-out infinite;
+    }
+    .ht-panel {
+      transform-origin: top;
+      animation: ht-expand 4.5s ease-in-out infinite;
+    }
+
+    /* Animation 3: Strength placement — highlight, lift, place at top */
+    @keyframes sp-highlight {
+      0%, 22% { transform: translateY(0); }
+      30%, 40% { transform: translateY(0); }
+      56% { transform: translateY(-116px); }
+      68%, 80% { transform: translateY(-116px); }
+      92%, 100% { transform: translateY(0); }
+    }
+    @keyframes sp-glow {
+      0%, 22% { filter: none; }
+      30% { filter: drop-shadow(0 0 6px rgba(0, 150, 136, 0.4)); }
+      68% { filter: drop-shadow(0 0 6px rgba(0, 150, 136, 0.4)); }
+      80%, 100% { filter: none; }
+    }
+    @keyframes sp-border-color {
+      0%, 22% { stroke: var(--border); }
+      30%, 80% { stroke: var(--teal); }
+      92%, 100% { stroke: var(--border); }
+    }
+    @keyframes sp-shift-down {
+      0%, 40% { transform: translateY(0); }
+      56%, 80% { transform: translateY(56px); }
+      92%, 100% { transform: translateY(0); }
+    }
+    .sp-target {
+      animation: sp-highlight 4.5s ease-in-out infinite, sp-glow 4.5s ease-in-out infinite;
+    }
+    .sp-target-box-l { animation: sp-border-color 4.5s ease-in-out infinite; }
+    .sp-target-box-r { animation: sp-border-color 4.5s ease-in-out infinite; }
+    .sp-shift-1 { animation: sp-shift-down 4.5s ease-in-out infinite; }
+    .sp-shift-2 { animation: sp-shift-down 4.5s ease-in-out 0.04s infinite; }
+    .sp-shift-3 { animation: sp-shift-down 4.5s ease-in-out 0.08s infinite; }
 
     /* ===== IMPACT ===== */
     .impact-block {
@@ -698,7 +795,51 @@
             <p class="solution-card-text">I gave users the ability to create dynamic forms, showing only relevant sections depending on the context.</p>
             <p class="solution-card-rationale"><strong>Why I did this:</strong> Previously, users had to remember to leave sections empty. This change removed that requirement entirely.</p>
           </div>
-          <div class="solution-card-image">Image placeholder</div>
+          <div class="solution-card-image">
+            <svg viewBox="0 0 360 248" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Form container with subtle shadow -->
+              <rect x="42" y="12" width="280" height="228" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
+              <rect x="40" y="10" width="280" height="228" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <!-- Title bar -->
+              <rect x="56" y="24" width="120" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
+              <rect x="56" y="36" width="80" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.2"/>
+              <!-- Divider -->
+              <line x1="56" y1="48" x2="304" y2="48" stroke="var(--border)" opacity="0.5"/>
+              <!-- Component stays: Strengths row (two-col like reference) -->
+              <g>
+                <rect x="56" y="56" width="120" height="32" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="63" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
+                <rect x="66" y="74" width="80" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
+                <rect x="184" y="56" width="120" height="32" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="194" y="63" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
+                <rect x="194" y="74" width="70" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
+              </g>
+              <!-- Component removes 1: section with coloured pills -->
+              <g class="cf-remove-1">
+                <rect x="56" y="96" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="104" width="60" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
+                <rect x="66" y="116" width="36" height="12" rx="6" fill="rgba(215, 195, 60, 0.12)" stroke="#D7C33C" opacity="0.4"/>
+                <rect x="108" y="116" width="36" height="12" rx="6" fill="rgba(139, 195, 74, 0.12)" stroke="#8BC34A" opacity="0.4"/>
+                <rect x="150" y="116" width="36" height="12" rx="6" fill="rgba(0, 150, 136, 0.1)" stroke="var(--teal)" opacity="0.4"/>
+              </g>
+              <!-- Component removes 2: text area section -->
+              <g class="cf-remove-2">
+                <rect x="56" y="144" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="152" width="70" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
+                <rect x="66" y="164" width="220" height="12" rx="3" stroke="var(--border)" opacity="0.4" fill="var(--bg-card)"/>
+                <!-- Typed text lines for depth -->
+                <rect x="72" y="167" width="100" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.12"/>
+              </g>
+              <!-- Component stays: coloured pills section, shifts up -->
+              <g class="cf-shift-up">
+                <rect x="56" y="192" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="200" width="55" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
+                <rect x="66" y="212" width="36" height="12" rx="6" fill="rgba(215, 195, 60, 0.12)" stroke="#D7C33C" opacity="0.4"/>
+                <rect x="108" y="212" width="36" height="12" rx="6" fill="rgba(139, 195, 74, 0.12)" stroke="#8BC34A" opacity="0.4"/>
+                <rect x="150" y="212" width="36" height="12" rx="6" fill="rgba(0, 150, 136, 0.1)" stroke="var(--teal)" opacity="0.4"/>
+              </g>
+            </svg>
+          </div>
         </div>
 
         <div class="solution-card fade-in">
@@ -708,7 +849,48 @@
             <p class="solution-card-text">I let users store tooltips next to an observation strand to help them complete sections.</p>
             <p class="solution-card-rationale"><strong>Why I did this:</strong> Users had to scroll to the top of the form to see this information. This change brought it to where they were working.</p>
           </div>
-          <div class="solution-card-image">Image placeholder</div>
+          <div class="solution-card-image">
+            <svg viewBox="0 0 360 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Form container with shadow -->
+              <rect x="42" y="12" width="280" height="212" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
+              <rect x="40" y="10" width="280" height="212" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <!-- Section header -->
+              <rect x="56" y="26" width="100" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
+              <!-- Collapse arrow -->
+              <path d="M296 28 L300 33 L292 33 Z" fill="var(--text-tertiary)" opacity="0.3"/>
+              <!-- Coloured rating buttons (warm palette from PT UI) -->
+              <rect x="56" y="46" width="44" height="18" rx="9" fill="rgba(215, 195, 60, 0.15)" stroke="#D7C33C" opacity="0.5"/>
+              <rect x="66" y="53" width="24" height="4" rx="2" fill="#D7C33C" opacity="0.35"/>
+              <rect x="108" y="46" width="44" height="18" rx="9" fill="rgba(139, 195, 74, 0.15)" stroke="#8BC34A" opacity="0.5"/>
+              <rect x="118" y="53" width="24" height="4" rx="2" fill="#8BC34A" opacity="0.35"/>
+              <rect x="160" y="46" width="44" height="18" rx="9" fill="rgba(0, 150, 136, 0.12)" stroke="var(--teal)" opacity="0.5"/>
+              <rect x="170" y="53" width="24" height="4" rx="2" fill="var(--teal)" opacity="0.35"/>
+              <!-- Text area -->
+              <rect x="56" y="76" width="248" height="44" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+              <rect x="66" y="88" width="140" height="4" rx="2" fill="var(--text-tertiary)" opacity="0.12"/>
+              <rect x="66" y="96" width="100" height="4" rx="2" fill="var(--text-tertiary)" opacity="0.08"/>
+              <!-- Info icon (animates in) -->
+              <g class="ht-icon" style="transform-origin: 72px 140px;">
+                <circle cx="72" cy="140" r="11" stroke="var(--teal)" stroke-width="1.5" fill="rgba(0, 150, 136, 0.06)"/>
+                <text x="72" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--teal)" font-family="var(--font-display)">i</text>
+              </g>
+              <!-- Cursor (classic black arrow with white outline) -->
+              <g class="ht-cursor" style="transform-origin: 85px 146px;">
+                <path d="M81 130 L81 156 L87.5 150.5 L93 160 L97 158 L91.5 148.5 L99.5 147 Z" fill="#1A1A1A" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              </g>
+              <!-- Expanding help panel -->
+              <g class="ht-panel">
+                <rect x="56" y="158" width="248" height="60" rx="4" stroke="var(--teal)" opacity="0.3" fill="rgba(0, 150, 136, 0.04)"/>
+                <rect x="66" y="168" width="40" height="5" rx="2" fill="var(--teal)" opacity="0.4"/>
+                <circle cx="62" cy="182" r="2" fill="var(--teal)" opacity="0.35"/>
+                <rect x="70" y="180" width="200" height="4" rx="2" fill="var(--teal)" opacity="0.25"/>
+                <circle cx="62" cy="192" r="2" fill="var(--teal)" opacity="0.35"/>
+                <rect x="70" y="190" width="180" height="4" rx="2" fill="var(--teal)" opacity="0.2"/>
+                <circle cx="62" cy="202" r="2" fill="var(--teal)" opacity="0.35"/>
+                <rect x="70" y="200" width="160" height="4" rx="2" fill="var(--teal)" opacity="0.15"/>
+              </g>
+            </svg>
+          </div>
         </div>
 
         <div class="solution-card fade-in">
@@ -718,7 +900,50 @@
             <p class="solution-card-text">This component was the first thing any teacher wanted to see when starting a form. I moved it to the top.</p>
             <p class="solution-card-rationale"><strong>Why I did this:</strong> Users wanted the context before filling out the form. This gave them the context upfront.</p>
           </div>
-          <div class="solution-card-image">Image placeholder</div>
+          <div class="solution-card-image">
+            <svg viewBox="0 0 360 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Form container with shadow -->
+              <rect x="42" y="12" width="280" height="220" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
+              <rect x="40" y="10" width="280" height="220" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <!-- Title bar -->
+              <rect x="56" y="24" width="100" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
+              <rect x="56" y="36" width="65" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.2"/>
+              <!-- Component 1 (shifts down) — section with coloured pills, y=50, h=32 -->
+              <g class="sp-shift-1">
+                <rect x="56" y="50" width="248" height="32" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="57" width="60" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
+                <rect x="66" y="68" width="36" height="10" rx="5" fill="rgba(215, 195, 60, 0.12)" stroke="#D7C33C" opacity="0.4"/>
+                <rect x="108" y="68" width="36" height="10" rx="5" fill="rgba(139, 195, 74, 0.12)" stroke="#8BC34A" opacity="0.4"/>
+                <rect x="150" y="68" width="36" height="10" rx="5" fill="rgba(0, 150, 136, 0.1)" stroke="var(--teal)" opacity="0.4"/>
+              </g>
+              <!-- Component 2 (shifts down) — text area section, y=90, h=36 -->
+              <g class="sp-shift-2">
+                <rect x="56" y="90" width="248" height="36" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="98" width="55" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
+                <rect x="66" y="110" width="200" height="10" rx="3" stroke="var(--border)" opacity="0.3" fill="var(--bg-card)"/>
+              </g>
+              <!-- Component 3 (shifts down) — small section, y=134, h=24 -->
+              <g class="sp-shift-3">
+                <rect x="56" y="134" width="248" height="24" rx="4" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="142" width="70" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.3"/>
+              </g>
+              <!-- Strength & Action Steps — two-col block, y=166, h=48 -->
+              <!-- Moves from y=166 to y=50 → translateY(-116px) -->
+              <!-- Other components shift down by 56px (48 + 8 gap) -->
+              <g class="sp-target">
+                <rect x="56" y="166" width="120" height="48" rx="4" class="sp-target-box-l" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="184" y="166" width="120" height="48" rx="4" class="sp-target-box-r" stroke="var(--border)" fill="var(--bg)"/>
+                <rect x="66" y="175" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
+                <rect x="66" y="186" width="80" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
+                <rect x="66" y="194" width="60" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.2"/>
+                <rect x="66" y="201" width="70" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.15"/>
+                <rect x="194" y="175" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
+                <rect x="194" y="186" width="70" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
+                <rect x="194" y="194" width="55" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.2"/>
+                <rect x="194" y="201" width="65" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.15"/>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
 
