@@ -345,6 +345,25 @@
       filter: brightness(0.3);
     }
 
+    /* Halo slideshow */
+    .halo-slideshow {
+      background: #1a3a2e;
+    }
+
+    .slideshow-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .slideshow-img.active {
+      opacity: 1;
+    }
+
     .work-card-body {
       position: absolute;
       inset: 0;
@@ -1620,7 +1639,11 @@
 
       <!-- Halo Card -->
       <div class="work-card fade-in" data-modal-src="case-study-halo.html">
-        <div class="work-card-image" style="background: linear-gradient(145deg, #2d4a3e, #1a3a2e, #3d5a4e);"></div>
+        <div class="work-card-image halo-slideshow">
+          <img src="halo-hero.jpg" alt="Halo map overview" class="slideshow-img active">
+          <img src="halo-slide-2.png" alt="Halo gameplay combat" class="slideshow-img">
+          <img src="halo-slide-3.png" alt="Halo gameplay firefight" class="slideshow-img">
+        </div>
         <div class="work-card-body">
           <h2 class="work-card-title">Halo Level Design</h2>
           <p class="work-card-description">
@@ -2932,6 +2955,18 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && lb.classList.contains('active')) lb.classList.remove('active');
       });
+    })();
+
+    // Halo slideshow
+    (function() {
+      const imgs = document.querySelectorAll('.halo-slideshow .slideshow-img');
+      if (imgs.length < 2) return;
+      let current = 0;
+      setInterval(() => {
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+      }, 3500);
     })();
   </script>
 
