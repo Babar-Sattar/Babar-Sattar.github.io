@@ -334,6 +334,12 @@
 
     .section-text + .section-text { margin-top: 16px; }
     .section-text strong { color: var(--text-primary); font-weight: 600; }
+    .teal { color: var(--teal); }
+    .teal-highlight {
+      background: rgba(0, 150, 136, 0.12);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
 
     /* ===== QUOTES ===== */
     .quote-block {
@@ -416,6 +422,73 @@
     .prototype-mobile-link:hover {
       background: var(--teal);
       color: white;
+    }
+
+    /* ===== SOLUTION CARDS ===== */
+    .solution-cards {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .solution-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .solution-card-content {
+      padding: 28px 32px;
+    }
+
+    .solution-card-number {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .solution-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .solution-card-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .solution-card-rationale {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-tertiary);
+    }
+
+    .solution-card-rationale strong {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .solution-card-image {
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: var(--text-tertiary);
+      font-size: 13px;
     }
 
     /* ===== IMPACT ===== */
@@ -549,13 +622,10 @@
     <div class="container-wide">
       <div class="hero-grid">
         <div>
-          <p class="case-meta">ProgressTeaching · B2B SaaS · EdTech</p>
-          <h1 class="case-title">Redesigning Observation Forms, 70% Adoption in Year One</h1>
-          <p class="case-tldr">A feature I designed and shipped end-to-end that addressed a real user problem, and taught me the cost of designing for only one user.</p>
+          <h1 class="case-title">72% fewer support requests through simpler observation forms</h1>
           <div class="case-pills">
+            <span class="pill">B2B SaaS</span>
             <span class="pill">User Research</span>
-            <span class="pill">Product Design</span>
-            <span class="pill">Shipped Feature</span>
             <span class="pill">Jira</span>
           </div>
         </div>
@@ -575,11 +645,11 @@
     <div class="meta-bar">
       <div>
         <p class="meta-item-label">Timeline</p>
-        <p class="meta-item-value">2023</p>
+        <p class="meta-item-value">4 months</p>
       </div>
       <div>
         <p class="meta-item-label">Role</p>
-        <p class="meta-item-value">Product & UX Lead</p>
+        <p class="meta-item-value">Product Designer</p>
       </div>
       <div>
         <p class="meta-item-label">Company</p>
@@ -587,7 +657,7 @@
       </div>
       <div>
         <p class="meta-item-label">Outcome</p>
-        <p class="meta-item-value">70% adoption</p>
+        <p class="meta-item-value">72% fewer support requests</p>
       </div>
     </div>
   </div>
@@ -596,21 +666,14 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">The signal</p>
-        <h2 class="section-heading">Schools kept telling us the same thing, independently.</h2>
+        <h2 class="section-heading">The forms worked for me, but teachers experienced it differently.</h2>
         <p class="section-text">
-          ProgressTeaching is an EdTech platform used by UK schools to log and analyse lesson observations. The observation form was static, meaning every type of observation showed the same sections, even when most of them weren't relevant.
-        </p>
-        <p class="section-text">
-          Schools of different types and sizes were independently reporting the same frustration. Observers wanted dynamic forms that only showed what was relevant to the observation they were conducting.
+          ProgressTeaching helps schools observe lessons and record feedback on digital forms. Most users were teachers; <span class="teal-highlight">they accessed the platform through tablets or phones, and had to navigate a complex UI whilst managing students.</span> They made mistakes, got confused, and raised a steady stream of support tickets.
         </p>
         <div class="quote-block">
           <blockquote class="quote">
             "We do book looks every half term but the form shows everything. Most of it isn't relevant."
-            <span class="quote-source">SLT member, Primary school</span>
-          </blockquote>
-          <blockquote class="quote">
-            "Our observers have to ignore half the form depending on what type of observation they're doing."
-            <span class="quote-source">SLT member, Secondary school</span>
+            <span class="quote-source">Teacher, Primary school</span>
           </blockquote>
         </div>
       </div>
@@ -621,79 +684,69 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">The solution</p>
-        <h2 class="section-heading">I removed the irrelevant sections entirely.</h2>
+        <h2 class="section-heading">Three changes to reduce cognitive load</h2>
         <p class="section-text">
-          I considered collapsing irrelevant sections by default, but they could still be expanded and filled out, which risked confusing observers. Instead, I chose to remove them entirely with conditional logic tied to the observation type.
-        </p>
-        <p class="section-text">
-          I documented the solution in Jira with annotated screenshots and walked the engineer through the problem and intended outcome.
+          The observation forms were dense, and teachers didn't have a lot of time. I needed to simplify complexity.
         </p>
       </div>
-      <div class="prototype-wrapper fade-in prototype-desktop">
+
+      <div class="solution-cards">
+        <div class="solution-card fade-in">
+          <div class="solution-card-content">
+            <p class="solution-card-number">Change 1</p>
+            <h3 class="solution-card-title">Conditional forms</h3>
+            <p class="solution-card-text">I gave users the ability to create dynamic forms, showing only relevant sections depending on the context.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> Previously, users had to remember to leave sections empty. This change removed that requirement entirely.</p>
+          </div>
+          <div class="solution-card-image">Image placeholder</div>
+        </div>
+
+        <div class="solution-card fade-in">
+          <div class="solution-card-content">
+            <p class="solution-card-number">Change 2</p>
+            <h3 class="solution-card-title">Help text</h3>
+            <p class="solution-card-text">I let users store tooltips next to an observation strand to help them complete sections.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> Users had to scroll to the top of the form to see this information. This change brought it to where they were working.</p>
+          </div>
+          <div class="solution-card-image">Image placeholder</div>
+        </div>
+
+        <div class="solution-card fade-in">
+          <div class="solution-card-content">
+            <p class="solution-card-number">Change 3</p>
+            <h3 class="solution-card-title">Strength & Action Steps placement</h3>
+            <p class="solution-card-text">This component was the first thing any teacher wanted to see when starting a form. I moved it to the top.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> Users wanted the context before filling out the form. This gave them the context upfront.</p>
+          </div>
+          <div class="solution-card-image">Image placeholder</div>
+        </div>
+      </div>
+
+      <div class="prototype-wrapper fade-in prototype-desktop" style="margin-top: 32px;">
         <iframe src="pt-prototype.html" title="Conditional Forms before and after prototype"></iframe>
-        <p class="prototype-caption">Toggle to see the feature in action. <a href="https://babar-sattar.github.io/PT-Prototype/" target="_blank" rel="noopener">Explore the full prototype →</a></p>
-      </div>
-      <div class="prototype-mobile fade-in">
-        <a href="pt-prototype.html" target="_blank" rel="noopener" class="prototype-mobile-link">
-          Try the interactive prototype →
-        </a>
       </div>
     </div>
   </section>
 
-  <div class="container-wide">
-    <div class="impact-block fade-in">
-      <p class="impact-number">70%</p>
-      <p class="impact-label">of existing schools adopted Conditional Forms within a year</p>
-      <p class="impact-sub">Almost every new school onboarded after launch used it as standard.</p>
+  <div class="container-wide" style="margin-top: var(--section-gap); margin-bottom: -24px;">
+    <p class="section-label fade-in">The outcome</p>
+    <div class="impact-block fade-in" style="margin-top: 16px;">
+      <p class="impact-number">72%</p>
+      <p class="impact-label">reduction in form-related support tickets</p>
+      <p class="impact-sub">From ~18 per month down to fewer than 5.</p>
     </div>
   </div>
 
   <section class="reflection-band">
     <div class="reflection-inner">
-      <p class="section-label fade-in">The blind spot</p>
-      <h2 class="section-heading fade-in">I designed for the observer. I forgot about the person setting it up.</h2>
+      <p class="section-label fade-in">Reflection</p>
+      <h2 class="section-heading fade-in">I solved one problem but created another in the process.</h2>
       <p class="section-text fade-in">
-        Conditional Forms solved the observer's problem. The signal was consistent, the solution worked, and the adoption numbers proved it.
-      </p>
-      <p class="section-text fade-in">
-        But I never thought about who would <strong>configure</strong> the forms. The setup process was convoluted enough that almost every school relied on me to create and manage their forms manually. I'd shipped a feature that worked for its users but created an operational problem because I didn't ask <strong>"who else touches this, and what does their experience look like?"</strong>
-      </p>
-      <p class="section-text fade-in">
-        That's the question I'd now ask at the start of every project. Not just "who uses the output" but "who configures it, who maintains it, and what does their workflow look like?"
+        The setup of forms had increased in complexity. Schools were having a tough time configuring them without help, and leant on me for support. The reflection I took from this was to <strong>consider all users that are affected by a product, not just the end user interacting with it.</strong>
       </p>
     </div>
   </section>
 
-  <section class="next-up">
-    <div class="container-wide">
-      <p class="section-label fade-in">Next up</p>
-      <a href="case-study-halo.html" class="next-up-card fade-in">
-        <div class="next-up-body">
-          <p class="next-up-label">Halo Forge · Personal Project</p>
-          <h3 class="next-up-title">When Your Hypothesis is Wrong</h3>
-          <p class="next-up-description">A playtesting case study where I measured a pacing problem, built five prototypes, and discovered the real issues only after putting my design in front of real users.</p>
-        </div>
-        <div class="next-up-image">
-          <div style="width:80%; max-width:320px; display:flex; flex-direction:column; align-items:center;">
-            <div style="width:100%; background:#2a2a2a; border-radius:6px 6px 0 0; padding:3px 3px 0; border:1px solid #d0d0d0;">
-              <div style="border-radius:3px 3px 0 0; overflow:hidden; aspect-ratio:16/9;">
-                <img src="halo-hero.jpg" alt="Halo Forge map" style="width:100%; height:100%; object-fit:cover; display:block;">
-              </div>
-            </div>
-            <div style="width:50px; height:18px; background:linear-gradient(to bottom, #333, #2a2a2a);"></div>
-            <div style="width:100px; height:5px; background:#333; border-radius:0 0 3px 3px;"></div>
-          </div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section class="case-footer">
-    <div class="container-wide">
-      <a href="index.html" class="back-link">← Back to all work</a>
-    </div>
-  </section>
 
   <script>
     const observer = new IntersectionObserver(
