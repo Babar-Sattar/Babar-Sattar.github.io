@@ -1543,7 +1543,7 @@
         Aspiring product designer <span class="teal">✦</span> Vibe coding enthusiast <span class="teal">✦</span> Gaming aficionado
       </p>
       <p class="hero-bio">
-        I love deeply understanding user problems, nerding out on the technical, and developing<br><span class="teal">empathy-led solutions that make a difference.</span>
+        I love <span class="teal">deeply understanding</span> user problems, <span class="teal">nerding out on the technical</span>, and developing <span class="teal">empathy-led solutions</span> that make a difference.
       </p>
     </div>
   </section>
@@ -1962,7 +1962,9 @@
 
         // Show active tab content
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById('tab-' + tab).classList.add('active');
+        var switchedTab = document.getElementById('tab-' + tab);
+        switchedTab.classList.add('active');
+        switchedTab.classList.add('entered');
 
         // Re-observe fade-in elements in the newly visible tab
         document.querySelectorAll('#tab-' + tab + ' .fade-in:not(.visible)').forEach(el => observer.observe(el));
