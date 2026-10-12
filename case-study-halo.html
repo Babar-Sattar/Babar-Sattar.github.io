@@ -243,7 +243,13 @@
       height: 8px;
       border-radius: 4px;
       background: var(--teal-light);
+      position: relative;
+      overflow: visible;
+    }
+
+    .stat-bar-fill {
       overflow: hidden;
+      border-radius: 4px;
     }
 
     .stat-bar-fill {
@@ -255,6 +261,26 @@
 
     .stat-bar-fill.slow {
       background: #c0504d;
+    }
+
+    .stat-bar-target {
+      position: absolute;
+      top: -12px;
+      bottom: -12px;
+      width: 0;
+      border-left: 1.5px dashed var(--text-tertiary);
+    }
+
+    .stat-bar-target-label {
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-family: var(--font-body);
     }
 
     /* ===== PROCESS TIMELINE ===== */
@@ -785,10 +811,12 @@
                   <svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M6 10l3-3M6 10L3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
               </div>
-              <span class="stat-row-label">Target: 4.8s</span>
             </div>
             <div class="stat-bar">
               <div class="stat-bar-fill" style="width: 61%;"></div>
+              <div class="stat-bar-target" style="left: 50%;">
+                <span class="stat-bar-target-label">Target: 4.8s</span>
+              </div>
             </div>
           </div>
         </div>
@@ -803,10 +831,12 @@
                   <svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M6 10l3-3M6 10L3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
               </div>
-              <span class="stat-row-label">Target: 318s</span>
             </div>
             <div class="stat-bar">
               <div class="stat-bar-fill" style="width: 52%;"></div>
+              <div class="stat-bar-target" style="left: 48%;">
+                <span class="stat-bar-target-label">Target: 318s</span>
+              </div>
             </div>
           </div>
         </div>
