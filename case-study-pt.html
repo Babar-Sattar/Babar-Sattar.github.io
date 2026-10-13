@@ -481,7 +481,7 @@
 
     .solution-card-image {
       border-top: 1px solid var(--border);
-      background: var(--teal);
+      background: rgba(0, 150, 136, 0.08);
       padding: 32px 24px;
       display: flex;
       align-items: center;
@@ -782,9 +782,6 @@
       <div class="fade-in">
         <p class="section-label">The solution</p>
         <h2 class="section-heading">Three changes to reduce cognitive load</h2>
-        <p class="section-text">
-          The observation forms were dense, and teachers didn't have a lot of time. I needed to simplify complexity.
-        </p>
       </div>
 
       <div class="solution-cards">
@@ -792,14 +789,14 @@
           <div class="solution-card-content">
             <p class="solution-card-number">Change 1</p>
             <h3 class="solution-card-title">Conditional forms</h3>
-            <p class="solution-card-text">I gave users the ability to create dynamic forms, showing only relevant sections depending on the context.</p>
-            <p class="solution-card-rationale"><strong>Why I did this:</strong> Previously, users had to remember to leave sections empty. This change removed that requirement entirely.</p>
+            <p class="solution-card-text">I created dynamic forms, showing only relevant sections depending on the context.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> Teachers saw every section on the form, even when only some applied to their observation type. They had to mentally filter what was relevant while managing a classroom. Conditional logic removed that decision entirely.</p>
           </div>
           <div class="solution-card-image">
             <svg viewBox="0 0 360 248" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- Form container with subtle shadow -->
               <rect x="42" y="12" width="280" height="228" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
-              <rect x="40" y="10" width="280" height="228" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <rect x="40" y="10" width="280" height="228" rx="6" stroke="var(--teal)" stroke-width="1.5" fill="var(--bg-card)"/>
               <!-- Title bar -->
               <rect x="56" y="24" width="120" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
               <rect x="56" y="36" width="80" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.2"/>
@@ -846,14 +843,14 @@
           <div class="solution-card-content">
             <p class="solution-card-number">Change 2</p>
             <h3 class="solution-card-title">Help text</h3>
-            <p class="solution-card-text">I let users store tooltips next to an observation strand to help them complete sections.</p>
-            <p class="solution-card-rationale"><strong>Why I did this:</strong> Users had to scroll to the top of the form to see this information. This change brought it to where they were working.</p>
+            <p class="solution-card-text">I added tooltip info directly to sections that teachers would fill out.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> The guidance teachers needed lived in the Matrix, a large reference table at the top of the form. To check it, they had to scroll away from the section they were filling in, find the right row, then scroll back. Inline help text put the guidance next to the field.</p>
           </div>
           <div class="solution-card-image">
             <svg viewBox="0 0 360 232" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- Form container with shadow -->
               <rect x="42" y="12" width="280" height="212" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
-              <rect x="40" y="10" width="280" height="212" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <rect x="40" y="10" width="280" height="212" rx="6" stroke="var(--teal)" stroke-width="1.5" fill="var(--bg-card)"/>
               <!-- Section header -->
               <rect x="56" y="26" width="100" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
               <!-- Collapse arrow -->
@@ -897,14 +894,14 @@
           <div class="solution-card-content">
             <p class="solution-card-number">Change 3</p>
             <h3 class="solution-card-title">Strength & Action Steps placement</h3>
-            <p class="solution-card-text">This component was the first thing any teacher wanted to see when starting a form. I moved it to the top.</p>
-            <p class="solution-card-rationale"><strong>Why I did this:</strong> Users wanted the context before filling out the form. This gave them the context upfront.</p>
+            <p class="solution-card-text">I moved the most important component to the top by default.</p>
+            <p class="solution-card-rationale"><strong>Why I did this:</strong> Before starting an observation, teachers needed to know what the person being observed had been working on, so they could look for evidence of progress during the lesson. That context was buried near the bottom of the form. Moving it to the top meant they had it before they started.</p>
           </div>
           <div class="solution-card-image">
             <svg viewBox="0 0 360 240" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- Form container with shadow -->
               <rect x="42" y="12" width="280" height="220" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
-              <rect x="40" y="10" width="280" height="220" rx="6" stroke="var(--border)" fill="var(--bg-card)"/>
+              <rect x="40" y="10" width="280" height="220" rx="6" stroke="var(--teal)" stroke-width="1.5" fill="var(--bg-card)"/>
               <!-- Title bar -->
               <rect x="56" y="24" width="100" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
               <rect x="56" y="36" width="65" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.2"/>
@@ -947,9 +944,6 @@
         </div>
       </div>
 
-      <div class="prototype-wrapper fade-in prototype-desktop" style="margin-top: 32px;">
-        <iframe src="pt-prototype.html" title="Conditional Forms before and after prototype"></iframe>
-      </div>
     </div>
   </section>
 
@@ -958,7 +952,7 @@
     <div class="impact-block fade-in" style="margin-top: 16px;">
       <p class="impact-number">72%</p>
       <p class="impact-label">reduction in form-related support tickets</p>
-      <p class="impact-sub">From ~18 per month down to fewer than 5.</p>
+      <p class="impact-sub">From ~18 per month down to fewer than 5, tracked in Salesforce over 4 months and sustained.</p>
     </div>
   </div>
 
@@ -967,7 +961,10 @@
       <p class="section-label fade-in">Reflection</p>
       <h2 class="section-heading fade-in">I solved one problem but created another in the process.</h2>
       <p class="section-text fade-in">
-        The setup of forms had increased in complexity. Schools were having a tough time configuring them without help, and leant on me for support. The reflection I took from this was to <strong>consider all users that are affected by a product, not just the end user interacting with it.</strong>
+        The simpler forms worked for teachers, but the setup had become harder for school administrators. Conditional logic and help text needed configuring, and most schools couldn't do it without support. That meant I was personally setting up forms and making adjustments whenever schools needed changes.
+      </p>
+      <p class="section-text fade-in" style="margin-top: 16px;">
+        <strong>If I were doing this again, I'd map out every user who touches the system before designing, not just the one complaining.</strong>
       </p>
     </div>
   </section>
