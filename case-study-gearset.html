@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Babar Sattar - Product Designer</title>
-  <meta name="description" content="Five platform papercuts identified, prototyped and shipped to production from my CSM role, using Claude Code.">
+  <meta name="description" content="Four platform UX fixes identified, prototyped and shipped to production from my CSM role, using Claude Code.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,23 +79,6 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover { color: var(--teal); }
 
     /* ===== HERO ===== */
     .case-hero {
@@ -310,6 +293,14 @@
       cursor: zoom-in;
     }
 
+    .ba-panel video {
+      width: 100%;
+      display: block;
+      flex: 1;
+      object-fit: cover;
+      object-position: top left;
+    }
+
     .ba-caption {
       font-size: 13px;
       color: var(--text-tertiary);
@@ -317,192 +308,6 @@
       border-top: 1px solid var(--border);
       line-height: 1.5;
       margin-top: auto;
-    }
-
-    /* ===== CALLOUT ===== */
-    .callout {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      margin-top: 24px;
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    /* ===== DEEP DIVE (larger) ===== */
-    .deep-dive-ba {
-      margin-top: 24px;
-    }
-
-    .deep-dive-ba .ba-panel {
-      margin-bottom: 16px;
-    }
-
-    .deep-dive-ba .ba-panel img {
-      flex: 0 0 auto;
-      object-fit: contain;
-    }
-
-    /* ===== CAROUSEL ===== */
-    .carousel-wrapper {
-      position: relative;
-      margin-top: 32px;
-      background: var(--teal);
-      border-radius: 16px;
-      padding: 40px 64px;
-    }
-
-    .carousel-stage {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .carousel-stack {
-      position: relative;
-      width: 100%;
-    }
-
-    .carousel-track {
-      position: relative;
-      overflow: hidden;
-      min-height: 420px;
-    }
-
-    .carousel-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(60px) scale(0.97);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .carousel-slide.active {
-      position: relative;
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0) scale(1);
-    }
-
-    .carousel-slide.exit-left {
-      transform: translateX(-60px) scale(0.97);
-      opacity: 0;
-    }
-
-    .carousel-slide.enter-right {
-      transform: translateX(60px) scale(0.97);
-    }
-
-    .carousel-slide.exit-right {
-      transform: translateX(60px) scale(0.97);
-      opacity: 0;
-    }
-
-    .carousel-slide.enter-left {
-      transform: translateX(-60px) scale(0.97);
-    }
-
-    .carousel-slide-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .carousel-slide-desc {
-      font-size: 13px;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.6;
-      margin-bottom: 20px;
-      max-width: var(--content-width);
-    }
-
-    .carousel-wrapper .ba-label {
-      color: var(--text-primary);
-      border-bottom-color: var(--border);
-    }
-
-    .carousel-wrapper .ba-label.before { color: var(--text-tertiary); }
-    .carousel-wrapper .ba-label.after { color: var(--teal); }
-    .carousel-wrapper .ba-label-sub { color: var(--text-secondary); }
-
-    .carousel-ba {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .carousel-ba .ba-panel {
-      background: #fff;
-      border-color: var(--border);
-    }
-
-    .carousel-ba .ba-panel img {
-      max-height: 300px;
-      object-fit: cover;
-      object-position: top left;
-    }
-
-    .carousel-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
-      backdrop-filter: blur(4px);
-    }
-
-    .carousel-arrow:hover {
-      background: rgba(255,255,255,0.3);
-    }
-
-    .carousel-arrow svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .carousel-arrow.prev { left: -52px; }
-    .carousel-arrow.next { right: -52px; }
-
-    .carousel-footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    .carousel-dot.active {
-      background: #fff;
     }
 
     /* ===== PROCESS CARDS ===== */
@@ -753,12 +558,6 @@
       .meta-band { padding: 20px 24px; }
       .next-up-card { grid-template-columns: 1fr; }
       .before-after { grid-template-columns: 1fr; }
-      .carousel-ba { grid-template-columns: 1fr; }
-      .carousel-wrapper { padding: 28px 48px; }
-      .carousel-arrow.prev { left: -44px; }
-      .carousel-arrow.next { right: -44px; }
-      .carousel-arrow { width: 36px; height: 36px; }
-      .carousel-track { min-height: 480px; }
     }
 
     @media (max-width: 600px) {
@@ -786,8 +585,8 @@
       <div class="hero-grid">
         <div>
           <p class="case-meta">Gearset · B2B SaaS · Developer Tooling</p>
-          <h1 class="case-title">Five Platform Papercuts, Shipped from my CSM Role</h1>
-          <p class="case-tldr">Small UX fixes I identified, prototyped and shipped to production using Claude Code, all from my role as a Customer Success Manager.</p>
+          <h1 class="case-title">Four UX Fixes, Shipped From My CSM Role</h1>
+          <p class="case-tldr">I spend all day in Gearset's product. When I kept noticing friction that customers were reporting too, I got codebase access and shipped the fixes myself.</p>
           <div class="case-pills">
             <span class="pill">Design Judgement</span>
             <span class="pill">Claude Code</span>
@@ -822,157 +621,134 @@
       </div>
       <div>
         <p class="meta-item-label">Outcome</p>
-        <p class="meta-item-value">5 fixes in production</p>
+        <p class="meta-item-value">4 fixes in production</p>
       </div>
     </div>
   </div>
 
-  <!-- Section 1: The pattern -->
+  <!-- Context -->
   <section class="case-section">
     <div class="container-wide">
       <div class="fade-in">
-        <p class="section-label">The pattern</p>
-        <h2 class="section-heading">I'm in the product every day. That's how I found these.</h2>
+        <p class="section-label">Context</p>
+        <h2 class="section-heading">I use the product all day. That's where these came from.</h2>
         <p class="section-text">
-          I'm in Gearset every day, customer calls, live troubleshooting, and walkthroughs of different product areas. That means I hit the same small frictions our users hit.
+          I'm in Gearset constantly for my CSM role. Customer calls, live troubleshooting, product walkthroughs. I run into the same rough edges our users run into.
         </p>
         <p class="section-text">
-          To address these issues, I went and got access to Claude Code and Gearset's codebase (which took approval and persistence).
-        </p>
-        <p class="section-text">
-          I learned the workflows used by the UX team, then built and shipped five fixes to production.
+          So I got access to the codebase and Claude Code, learned the UX team's workflows, and started fixing things.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Section 2: Deep dive -->
+  <!-- Fix 01: Delegate org access -->
   <section class="case-section">
     <div class="container-wide">
       <div class="fade-in">
-        <p class="section-label">Deep dive</p>
-        <h2 class="section-heading">Delegate org access: a table that wouldn't scale.</h2>
+        <p class="section-label">Fix 01</p>
+        <h2 class="section-heading">Delegate access: a save button you had to scroll for.</h2>
+        <p class="section-text">
+          The delegate access page listed every user in one long column. To save changes, you scrolled past all of them. One customer had 126 users on this page. I found an existing table component from elsewhere in the platform, reused it here with pagination and a persistent save button, and raised a PR.
+        </p>
       </div>
 
-      <div class="deep-dive-ba fade-in">
-        <div class="before-after">
-          <div class="ba-panel">
-            <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden at the bottom of the table</span></p>
-            <img src="delegate-before.png" alt="Delegate access page showing 31 users in a full list with no visible Save button">
-            <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
-          </div>
-          <div class="ba-panel">
-            <p class="ba-label after">After <span class="ba-label-sub">Save button always visible</span></p>
-            <video autoplay loop muted playsinline style="width:100%; display:block; flex:1; object-fit:cover; object-position:top left;">
-              <source src="delegate-after-prototype-video.mp4" type="video/mp4">
-            </video>
-            <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
-          </div>
+      <div class="before-after fade-in">
+        <div class="ba-panel">
+          <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden below all users</span></p>
+          <img src="delegate-before.png" alt="Delegate access page showing users in a full list with no visible Save button">
+          <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
         </div>
-      </div>
-
-      <div class="fade-in">
-        <p class="callout">Fine at ten users. Not fine at a hundred and twenty six.</p>
-      </div>
-
-      <div class="fade-in" style="margin-top: 24px;">
-        <p class="section-text">
-          In our product Slack channels I saw that Gearset's largest customer was hitting problems the platform hadn't been designed for (such as assigning licences for a team over 100 people).
-        </p>
-        <p class="section-text">
-          Later, I independently noticed the delegate org access page listed every user on the team in one long list. To save, you scrolled past all of them.
-        </p>
-        <p class="section-text">
-          I found an existing table component in the platform and reused it here. I raised the PR, worked with Engineering on some small UI tweaks, and it's in production now.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 3: Gallery -->
-  <section class="case-section">
-    <div class="container-wide">
-      <div class="fade-in">
-        <p class="section-label">The other fixes</p>
-        <h2 class="section-heading">Three more, caught from daily use.</h2>
-
-        <div class="carousel-wrapper" id="fixesCarousel">
-          <div class="carousel-stage">
-            <button class="carousel-arrow prev" onclick="changeSlide(-1)" aria-label="Previous fix">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-
-            <div class="carousel-stack">
-              <div class="carousel-track">
-                <div class="carousel-slide active">
-                  <p class="carousel-slide-title">1. Search term highlighting, What's New</p>
-                  <p class="carousel-slide-desc">I searched for a release note and then had to scan the results to find my own search term. Now matches are highlighted.</p>
-                  <div class="carousel-ba">
-                    <div class="ba-panel">
-                      <p class="ba-label before">Before <span class="ba-label-sub">Search results weren't highlighted and hard to find</span></p>
-                      <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
-                    </div>
-                    <div class="ba-panel">
-                      <p class="ba-label after">After <span class="ba-label-sub">Search results highlighted and immediately identifiable</span></p>
-                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
-                        <source src="search-after-video.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="carousel-slide">
-                  <p class="carousel-slide-title">2. Clickable card area, Observability</p>
-                  <p class="carousel-slide-desc">The card looked clickable but only part of it was, so clicks landed on dead space. Now the whole card is a target.</p>
-                  <div class="carousel-ba">
-                    <div class="ba-panel">
-                      <p class="ba-label before">Before <span class="ba-label-sub">Unclickable dead space on the card</span></p>
-                      <img src="observability-before.png" alt="Observability error monitoring card with dead space annotation">
-                    </div>
-                    <div class="ba-panel">
-                      <p class="ba-label after">After <span class="ba-label-sub">Full card is clickable</span></p>
-                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:top left;">
-                        <source src="observability-after-video.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="carousel-slide">
-                  <p class="carousel-slide-title">3. Agent resizing handle</p>
-                  <p class="carousel-slide-desc">The agent window was resizable but the interaction was hidden. Now it's discoverable.</p>
-                  <div class="carousel-ba">
-                    <div class="ba-panel">
-                      <p class="ba-label before">Before <span class="ba-label-sub">Resizing is completely hidden</span></p>
-                      <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
-                    </div>
-                    <div class="ba-panel">
-                      <p class="ba-label after">After <span class="ba-label-sub">Resizing handle is discoverable and has a hover state</span></p>
-                      <video autoplay loop muted playsinline style="width:100%; display:block; max-height:300px; object-fit:cover; object-position:center;">
-                        <source src="agent-resize-after.mp4" type="video/mp4">
-                      </video>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button class="carousel-arrow next" onclick="changeSlide(1)" aria-label="Next fix">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-          </div>
-
-          <div class="carousel-footer">
-            <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="Fix 1"></button>
-            <button class="carousel-dot" onclick="goToSlide(1)" aria-label="Fix 2"></button>
-            <button class="carousel-dot" onclick="goToSlide(2)" aria-label="Fix 3"></button>
-          </div>
+        <div class="ba-panel">
+          <p class="ba-label after">After <span class="ba-label-sub">Scrollable table, save button always visible</span></p>
+          <video autoplay loop muted playsinline>
+            <source src="delegate-after-prototype-video.mp4" type="video/mp4">
+          </video>
+          <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 4: Process -->
+  <!-- Fix 02: Search term highlighting -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">Fix 02</p>
+        <h2 class="section-heading">Search results you couldn't scan.</h2>
+        <p class="section-text">
+          The What's New section has a search bar. You type a term, get results, but your search term isn't highlighted anywhere in those results. You end up reading each one to find the match. I added keyword highlighting so matches stand out immediately.
+        </p>
+      </div>
+
+      <div class="before-after fade-in">
+        <div class="ba-panel">
+          <p class="ba-label before">Before <span class="ba-label-sub">No highlighting of search terms</span></p>
+          <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
+        </div>
+        <div class="ba-panel">
+          <p class="ba-label after">After <span class="ba-label-sub">Search terms highlighted in results</span></p>
+          <video autoplay loop muted playsinline>
+            <source src="search-after-video.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fix 03: Observability clickable area -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">Fix 03</p>
+        <h2 class="section-heading">A card that looked clickable but mostly wasn't.</h2>
+        <p class="section-text">
+          In the error monitoring view, the card looked like a single click target, but only part of it responded. Clicks on the dead space did nothing. I extended the clickable area to cover the full card.
+        </p>
+      </div>
+
+      <div class="before-after fade-in">
+        <div class="ba-panel">
+          <p class="ba-label before">Before <span class="ba-label-sub">Clickable area smaller than the card</span></p>
+          <img src="observability-before.png" alt="Observability error monitoring card with dead space">
+        </div>
+        <div class="ba-panel">
+          <p class="ba-label after">After <span class="ba-label-sub">Entire card responds to clicks</span></p>
+          <video autoplay loop muted playsinline>
+            <source src="observability-after-video.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fix 04: Agent resize handle -->
+  <section class="case-section">
+    <div class="container-wide">
+      <div class="fade-in">
+        <p class="section-label">Fix 04</p>
+        <h2 class="section-heading">A panel you could resize, if you knew to try.</h2>
+        <p class="section-text">
+          The agent window was already resizable, but there was no visual signal. Users would only discover it by accident. I added a visible handle with a hover state so the interaction is discoverable.
+        </p>
+      </div>
+
+      <div class="before-after fade-in">
+        <div class="ba-panel">
+          <p class="ba-label before">Before <span class="ba-label-sub">No visible resize affordance</span></p>
+          <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
+        </div>
+        <div class="ba-panel">
+          <p class="ba-label after">After <span class="ba-label-sub">Resize handle with hover state</span></p>
+          <video autoplay loop muted playsinline style="object-position:center;">
+            <source src="agent-resize-after.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
   <section class="case-section">
     <div class="container-wide">
       <div class="fade-in">
@@ -984,7 +760,7 @@
               <p class="process-card-title">Spot it.</p>
               <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <p class="process-card-desc">I identify friction from daily product use, log a ticket in Shortcut, and self-assign it.</p>
+            <p class="process-card-desc">I find friction from daily product use, log a ticket in Shortcut, and self-assign it.</p>
             <span class="process-card-number">1</span>
           </div>
           <div class="process-card">
@@ -992,7 +768,7 @@
               <p class="process-card-title">Build it.</p>
               <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
             </div>
-            <p class="process-card-desc">I create a feature branch, prototype different approaches with Claude Code, and raise a PR.</p>
+            <p class="process-card-desc">I create a feature branch, prototype with Claude Code, and raise a PR.</p>
             <span class="process-card-number">2</span>
           </div>
           <div class="process-card">
@@ -1008,16 +784,16 @@
     </div>
   </section>
 
-  <!-- Section 5: Reflection -->
+  <!-- Reflection -->
   <section class="reflection-band">
     <div class="reflection-inner">
-      <p class="section-label fade-in">The ceiling</p>
-      <h2 class="section-heading fade-in">I've found the limit of what my CSM role allows.</h2>
+      <p class="section-label fade-in">What's next</p>
+      <h2 class="section-heading fade-in">This is the work I want to do full-time.</h2>
       <p class="section-text fade-in">
-        From my CSM role I can spot friction and ship a fix, but I can't take on more meaningful and higher-impact problems.
+        I shipped these fixes alongside my full-time CSM job. I got codebase access on my own initiative, learned the UX team's workflow, and went through engineering code review for each one.
       </p>
       <p class="section-text fade-in">
-        I've found the limit of what I can do as a CSM, the work I want to do is that of a dedicated Product Designer.
+        I want to do this properly, as a Product Designer. Find the problems, design the fixes, ship them.
       </p>
     </div>
   </section>
@@ -1075,55 +851,6 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
-
-    // Carousel
-    let currentSlide = 0;
-    let isAnimating = false;
-    const slides = document.querySelectorAll('#fixesCarousel .carousel-slide');
-    const dots = document.querySelectorAll('#fixesCarousel .carousel-dot');
-
-    function goToSlide(index, dir) {
-      if (isAnimating) return;
-      const prev = currentSlide;
-      const next = (index + slides.length) % slides.length;
-      if (prev === next) return;
-      if (dir === undefined) dir = next > prev ? 1 : -1;
-
-      isAnimating = true;
-
-      // Set up incoming slide starting position
-      slides[next].classList.add(dir > 0 ? 'enter-right' : 'enter-left');
-      slides[next].style.position = 'absolute';
-      slides[next].style.opacity = '0';
-      slides[next].style.pointerEvents = 'none';
-
-      // Force reflow so the starting transform is applied
-      slides[next].offsetHeight;
-
-      // Animate outgoing slide
-      slides[prev].classList.add(dir > 0 ? 'exit-left' : 'exit-right');
-      slides[prev].classList.remove('active');
-
-      // Animate incoming slide
-      slides[next].classList.remove('enter-right', 'enter-left');
-      slides[next].classList.add('active');
-      slides[next].style.position = '';
-      slides[next].style.opacity = '';
-      slides[next].style.pointerEvents = '';
-
-      dots[prev].classList.remove('active');
-      dots[next].classList.add('active');
-      currentSlide = next;
-
-      setTimeout(() => {
-        slides[prev].classList.remove('exit-left', 'exit-right');
-        isAnimating = false;
-      }, 420);
-    }
-
-    function changeSlide(dir) {
-      goToSlide(currentSlide + dir, dir);
-    }
 
     // Scroll fade
     const observer = new IntersectionObserver(
