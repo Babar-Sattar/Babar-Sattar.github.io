@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Babar Sattar — Product Designer</title>
-  <meta name="description" content="I'm the kind of designer who owns user problems end-to-end — I research, I build, I ship.">
+  <meta name="description" content="I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.">
+  <meta property="og:description" content="I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -217,6 +218,7 @@
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 1.2s ease-out, transform 1.6s ease-out;
+      min-height: 1.5em;
     }
 
     .hero-tagline.animate {
@@ -224,22 +226,23 @@
       transform: translateY(0);
     }
 
+    .hero-tagline .typed-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--teal);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink-cursor 0.6s step-end infinite;
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
     .hero .teal {
       color: var(--teal);
-    }
-
-    .hero-bio {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-tertiary);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 1.2s ease-out, transform 1.6s ease-out;
-    }
-
-    .hero-bio.animate {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* ===== SECTION CONTAINERS ===== */
@@ -1613,12 +1616,7 @@
   <section class="hero" id="heroSection">
     <div class="hero-content">
       <h1 class="hero-name">Babar Sattar</h1>
-      <p class="hero-tagline">
-        Product Designer | B2B SaaS <span class="teal">✦</span> Vibe coding enthusiast <span class="teal">✦</span> Gaming aficionado
-      </p>
-      <p class="hero-bio">
-        I help B2B SaaS companies <span class="teal">turn complex workflows into high-value product opportunities</span>.
-      </p>
+      <p class="hero-tagline" id="heroTagline"><span class="typed-cursor"></span></p>
     </div>
   </section>
 
@@ -2470,6 +2468,13 @@
 
         // Stay in place — no scroll
 
+        // Update hero tagline with typing animation
+        if (tab !== currentTaglineTab) {
+          currentTaglineTab = tab;
+          const newText = taglineTexts[tab] || taglineTexts.work;
+          clearAndType(heroTagline, newText, 18);
+        }
+
         // Track last tab so runner spawns on return to Play
         if (tab === 'play' && !window._pixelRunnerActive) {
           spawnPixelRunner();
@@ -2561,6 +2566,7 @@
       let state = 'walk';
       let pauseTimer = 0;
       let airborne = false;
+      let exitSpeed = 0;
 
       function drawJumpPose() {
         ctx.clearRect(0, 0, 16, 20);
@@ -2679,8 +2685,10 @@
             break;
 
           case 'walk_exit':
-            if (tick % 4 === 0) frame++;
-            x += speed;
+            if (!exitSpeed) exitSpeed = speed;
+            exitSpeed *= 1.06;
+            if (tick % Math.max(1, Math.round(4 / (exitSpeed / speed))) === 0) frame++;
+            x += exitSpeed;
             drawFrame(frame);
             break;
         }
@@ -2715,15 +2723,70 @@
 
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 
+    // Typing animation engine
+    const heroTagline = document.getElementById('heroTagline');
+    const taglineTexts = {
+      work: 'I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.',
+      play: 'Gaming aficionado ✦ Level design nerd ✦ Vibe coding enthusiast',
+      about: 'I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.'
+    };
+    let typingAnim = null;
+    let currentTaglineTab = '';
+
+    function typeText(el, text, speed, callback) {
+      if (typingAnim) { cancelAnimationFrame(typingAnim); typingAnim = null; }
+      const cursor = el.querySelector('.typed-cursor') || document.createElement('span');
+      cursor.className = 'typed-cursor';
+      el.textContent = '';
+      el.appendChild(cursor);
+      let i = 0;
+      function step() {
+        if (i < text.length) {
+          // Insert character before cursor, wrapping ✦ in teal
+          if (text[i] === '✦') {
+            const s = document.createElement('span');
+            s.className = 'teal';
+            s.textContent = '✦';
+            cursor.before(s);
+          } else {
+            cursor.before(text[i]);
+          }
+          i++;
+          typingAnim = setTimeout(step, speed);
+        } else {
+          typingAnim = null;
+          // Remove cursor after a short pause
+          setTimeout(() => { if (cursor.parentNode) cursor.remove(); }, 1200);
+          if (callback) callback();
+        }
+      }
+      step();
+    }
+
+    function clearAndType(el, text, speed) {
+      if (typingAnim) { clearTimeout(typingAnim); typingAnim = null; }
+      const currentText = el.textContent;
+      const cursor = document.createElement('span');
+      cursor.className = 'typed-cursor';
+      // Clear existing text quickly
+      let chars = Array.from(el.childNodes).filter(n => n.nodeType === 3 || (n.nodeType === 1 && !n.classList.contains('typed-cursor')));
+      el.textContent = '';
+      el.appendChild(cursor);
+      // Small pause then type new text
+      setTimeout(() => typeText(el, text, speed), 150);
+    }
+
     // Hero entrance sequence
     window.addEventListener('load', () => {
       const name = document.querySelector('.hero-name');
       const tagline = document.querySelector('.hero-tagline');
-      const bio = document.querySelector('.hero-bio');
 
       setTimeout(() => name.classList.add('animate'), 100);
-      setTimeout(() => tagline.classList.add('animate'), 500);
-      setTimeout(() => bio.classList.add('animate'), 800);
+      setTimeout(() => {
+        tagline.classList.add('animate');
+        currentTaglineTab = 'work';
+        typeText(tagline, taglineTexts.work, 18);
+      }, 500);
 
       // After hero, reveal pills and cards
       setTimeout(() => {
