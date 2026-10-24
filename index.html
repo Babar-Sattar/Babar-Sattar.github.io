@@ -475,6 +475,51 @@
       backdrop-filter: blur(4px);
     }
 
+    /* Split card variant — illustration top, text bottom */
+    .work-card--split {
+      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-card--split .work-card-image {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    .work-card--split .work-card-body {
+      position: relative;
+      inset: auto;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+    }
+
+    .work-card--split .work-card-company {
+      color: var(--teal);
+    }
+
+    .work-card--split .work-card-title {
+      color: var(--text-primary);
+      font-size: 22px;
+    }
+
+    .work-card--split .work-card-pills {
+      margin-top: 16px;
+    }
+
+    .work-card--split .pill-overlay {
+      background: rgba(22, 91, 96, 0.08);
+      color: var(--teal);
+      backdrop-filter: none;
+    }
+
+    .work-card--split .work-card-body .work-card-pills {
+      order: 0;
+      margin-bottom: 0;
+    }
+
     /* Device mockups in cards */
     .card-laptop-frame {
       width: 90%;
@@ -761,8 +806,20 @@
         max-width: 100%;
       }
 
-      .work-card {
+      .work-card:not(.work-card--split) {
         aspect-ratio: 4 / 3;
+      }
+
+      .work-card--split .work-card-image {
+        aspect-ratio: 3 / 2;
+      }
+
+      .work-card--split .work-card-body {
+        padding: 24px;
+      }
+
+      .work-card--split .work-card-title {
+        font-size: 20px;
       }
 
       .section-wide {
@@ -1643,7 +1700,7 @@
     <div class="work-grid">
 
       <!-- Gearset Card -->
-      <div class="work-card fade-in" data-modal-src="case-study-gearset.html">
+      <div class="work-card work-card--split fade-in" data-modal-src="case-study-gearset.html">
         <div class="work-card-image">
           <div class="gs-chain-anim" id="gsChainAnim">
             <svg viewBox="0 0 360 258" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2013,7 +2070,7 @@
       </div>
 
       <!-- PT Card -->
-      <div class="work-card fade-in" data-modal-src="case-study-pt.html">
+      <div class="work-card work-card--split fade-in" data-modal-src="case-study-pt.html">
         <div class="work-card-image">
           <div class="pt-chain-anim" id="ptChainAnim">
             <svg viewBox="0 0 360 248" fill="none" xmlns="http://www.w3.org/2000/svg">
