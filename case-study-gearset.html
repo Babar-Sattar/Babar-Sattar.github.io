@@ -471,6 +471,62 @@
 
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+    /* ===== FIX CARDS ===== */
+    .fix-cards {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .fix-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .fix-card-content {
+      padding: 28px 32px;
+    }
+
+    .fix-card-number {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .fix-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .fix-card-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .fix-card-text + .fix-card-text {
+      margin-top: 8px;
+    }
+
+    .fix-card-media {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .fix-card-media .before-after {
+      margin-top: 0;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
       .container-wide { padding: 0 24px; }
@@ -484,6 +540,8 @@
       .meta-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
       .meta-band { padding: 20px 24px; }
       .before-after { grid-template-columns: 1fr; }
+      .fix-card-content { padding: 20px 24px; }
+      .fix-card-title { font-size: 18px; }
     }
 
     @media (max-width: 600px) {
@@ -568,132 +626,142 @@
     </div>
   </section>
 
-  <!-- Fix 01: Delegate org access -->
+  <!-- The fixes -->
   <section class="case-section">
     <div class="container-wide">
       <div class="fade-in">
-        <p class="section-label">Fix 01</p>
-        <h2 class="section-heading">Delegate access: a save button buried at the bottom of the list.</h2>
-        <p class="section-text">
-          Admins managing org access had to scroll past every user to reach Save. Some customers have over 100 users on this page.
-        </p>
-        <p class="section-text">
-          <strong>What I did, and why:</strong> I designed a paginated table in Figma and shared it with a UX colleague. He suggested reusing a new table component from elsewhere in the platform for consistency. I prototyped both in Claude, and chose the latter.
-        </p>
-        <p class="section-text">
-          <strong>Impact:</strong> over 40% of visits to this page came from teams too large to see Save without scrolling. Two-thirds of those visits came from Enterprise accounts. For the largest teams, Save was buried 5+ seconds down.
-        </p>
+        <p class="section-label">The fixes</p>
+        <h2 class="section-heading">Four UI issues I found, fixed, and shipped.</h2>
       </div>
 
-      <div class="before-after fade-in">
-        <div class="ba-panel">
-          <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden below all users</span></p>
-          <img src="delegate-before.png" alt="Delegate access page showing users in a full list with no visible Save button" loading="lazy">
-          <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
-        </div>
-        <div class="ba-panel">
-          <p class="ba-label after">After <span class="ba-label-sub">Scrollable table, save button always visible</span></p>
-          <video autoplay loop muted playsinline>
-            <source src="delegate-after-prototype-video.mp4" type="video/mp4">
-          </video>
-          <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="fix-cards">
 
-  <!-- Fix 02: Search term highlighting -->
-  <section class="case-section">
-    <div class="container-wide">
-      <div class="fade-in">
-        <p class="section-label">Fix 02</p>
-        <h2 class="section-heading">What's New search: results that required manual scanning to find the information.</h2>
-        <p class="section-text">
-          Searching What's New returned matching results, but it didn't show where your term appeared. You had to manually read the results to find the relevant info.
-        </p>
-        <p class="section-text">
-          <strong>What I did, and why:</strong> I used the design system to find the right highlight colour, and applied it to searched terms. Highlighting matches existing mental models, and lets users jump straight to the match. I toyed with ideas of making the product areas filter options, but the increased complexity meant I wanted to tackle it later.
-        </p>
-        <p class="section-text">
-          <strong>Impact:</strong> X searches a month (tracking requested, data pending).
-        </p>
-      </div>
+        <!-- Fix 01: Delegate org access -->
+        <div class="fix-card fade-in">
+          <div class="fix-card-content">
+            <p class="fix-card-number">Fix 01</p>
+            <h3 class="fix-card-title">Delegate access: a save button buried at the bottom of the list.</h3>
+            <p class="fix-card-text">
+              Admins managing org access had to scroll past every user to reach Save. Some customers have over 100 users on this page.
+            </p>
+            <p class="fix-card-text">
+              <strong>What I did, and why:</strong> I designed a paginated table in Figma and shared it with a UX colleague. He suggested reusing a new table component from elsewhere in the platform for consistency. I prototyped both in Claude, and chose the latter.
+            </p>
+            <p class="fix-card-text">
+              <strong>Impact:</strong> over 40% of visits to this page came from teams too large to see Save without scrolling. Two-thirds of those visits came from Enterprise accounts. For the largest teams, Save was buried 5+ seconds down.
+            </p>
+          </div>
+          <div class="fix-card-media">
+            <div class="before-after">
+              <div class="ba-panel">
+                <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden below all users</span></p>
+                <img src="delegate-before.png" alt="Delegate access page showing users in a full list with no visible Save button" loading="lazy">
+                <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
+              </div>
+              <div class="ba-panel">
+                <p class="ba-label after">After <span class="ba-label-sub">Scrollable table, save button always visible</span></p>
+                <video autoplay loop muted playsinline>
+                  <source src="delegate-after-prototype-video.mp4" type="video/mp4">
+                </video>
+                <p class="ba-caption">126 users in a scrollable table. Save is always visible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="before-after fade-in">
-        <div class="ba-panel">
-          <p class="ba-label before">Before <span class="ba-label-sub">No highlighting of search terms</span></p>
-          <img src="search-before.png" alt="What's New search results with no highlighting of the search term" loading="lazy">
+        <!-- Fix 02: Search term highlighting -->
+        <div class="fix-card fade-in">
+          <div class="fix-card-content">
+            <p class="fix-card-number">Fix 02</p>
+            <h3 class="fix-card-title">What's New search: results that required manual scanning to find the information.</h3>
+            <p class="fix-card-text">
+              Searching What's New returned matching results, but it didn't show where your term appeared. You had to manually read the results to find the relevant info.
+            </p>
+            <p class="fix-card-text">
+              <strong>What I did, and why:</strong> I used the design system to find the right highlight colour, and applied it to searched terms. Highlighting matches existing mental models, and lets users jump straight to the match. I toyed with ideas of making the product areas filter options, but the increased complexity meant I wanted to tackle it later.
+            </p>
+            <p class="fix-card-text">
+              <strong>Impact:</strong> X searches a month (tracking requested, data pending).
+            </p>
+          </div>
+          <div class="fix-card-media">
+            <div class="before-after">
+              <div class="ba-panel">
+                <p class="ba-label before">Before <span class="ba-label-sub">No highlighting of search terms</span></p>
+                <img src="search-before.png" alt="What's New search results with no highlighting of the search term" loading="lazy">
+              </div>
+              <div class="ba-panel">
+                <p class="ba-label after">After <span class="ba-label-sub">Search terms highlighted in results</span></p>
+                <video autoplay loop muted playsinline>
+                  <source src="search-after-video.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="ba-panel">
-          <p class="ba-label after">After <span class="ba-label-sub">Search terms highlighted in results</span></p>
-          <video autoplay loop muted playsinline>
-            <source src="search-after-video.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Fix 03: Observability clickable area -->
-  <section class="case-section">
-    <div class="container-wide">
-      <div class="fade-in">
-        <p class="section-label">Fix 03</p>
-        <h2 class="section-heading">Error monitoring: a card that looked clickable but parts of it weren't.</h2>
-        <p class="section-text">
-          The card looked like a single click target, but only part of it responded. Clicks on the rest did nothing.
-        </p>
-        <p class="section-text">
-          <strong>What I did, and why:</strong> if something looks like one target, users treat it as one. I made the whole card clickable to match what that design pattern, and because a larger target is faster and easier to hit (Fitts's law).
-        </p>
-        <p class="section-text">
-          <strong>Impact:</strong> every click on the card now does what the design promises, with no dead areas.
-        </p>
-      </div>
+        <!-- Fix 03: Observability clickable area -->
+        <div class="fix-card fade-in">
+          <div class="fix-card-content">
+            <p class="fix-card-number">Fix 03</p>
+            <h3 class="fix-card-title">Error monitoring: a card that looked clickable but parts of it weren't.</h3>
+            <p class="fix-card-text">
+              The card looked like a single click target, but only part of it responded. Clicks on the rest did nothing.
+            </p>
+            <p class="fix-card-text">
+              <strong>What I did, and why:</strong> if something looks like one target, users treat it as one. I made the whole card clickable to match what that design pattern, and because a larger target is faster and easier to hit (Fitts's law).
+            </p>
+            <p class="fix-card-text">
+              <strong>Impact:</strong> every click on the card now does what the design promises, with no dead areas.
+            </p>
+          </div>
+          <div class="fix-card-media">
+            <div class="before-after">
+              <div class="ba-panel">
+                <p class="ba-label before">Before <span class="ba-label-sub">Clickable area smaller than the card</span></p>
+                <img src="observability-before.png" alt="Observability error monitoring card with dead space" loading="lazy">
+              </div>
+              <div class="ba-panel">
+                <p class="ba-label after">After <span class="ba-label-sub">Entire card responds to clicks</span></p>
+                <video autoplay loop muted playsinline>
+                  <source src="observability-after-video.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="before-after fade-in">
-        <div class="ba-panel">
-          <p class="ba-label before">Before <span class="ba-label-sub">Clickable area smaller than the card</span></p>
-          <img src="observability-before.png" alt="Observability error monitoring card with dead space" loading="lazy">
+        <!-- Fix 04: Agent resize handle -->
+        <div class="fix-card fade-in">
+          <div class="fix-card-content">
+            <p class="fix-card-number">Fix 04</p>
+            <h3 class="fix-card-title">Agent window: resizing had no signal.</h3>
+            <p class="fix-card-text">
+              The agent window could be resized, but nothing signalled it. Users found it by accident or not at all, and one customer asked us to add the feature even though it already existed.
+            </p>
+            <p class="fix-card-text">
+              <strong>What I did, and why:</strong> a feature users can't discover might as well not exist. I used Claude Code to prototype some icons and hover states, and shared it with a UX colleague. She suggested looking for an existing component to reduce the lift. We found the component, shared it with Engineering, and got it implemented.
+            </p>
+            <p class="fix-card-text">
+              <strong>Impact:</strong> makes an existing feature discoverable for everyone using the Agent.
+            </p>
+          </div>
+          <div class="fix-card-media">
+            <div class="before-after">
+              <div class="ba-panel">
+                <p class="ba-label before">Before <span class="ba-label-sub">No visible resize signal</span></p>
+                <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" loading="lazy" style="object-position:center;">
+              </div>
+              <div class="ba-panel">
+                <p class="ba-label after">After <span class="ba-label-sub">Resize handle with hover state</span></p>
+                <video autoplay loop muted playsinline style="object-position:center;">
+                  <source src="agent-resize-after.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="ba-panel">
-          <p class="ba-label after">After <span class="ba-label-sub">Entire card responds to clicks</span></p>
-          <video autoplay loop muted playsinline>
-            <source src="observability-after-video.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Fix 04: Agent resize handle -->
-  <section class="case-section">
-    <div class="container-wide">
-      <div class="fade-in">
-        <p class="section-label">Fix 04</p>
-        <h2 class="section-heading">Agent window: resizing had no signal.</h2>
-        <p class="section-text">
-          The agent window could be resized, but nothing signalled it. Users found it by accident or not at all, and one customer asked us to add the feature even though it already existed.
-        </p>
-        <p class="section-text">
-          <strong>What I did, and why:</strong> a feature users can't discover might as well not exist. I used Claude Code to prototype some icons and hover states, and shared it with a UX colleague. She suggested looking for an existing component to reduce the lift. We found the component, shared it with Engineering, and got it implemented.
-        </p>
-        <p class="section-text">
-          <strong>Impact:</strong> makes an existing feature discoverable for everyone using the Agent.
-        </p>
-      </div>
-
-      <div class="before-after fade-in">
-        <div class="ba-panel">
-          <p class="ba-label before">Before <span class="ba-label-sub">No visible resize signal</span></p>
-          <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" loading="lazy" style="object-position:center;">
-        </div>
-        <div class="ba-panel">
-          <p class="ba-label after">After <span class="ba-label-sub">Resize handle with hover state</span></p>
-          <video autoplay loop muted playsinline style="object-position:center;">
-            <source src="agent-resize-after.mp4" type="video/mp4">
-          </video>
-        </div>
       </div>
     </div>
   </section>
@@ -789,6 +857,7 @@
       { threshold: 0.15 }
     );
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
   </script>
 
 </body>
