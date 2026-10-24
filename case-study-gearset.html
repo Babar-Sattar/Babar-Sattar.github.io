@@ -572,16 +572,22 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Fix 01</p>
-        <h2 class="section-heading">Delegate access: a save button you had to scroll for.</h2>
+        <h2 class="section-heading">Delegate access: a save button buried at the bottom of the list.</h2>
         <p class="section-text">
-          The delegate access page listed every user in one long column. To save changes, you scrolled past all of them. One customer had 126 users on this page. I found an existing table component from elsewhere in the platform, reused it here with pagination and a persistent save button, and raised a PR.
+          Admins managing org access had to scroll past every user to reach Save. Some customers have over 100 users on this page.
+        </p>
+        <p class="section-text">
+          <strong>Why I reused a component:</strong> reusing it meant users saw a pattern they already knew, and Engineering had less new code to review.
+        </p>
+        <p class="section-text">
+          <strong>Impact:</strong> Over 40% of visits to this page came from teams too large to see Save without scrolling, a conservative count based on a large monitor. Two-thirds of those visits came from Enterprise accounts. For the largest teams, Save was buried 5+ seconds down, and the gap grew with every user added.
         </p>
       </div>
 
       <div class="before-after fade-in">
         <div class="ba-panel">
           <p class="ba-label before">Before <span class="ba-label-sub">Save button hidden below all users</span></p>
-          <img src="delegate-before.png" alt="Delegate access page showing users in a full list with no visible Save button">
+          <img src="delegate-before.png" alt="Delegate access page showing users in a full list with no visible Save button" loading="lazy">
           <p class="ba-caption">31 users listed in full. The Save button sits below every row.</p>
         </div>
         <div class="ba-panel">
@@ -600,16 +606,22 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Fix 02</p>
-        <h2 class="section-heading">Search results you couldn't scan.</h2>
+        <h2 class="section-heading">What's New search: results that required you to read in order to find the information.</h2>
         <p class="section-text">
-          The What's New section has a search bar. You type a term, get results, but your search term isn't highlighted anywhere in those results. You end up reading each one to find the match. I added keyword highlighting so matches stand out immediately.
+          Searching What's New returned matching results, but it didn't show where your term appeared. You had to manually read the results to find the relevant info.
+        </p>
+        <p class="section-text">
+          <strong>Why highlighting:</strong> it's the pattern users already know from every search engine and inbox. Highlighting turns reading into scanning, because the eye jumps straight to the match.
+        </p>
+        <p class="section-text">
+          <strong>Impact:</strong> X searches a month (tracking requested, data pending).
         </p>
       </div>
 
       <div class="before-after fade-in">
         <div class="ba-panel">
           <p class="ba-label before">Before <span class="ba-label-sub">No highlighting of search terms</span></p>
-          <img src="search-after.png" alt="What's New search results with no highlighting of the search term">
+          <img src="search-after.png" alt="What's New search results with no highlighting of the search term" loading="lazy">
         </div>
         <div class="ba-panel">
           <p class="ba-label after">After <span class="ba-label-sub">Search terms highlighted in results</span></p>
@@ -626,16 +638,22 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Fix 03</p>
-        <h2 class="section-heading">A card that looked clickable but mostly wasn't.</h2>
+        <h2 class="section-heading">Error monitoring: a card that looked clickable but parts of it weren't.</h2>
         <p class="section-text">
-          In the error monitoring view, the card looked like a single click target, but only part of it responded. Clicks on the dead space did nothing. I extended the clickable area to cover the full card.
+          The card looked like a single click target, but only part of it responded. Clicks on the rest did nothing.
+        </p>
+        <p class="section-text">
+          <strong>Why the whole card:</strong> if something looks like one target, users treat it as one. Making the full card clickable matched what the design was already promising, and a larger target is faster and easier to hit (Fitts's law).
+        </p>
+        <p class="section-text">
+          <strong>Impact:</strong> every click on the card now does what the design promises, with no dead zones.
         </p>
       </div>
 
       <div class="before-after fade-in">
         <div class="ba-panel">
           <p class="ba-label before">Before <span class="ba-label-sub">Clickable area smaller than the card</span></p>
-          <img src="observability-before.png" alt="Observability error monitoring card with dead space">
+          <img src="observability-before.png" alt="Observability error monitoring card with dead space" loading="lazy">
         </div>
         <div class="ba-panel">
           <p class="ba-label after">After <span class="ba-label-sub">Entire card responds to clicks</span></p>
@@ -652,16 +670,22 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Fix 04</p>
-        <h2 class="section-heading">A panel you could resize, if you knew to try.</h2>
+        <h2 class="section-heading">Agent window: resizing had no signal.</h2>
         <p class="section-text">
-          The agent window was already resizable, but there was no visual signal. Users would only discover it by accident. I added a visible handle with a hover state so the interaction is discoverable.
+          The agent window could be resized, but nothing signalled it. Users found it by accident or not at all, and one customer asked us to add a feature that already existed.
+        </p>
+        <p class="section-text">
+          <strong>Why a visible handle:</strong> a feature users can't discover might as well not exist. A handle with a hover state is a signal that tells users the panel can be resized.
+        </p>
+        <p class="section-text">
+          <strong>Impact:</strong> makes an existing feature discoverable for everyone using the Agent.
         </p>
       </div>
 
       <div class="before-after fade-in">
         <div class="ba-panel">
           <p class="ba-label before">Before <span class="ba-label-sub">No visible resize affordance</span></p>
-          <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" style="object-position:center;">
+          <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" loading="lazy" style="object-position:center;">
         </div>
         <div class="ba-panel">
           <p class="ba-label after">After <span class="ba-label-sub">Resize handle with hover state</span></p>

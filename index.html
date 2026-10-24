@@ -362,7 +362,7 @@
     }
 
     .work-card:hover .work-card-image {
-      filter: brightness(0.3);
+      filter: brightness(0.85);
     }
 
     /* Halo slideshow */
@@ -391,18 +391,13 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      opacity: 0;
-      transition: opacity 0.35s ease;
       z-index: 2;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 40%, transparent 70%);
     }
 
     .work-card-body .work-card-pills {
       order: -1;
       margin-bottom: auto;
-    }
-
-    .work-card:hover .work-card-body {
-      opacity: 1;
     }
 
     .work-card-meta {
@@ -611,26 +606,20 @@
     }
 
     .about-collage img {
-      position: absolute;
       border-radius: var(--radius);
       object-fit: cover;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    .about-collage .collage-top {
-      width: 220px;
-      height: 260px;
-      top: 0;
-      left: 0;
-      z-index: 1;
+    .about-collage-single {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .about-collage .collage-bottom {
-      width: 220px;
-      height: 260px;
-      bottom: 0;
-      right: 0;
-      z-index: 2;
+    .about-collage .collage-single {
+      width: 100%;
+      height: 100%;
     }
 
     /* ===== CONTACT ===== */
@@ -750,12 +739,6 @@
         width: 260px;
         height: 340px;
         order: -1;
-      }
-
-      .about-collage .collage-top,
-      .about-collage .collage-bottom {
-        width: 180px;
-        height: 210px;
       }
 
       .about-text-col-2 {
@@ -2114,9 +2097,9 @@
       <!-- Halo Card -->
       <div class="work-card fade-in" data-modal-src="case-study-halo.html">
         <div class="work-card-image halo-slideshow">
-          <img src="halo-hero.jpg" alt="Halo map overview" class="slideshow-img active">
-          <img src="halo-slide-2.png" alt="Halo gameplay combat" class="slideshow-img">
-          <img src="halo-slide-3.png" alt="Halo gameplay firefight" class="slideshow-img">
+          <img src="halo-hero.jpg" alt="Halo map overview" class="slideshow-img active" loading="lazy">
+          <img src="halo-slide-2.png" alt="Halo gameplay combat" class="slideshow-img" loading="lazy">
+          <img src="halo-slide-3.png" alt="Halo gameplay firefight" class="slideshow-img" loading="lazy">
         </div>
         <div class="work-card-body">
           <h2 class="work-card-title">Halo Level Design</h2>
@@ -2313,7 +2296,7 @@
       <!-- Heatmap Generator Card -->
       <div class="work-card fade-in" data-lightbox-img="heatmap-tool.gif">
         <div class="work-card-image">
-          <img src="heatmap-tool.gif" alt="Heatmap generator tool" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <img src="heatmap-tool.gif" alt="Heatmap generator tool" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
         </div>
         <div class="work-card-body">
           <h2 class="work-card-title">Heatmap generator for levels</h2>
@@ -2357,16 +2340,12 @@
             <a href="mailto:b.sattar@gmail.com" style="color: var(--teal); text-decoration: none; font-weight: 600;">b.sattar@gmail.com</a>
           </p>
         </div>
-        <div class="about-collage">
+        <div class="about-collage about-collage-single">
           <img
             src="about-climbing.jpg"
             alt="Babar climbing"
-            class="collage-top"
-          >
-          <img
-            src="about-chess.jpg"
-            alt="Babar playing chess"
-            class="collage-bottom"
+            class="collage-single"
+            loading="lazy"
           >
         </div>
       </div>
@@ -2728,7 +2707,7 @@
     const taglineTexts = {
       work: 'I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.',
       play: 'Gaming aficionado ✦ Level design nerd ✦ Vibe coding enthusiast',
-      about: 'I find the friction hiding in complex B2B SaaS workflows, and I ship the fix.'
+      about: 'Gaming aficionado ✦ Level design nerd ✦ Vibe coding enthusiast'
     };
     let typingAnim = null;
     let currentTaglineTab = '';
