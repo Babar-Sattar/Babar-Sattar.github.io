@@ -293,6 +293,11 @@
       grid-row: 1 / 3;
     }
 
+    .play-grid .work-card-description,
+    .play-grid .work-card-pills {
+      display: none;
+    }
+
     .play-grid .work-card:nth-child(2) .work-card-body,
     .play-grid .work-card:nth-child(3) .work-card-body {
       padding: 20px;
@@ -301,13 +306,6 @@
     .play-grid .work-card:nth-child(2) .work-card-title,
     .play-grid .work-card:nth-child(3) .work-card-title {
       font-size: 20px;
-      margin-bottom: 6px;
-    }
-
-    .play-grid .work-card:nth-child(2) .work-card-description,
-    .play-grid .work-card:nth-child(3) .work-card-description {
-      font-size: 13px;
-      margin-bottom: 10px;
     }
 
     .play-grid .work-card:nth-child(4) {
@@ -472,7 +470,7 @@
     }
 
     .pill-overlay {
-      background: rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.55);
       color: #fff;
       backdrop-filter: blur(4px);
     }
@@ -2195,7 +2193,6 @@
                 <animate attributeName="opacity" values="0.15;0.04;0.15;0.15;0.15;0.15;0.04;0.15;0.15;0.15;0.15;0.04;0.15;0.15;0.15" keyTimes="0;0.03;0.06;0.07;0.08;0.33;0.36;0.39;0.40;0.41;0.66;0.69;0.72;0.73;1" dur="8s" repeatCount="indefinite"/>
               </ellipse>
             </svg>
-            <span class="placeholder-title">Catan Dice Tracker</span>
           </div>
         </div>
         <div class="work-card-body">
@@ -2278,7 +2275,6 @@
                 <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.60;0.61;0.67;0.68;1" dur="7s" repeatCount="indefinite"/>
               </ellipse>
             </svg>
-            <span class="placeholder-title">Hydration Hero</span>
           </div>
         </div>
         <div class="work-card-body">
