@@ -893,6 +893,29 @@
       border: none;
     }
 
+    .modal-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border, #e0e0e0);
+      border-top-color: var(--primary, #165B60);
+      border-radius: 50%;
+      animation: modal-spin 0.7s linear infinite;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-spinner.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes modal-spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
     /* ===== IMAGE LIGHTBOX ===== */
     .img-lightbox {
       position: fixed;
@@ -2359,6 +2382,7 @@
         <button class="modal-btn" id="modalFullscreen" title="Toggle fullscreen">⛶</button>
         <button class="modal-btn" id="modalClose" title="Close (Esc)">✕</button>
       </div>
+      <div class="modal-spinner" id="modalSpinner"></div>
       <iframe class="modal-iframe" id="modalIframe"></iframe>
     </div>
   </div>
@@ -3419,8 +3443,17 @@
       const iframe = document.getElementById('modalIframe');
       const closeBtn = document.getElementById('modalClose');
       const fullscreenBtn = document.getElementById('modalFullscreen');
+      const spinner = document.getElementById('modalSpinner');
+
+      let clearTimer = null;
+
+      iframe.addEventListener('load', () => {
+        if (iframe.src) spinner.classList.add('hidden');
+      });
 
       function openModal(src) {
+        if (clearTimer) { clearTimeout(clearTimer); clearTimer = null; }
+        spinner.classList.remove('hidden');
         iframe.src = src;
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -3430,7 +3463,7 @@
         overlay.classList.remove('open');
         container.classList.remove('fullscreen');
         document.body.style.overflow = '';
-        setTimeout(() => { iframe.src = ''; }, 300);
+        clearTimer = setTimeout(() => { iframe.src = ''; spinner.classList.remove('hidden'); clearTimer = null; }, 300);
       }
 
       function toggleFullscreen() {
