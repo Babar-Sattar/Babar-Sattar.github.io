@@ -2519,7 +2519,7 @@
         return { left: r.left - divRect.left - 4, right: r.right - divRect.left + 4, top: -(r.height + 6) };
       });
 
-      const speed = 5;
+      const speed = 2;
       const totalWidth = divider.offsetWidth + 60;
       let x = -30;
       let y = 0;
@@ -2537,11 +2537,18 @@
       }
       const platform = { left: platformLeft, right: platformRight, top: platformTop };
 
-      // State machine: walk → pause → jump_up → land_pause → walk_on → edge_pause → jump_down → land_pause2 → walk_exit
+      // Find the Play pill center for the bounce target
+      const playPill = pills[1]; // Work, Play, About — Play is index 1
+      const playRect = playPill.getBoundingClientRect();
+      const playCenter = (playRect.left + playRect.right) / 2 - divRect.left;
+
+      // Find the Play pill top (it's highlighted/active so may be slightly different)
+      const playPillTop = -(playRect.height + 10); // a bit higher than general platform
+
+      // State machine: walk → pre_jump_pause → jump_up → land_pause → walk_on → hop_pause → hop_to_play → play_land → bounce_pause → bounce_up
       let state = 'walk';
       let pauseTimer = 0;
       let airborne = false;
-      let exitSpeed = 0;
 
       function drawJumpPose() {
         ctx.clearRect(0, 0, 16, 20);
@@ -2619,64 +2626,51 @@
             if (tick % 4 === 0) frame++;
             x += speed;
             drawFrame(frame);
-            // Reached end of platform — pause before jumping down
-            if (x + 8 >= platform.right - 30) {
-              state = 'edge_pause';
-              pauseTimer = 14;
+            // Walk a short distance on the bar, then pause before hopping to Play
+            if (x + 8 >= playCenter - 40) {
+              state = 'hop_pause';
+              pauseTimer = 16;
             }
             break;
 
-          case 'edge_pause':
+          case 'hop_pause':
             pauseTimer--;
             drawFrame(frame);
             if (pauseTimer <= 0) {
-              state = 'jump_down';
-              vy = -4;
+              state = 'hop_to_play';
+              vy = -8;
               airborne = true;
             }
             break;
 
-          case 'jump_down':
+          case 'hop_to_play':
             vy += gravity;
             y += vy;
-            x += speed * 0.5;
+            x += speed * 0.8;
             drawJumpPose();
-            // Land on ground
-            if (y >= 0) {
-              y = 0;
-              vy = 0;
-              airborne = false;
-              state = 'land_pause2';
-              pauseTimer = 12;
+            // Use clip-path to hide the bottom as he drops into the pill
+            if (vy > 0 && y > platform.top - 5) {
+              // How far below the pill surface he's gone
+              const below = y - (platform.top - 5);
+              const canvasH = 20; // canvas pixel height
+              const scaledH = canvas.offsetHeight || canvasH * 4; // rendered height
+              const clipPx = (below / canvasH) * scaledH;
+              const clipPercent = Math.min(100, (clipPx / scaledH) * 100);
+              canvas.style.clipPath = `inset(0 0 ${clipPercent}% 0)`;
             }
-            break;
-
-          case 'land_pause2':
-            pauseTimer--;
-            drawFrame(frame);
-            if (pauseTimer <= 0) {
-              state = 'walk_exit';
+            // Fully submerged — remove
+            if (vy > 0 && y >= platform.top - 5 + 20) {
+              canvas.remove();
+              window._pixelRunnerActive = false;
+              return;
             }
-            break;
-
-          case 'walk_exit':
-            if (!exitSpeed) exitSpeed = speed;
-            exitSpeed *= 1.06;
-            if (tick % Math.max(1, Math.round(4 / (exitSpeed / speed))) === 0) frame++;
-            x += exitSpeed;
-            drawFrame(frame);
             break;
         }
 
         canvas.style.left = x + 'px';
         canvas.style.bottom = (-y) + 'px';
 
-        if (x < totalWidth) {
-          requestAnimationFrame(update);
-        } else {
-          canvas.remove();
-          window._pixelRunnerActive = false;
-        }
+        requestAnimationFrame(update);
       }
 
       drawFrame(0);
@@ -2717,12 +2711,24 @@
       let i = 0;
       function step() {
         if (i < text.length) {
-          // Insert character before cursor, wrapping ✦ in teal
+          // Insert character before cursor, wrapping ✦ and specific phrases in teal
+          const tealPhrase = 'complex B2B SaaS workflows';
+          const tealStart = text.indexOf(tealPhrase);
+          const tealEnd = tealStart >= 0 ? tealStart + tealPhrase.length : -1;
           if (text[i] === '✦') {
             const s = document.createElement('span');
             s.className = 'teal';
             s.textContent = '✦';
             cursor.before(s);
+          } else if (tealStart >= 0 && i >= tealStart && i < tealEnd) {
+            // Find or create the teal span for this phrase
+            let tealSpan = cursor.previousSibling;
+            if (!tealSpan || tealSpan.className !== 'teal' || tealSpan.textContent === '✦') {
+              tealSpan = document.createElement('span');
+              tealSpan.className = 'teal';
+              cursor.before(tealSpan);
+            }
+            tealSpan.textContent += text[i];
           } else {
             cursor.before(text[i]);
           }
