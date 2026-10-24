@@ -3431,8 +3431,20 @@
         container.classList.toggle('fullscreen');
       }
 
-      // Card click handlers
+      // Prefetch case study on hover so iframe loads faster on click
       document.querySelectorAll('[data-modal-src]').forEach(card => {
+        let prefetched = false;
+        card.addEventListener('mouseenter', () => {
+          if (prefetched) return;
+          const src = card.dataset.modalSrc;
+          if (src.startsWith('http')) return; // skip external links
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = src;
+          document.head.appendChild(link);
+          prefetched = true;
+        }, { once: true });
+
         card.addEventListener('click', (e) => {
           e.preventDefault();
           openModal(card.dataset.modalSrc);
