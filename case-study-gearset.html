@@ -556,12 +556,13 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Context</p>
-        <h2 class="section-heading">I use the product all day. That's where these came from.</h2>
+        <h2 class="section-heading">Using the product everyday meant I ran into small issues.</h2>
+        <h2 class="section-heading">I wanted to improve the UI of the product... myself.</h2>
         <p class="section-text">
-          I'm in Gearset constantly for my CSM role. Customer calls, live troubleshooting, product walkthroughs. I run into the same rough edges our users run into.
+          Gearset is a DevOps platform for Salesforce teams. I'm in the product constantly for customer calls, troubleshooting, and product demos. I run into the same UI issues our users do, and <strong>decided to fix them myself</strong>, since otherwise they may not get fixed at all.
         </p>
         <p class="section-text">
-          So I got access to the codebase and Claude Code, learned the UX team's workflows, and started fixing things.
+          I got access to the codebase and Claude Code, learned the UX team's workflows, and started fixing things.
         </p>
       </div>
     </div>
@@ -577,10 +578,10 @@
           Admins managing org access had to scroll past every user to reach Save. Some customers have over 100 users on this page.
         </p>
         <p class="section-text">
-          <strong>Why I reused a component:</strong> reusing it meant users saw a pattern they already knew, and Engineering had less new code to review.
+          <strong>What I did, and why:</strong> I designed a paginated table in Figma and shared it with a UX colleague. He suggested reusing a new table component from elsewhere in the platform for consistency. I prototyped both in Claude, and chose the latter.
         </p>
         <p class="section-text">
-          <strong>Impact:</strong> Over 40% of visits to this page came from teams too large to see Save without scrolling, a conservative count based on a large monitor. Two-thirds of those visits came from Enterprise accounts. For the largest teams, Save was buried 5+ seconds down, and the gap grew with every user added.
+          <strong>Impact:</strong> over 40% of visits to this page came from teams too large to see Save without scrolling. Two-thirds of those visits came from Enterprise accounts. For the largest teams, Save was buried 5+ seconds down.
         </p>
       </div>
 
@@ -606,12 +607,12 @@
     <div class="container-wide">
       <div class="fade-in">
         <p class="section-label">Fix 02</p>
-        <h2 class="section-heading">What's New search: results that required you to read in order to find the information.</h2>
+        <h2 class="section-heading">What's New search: results that required manual scanning to find the information.</h2>
         <p class="section-text">
           Searching What's New returned matching results, but it didn't show where your term appeared. You had to manually read the results to find the relevant info.
         </p>
         <p class="section-text">
-          <strong>Why highlighting:</strong> it's the pattern users already know from every search engine and inbox. Highlighting turns reading into scanning, because the eye jumps straight to the match.
+          <strong>What I did, and why:</strong> I used the design system to find the right highlight colour, and applied it to searched terms. Highlighting matches existing mental models, and lets users jump straight to the match. I toyed with ideas of making the product areas filter options, but the increased complexity meant I wanted to tackle it later.
         </p>
         <p class="section-text">
           <strong>Impact:</strong> X searches a month (tracking requested, data pending).
@@ -643,10 +644,10 @@
           The card looked like a single click target, but only part of it responded. Clicks on the rest did nothing.
         </p>
         <p class="section-text">
-          <strong>Why the whole card:</strong> if something looks like one target, users treat it as one. Making the full card clickable matched what the design was already promising, and a larger target is faster and easier to hit (Fitts's law).
+          <strong>What I did, and why:</strong> if something looks like one target, users treat it as one. I made the whole card clickable to match what that design pattern, and because a larger target is faster and easier to hit (Fitts's law).
         </p>
         <p class="section-text">
-          <strong>Impact:</strong> every click on the card now does what the design promises, with no dead zones.
+          <strong>Impact:</strong> every click on the card now does what the design promises, with no dead areas.
         </p>
       </div>
 
@@ -672,10 +673,10 @@
         <p class="section-label">Fix 04</p>
         <h2 class="section-heading">Agent window: resizing had no signal.</h2>
         <p class="section-text">
-          The agent window could be resized, but nothing signalled it. Users found it by accident or not at all, and one customer asked us to add a feature that already existed.
+          The agent window could be resized, but nothing signalled it. Users found it by accident or not at all, and one customer asked us to add the feature even though it already existed.
         </p>
         <p class="section-text">
-          <strong>Why a visible handle:</strong> a feature users can't discover might as well not exist. A handle with a hover state is a signal that tells users the panel can be resized.
+          <strong>What I did, and why:</strong> a feature users can't discover might as well not exist. I used Claude Code to prototype some icons and hover states, and shared it with a UX colleague. She suggested looking for an existing component to reduce the lift. We found the component, shared it with Engineering, and got it implemented.
         </p>
         <p class="section-text">
           <strong>Impact:</strong> makes an existing feature discoverable for everyone using the Agent.
@@ -684,7 +685,7 @@
 
       <div class="before-after fade-in">
         <div class="ba-panel">
-          <p class="ba-label before">Before <span class="ba-label-sub">No visible resize affordance</span></p>
+          <p class="ba-label before">Before <span class="ba-label-sub">No visible resize signal</span></p>
           <img src="agent-resize-before.png" alt="Agent window with no visible resize handle" loading="lazy" style="object-position:center;">
         </div>
         <div class="ba-panel">
@@ -717,7 +718,7 @@
               <p class="process-card-title">Build it.</p>
               <svg class="process-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
             </div>
-            <p class="process-card-desc">I create a feature branch, prototype with Claude Code, and raise a PR.</p>
+            <p class="process-card-desc">Depending on the extent of the change I either design in Figma first and validate it in Slack, or go straight into Claude Code. I create a feature branch, build it, and raise a PR.</p>
             <span class="process-card-number">2</span>
           </div>
           <div class="process-card">
