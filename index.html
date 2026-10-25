@@ -480,6 +480,8 @@
       aspect-ratio: auto;
       display: flex;
       flex-direction: column;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
     }
 
     .work-card--split .work-card-image {
@@ -491,9 +493,11 @@
     .work-card--split .work-card-body {
       position: relative;
       inset: auto;
+      flex: 1;
       background: var(--bg-card);
       border-top: 1px solid var(--border);
       padding: 28px 32px;
+      justify-content: flex-start;
     }
 
     .work-card--split .work-card-company {
@@ -506,7 +510,8 @@
     }
 
     .work-card--split .work-card-pills {
-      margin-top: 16px;
+      margin-top: auto;
+      padding-top: 16px;
     }
 
     .work-card--split .pill-overlay {
@@ -1653,18 +1658,41 @@
       height: calc(100% - 48px);
     }
 
-    /* ===== PT CARD CHAINED ANIMATION ===== */
-    .pt-chain-anim {
-      width: 100%;
-      height: 100%;
+    /* ===== PT CARD TABLET MOCKUP (classic iPad) ===== */
+    .card-tablet-frame {
+      width: 85%;
+      max-width: 420px;
+      background: linear-gradient(160deg, #2c2c2e, #1a1a1c);
+      border-radius: 16px;
+      padding: 10px 8px 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.06) inset;
       position: relative;
-      overflow: hidden;
     }
-    .pt-chain-anim svg {
+
+    /* Home button */
+    .card-tablet-frame::after {
+      content: '';
       position: absolute;
-      inset: 24px;
-      width: calc(100% - 48px);
-      height: calc(100% - 48px);
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .card-tablet-screen {
+      border-radius: 3px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .card-tablet-screen img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
@@ -2063,7 +2091,8 @@
           <h2 class="work-card-title">Four UX Fixes, Shipped from my CSM Role</h2>
           <div class="work-card-pills">
             <span class="pill pill-overlay">B2B SaaS</span>
-            <span class="pill pill-overlay">User Research</span>
+            <span class="pill pill-overlay">Prototyping</span>
+            <span class="pill pill-overlay">Figma</span>
             <span class="pill pill-overlay">Claude Code</span>
           </div>
         </div>
@@ -2072,83 +2101,10 @@
       <!-- PT Card -->
       <div class="work-card work-card--split fade-in" data-modal-src="case-study-pt.html">
         <div class="work-card-image">
-          <div class="pt-chain-anim" id="ptChainAnim">
-            <svg viewBox="0 0 360 248" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <clipPath id="ptCardClip"><rect x="40" y="10" width="280" height="228" rx="6"/></clipPath>
-              </defs>
-              <!-- Static card frame (never moves) -->
-              <rect x="42" y="12" width="280" height="228" rx="6" fill="var(--text-tertiary)" opacity="0.06"/>
-              <rect x="40" y="10" width="280" height="228" rx="6" stroke="var(--teal)" stroke-width="1.5" fill="var(--bg-card)"/>
-              <!-- Clipped content area -->
-              <g clip-path="url(#ptCardClip)">
-                <!-- CF scene content -->
-                <g id="pt-cf-content">
-                  <rect x="56" y="24" width="120" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
-                  <rect x="56" y="36" width="80" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.2"/>
-                  <line x1="56" y1="48" x2="304" y2="48" stroke="var(--border)" opacity="0.5"/>
-                  <g>
-                    <rect x="56" y="56" width="120" height="32" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                    <rect x="66" y="63" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
-                    <rect x="66" y="74" width="80" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
-                    <rect x="184" y="56" width="120" height="32" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                    <rect x="194" y="63" width="50" height="5" rx="2" fill="var(--teal)" opacity="0.5"/>
-                    <rect x="194" y="74" width="70" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.25"/>
-                  </g>
-                  <g id="pt-cf-r1">
-                    <rect x="56" y="96" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                    <rect x="66" y="104" width="60" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
-                    <rect x="66" y="116" width="36" height="12" rx="6" fill="rgba(215, 195, 60, 0.12)" stroke="#D7C33C" opacity="0.4"/>
-                    <rect x="108" y="116" width="36" height="12" rx="6" fill="rgba(139, 195, 74, 0.12)" stroke="#8BC34A" opacity="0.4"/>
-                    <rect x="150" y="116" width="36" height="12" rx="6" fill="rgba(0, 150, 136, 0.1)" stroke="var(--teal)" opacity="0.4"/>
-                  </g>
-                  <g id="pt-cf-r2">
-                    <rect x="56" y="144" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                    <rect x="66" y="152" width="70" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
-                    <rect x="66" y="164" width="220" height="12" rx="3" stroke="var(--border)" opacity="0.4" fill="var(--bg-card)"/>
-                    <rect x="72" y="167" width="100" height="3" rx="1.5" fill="var(--text-tertiary)" opacity="0.12"/>
-                  </g>
-                  <g id="pt-cf-shift">
-                    <rect x="56" y="192" width="248" height="40" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                    <rect x="66" y="200" width="55" height="5" rx="2" fill="var(--text-tertiary)" opacity="0.35"/>
-                    <rect x="66" y="212" width="36" height="12" rx="6" fill="rgba(215, 195, 60, 0.12)" stroke="#D7C33C" opacity="0.4"/>
-                    <rect x="108" y="212" width="36" height="12" rx="6" fill="rgba(139, 195, 74, 0.12)" stroke="#8BC34A" opacity="0.4"/>
-                    <rect x="150" y="212" width="36" height="12" rx="6" fill="rgba(0, 150, 136, 0.1)" stroke="var(--teal)" opacity="0.4"/>
-                  </g>
-                </g>
-                <!-- HT scene content (starts hidden) -->
-                <g id="pt-ht-content" style="opacity:0">
-                  <rect x="56" y="26" width="100" height="8" rx="3" fill="var(--text-tertiary)" opacity="0.4"/>
-                  <path d="M296 28 L300 33 L292 33 Z" fill="var(--text-tertiary)" opacity="0.3"/>
-                  <rect x="56" y="46" width="44" height="18" rx="9" fill="rgba(215, 195, 60, 0.15)" stroke="#D7C33C" opacity="0.5"/>
-                  <rect x="66" y="53" width="24" height="4" rx="2" fill="#D7C33C" opacity="0.35"/>
-                  <rect x="108" y="46" width="44" height="18" rx="9" fill="rgba(139, 195, 74, 0.15)" stroke="#8BC34A" opacity="0.5"/>
-                  <rect x="118" y="53" width="24" height="4" rx="2" fill="#8BC34A" opacity="0.35"/>
-                  <rect x="160" y="46" width="44" height="18" rx="9" fill="rgba(0, 150, 136, 0.12)" stroke="var(--teal)" opacity="0.5"/>
-                  <rect x="170" y="53" width="24" height="4" rx="2" fill="var(--teal)" opacity="0.35"/>
-                  <rect x="56" y="76" width="248" height="44" rx="4" stroke="var(--border)" fill="var(--bg)"/>
-                  <rect x="66" y="88" width="140" height="4" rx="2" fill="var(--text-tertiary)" opacity="0.12"/>
-                  <rect x="66" y="96" width="100" height="4" rx="2" fill="var(--text-tertiary)" opacity="0.08"/>
-                  <g id="pt-ht-icon" style="transform-origin:72px 140px;opacity:0;transform:scale(0.5)">
-                    <circle cx="72" cy="140" r="11" stroke="var(--teal)" stroke-width="1.5" fill="rgba(0, 150, 136, 0.06)"/>
-                    <text x="72" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--teal)" font-family="var(--font-display)">i</text>
-                  </g>
-                  <g id="pt-ht-cursor" style="transform-origin:85px 146px;opacity:0;transform:translate(60px,-10px)">
-                    <path d="M81 130 L81 156 L87.5 150.5 L93 160 L97 158 L91.5 148.5 L99.5 147 Z" fill="#1A1A1A" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-                  </g>
-                  <g id="pt-ht-panel" style="transform-origin:56px 158px;transform:scaleY(0);opacity:0">
-                    <rect x="56" y="158" width="248" height="60" rx="4" stroke="var(--teal)" opacity="0.3" fill="rgba(0, 150, 136, 0.04)"/>
-                    <rect x="66" y="168" width="40" height="5" rx="2" fill="var(--teal)" opacity="0.4"/>
-                    <circle cx="62" cy="182" r="2" fill="var(--teal)" opacity="0.35"/>
-                    <rect x="70" y="180" width="200" height="4" rx="2" fill="var(--teal)" opacity="0.25"/>
-                    <circle cx="62" cy="192" r="2" fill="var(--teal)" opacity="0.35"/>
-                    <rect x="70" y="190" width="180" height="4" rx="2" fill="var(--teal)" opacity="0.2"/>
-                    <circle cx="62" cy="202" r="2" fill="var(--teal)" opacity="0.35"/>
-                    <rect x="70" y="200" width="160" height="4" rx="2" fill="var(--teal)" opacity="0.15"/>
-                  </g>
-                </g>
-              </g>
-            </svg>
+          <div class="card-tablet-frame">
+            <div class="card-tablet-screen">
+              <img src="pt-card-screenshot.jpg" alt="ProgressTeaching observation form with help text expanded" loading="lazy">
+            </div>
           </div>
         </div>
         <div class="work-card-body">
@@ -3591,75 +3547,6 @@
       }, 3500);
     })();
 
-    // PT card chained animation
-    (function(){
-      var c=document.getElementById('ptChainAnim');
-      if(!c)return;
-      var cfG=document.getElementById('pt-cf-content');
-      var htG=document.getElementById('pt-ht-content');
-      var r1=document.getElementById('pt-cf-r1');
-      var r2=document.getElementById('pt-cf-r2');
-      var sh=document.getElementById('pt-cf-shift');
-      var ic=document.getElementById('pt-ht-icon');
-      var cu=document.getElementById('pt-ht-cursor');
-      var pa=document.getElementById('pt-ht-panel');
-
-      function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
-      function lerp(a,b,t){return a+(b-a)*t}
-
-      var P=[['show',.38],['collapse',1.06],['hold',.29],['xfade',.48],
-             ['pause',.19],['iconIn',.34],['curMove',.48],['click',.14],
-             ['expand',.34],['holdEnd',.58],['fadeOut',.24],['fadeIn',.24]];
-      var pi=0,pt=0,last=null;
-
-      function reset(){
-        r1.style.opacity='1';r2.style.opacity='1';sh.style.transform='translateY(0)';
-        cfG.style.opacity='1';
-        htG.style.opacity='0';
-        ic.style.opacity='0';ic.style.transform='scale(0.5)';
-        cu.style.opacity='0';cu.style.transform='translate(60px,-10px)';
-        pa.style.transform='scaleY(0)';pa.style.opacity='0';
-      }
-
-      function tick(ts){
-        if(!last)last=ts;
-        pt+=(ts-last)/1000;last=ts;
-        var d=P[pi][1],t=Math.min(pt/d,1),e=ease(t),n=P[pi][0];
-
-        switch(n){
-          case'show':break;
-          case'collapse':
-            var f1=ease(Math.min(1,t*3)),f2=ease(Math.min(1,Math.max(0,(t-.1)*3)));
-            var s=ease(Math.min(1,Math.max(0,(t-.25)/.55)));
-            r1.style.opacity=String(1-f1);r2.style.opacity=String(1-f2);
-            sh.style.transform='translateY('+(-96*s)+'px)';break;
-          case'hold':break;
-          case'xfade':
-            cfG.style.opacity=String(1-e);htG.style.opacity=String(e);break;
-          case'pause':break;
-          case'iconIn':ic.style.opacity=String(e);ic.style.transform='scale('+lerp(.5,1,e)+')';break;
-          case'curMove':cu.style.opacity=String(Math.min(1,t*3));
-            cu.style.transform='translate('+lerp(60,0,e)+'px,'+lerp(-10,0,e)+'px)';break;
-          case'click':var p=t<.5?t*2:2-t*2;
-            ic.style.transform='scale('+lerp(1,.85,p)+')';
-            cu.style.transform='translate(0px,'+lerp(0,2,p)+'px)';break;
-          case'expand':pa.style.opacity='1';pa.style.transform='scaleY('+e+')';break;
-          case'holdEnd':break;
-          case'fadeOut':c.style.opacity=String(1-e);break;
-          case'fadeIn':c.style.opacity=String(e);break;
-        }
-
-        if(t>=1){
-          pt=0;pi++;
-          if(pi>=P.length)pi=0;
-          if(P[pi][0]==='fadeIn'){reset();c.style.opacity='0';}
-        }
-        requestAnimationFrame(tick);
-      }
-
-      reset();c.style.opacity='1';
-      requestAnimationFrame(tick);
-    })();
 
     /* ===== Gearset delegate access animation ===== */
     (function(){

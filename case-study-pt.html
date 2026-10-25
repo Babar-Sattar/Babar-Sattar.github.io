@@ -253,52 +253,44 @@
     }
 
     /* ===== LAPTOP MOCKUP ===== */
-    .laptop-mockup {
+    .tablet-mockup {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
     }
 
-    .laptop-frame {
-      width: 100%;
-      background: #2a2a2a;
-      border-radius: 6px 6px 0 0;
-      padding: 3px 3px 0;
-      border: 1px solid #d0d0d0;
-    }
-
-    .laptop-screen {
-      border-radius: 3px 3px 0 0;
-      overflow: hidden;
-      aspect-ratio: 16/10;
-    }
-
-    .laptop-screen img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top left;
-      display: block;
-    }
-
-    .laptop-bottom {
-      width: 105%;
-      height: 12px;
-      background: linear-gradient(to bottom, #333, #2a2a2a);
-      border-radius: 0 0 4px 4px;
+    .tablet-frame {
+      width: 75%;
+      max-width: 340px;
+      background: linear-gradient(160deg, #2c2c2e, #1a1a1c);
+      border-radius: 16px;
+      padding: 10px 8px 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.06) inset;
       position: relative;
     }
 
-    .laptop-bottom::after {
+    .tablet-frame::after {
       content: '';
       position: absolute;
-      top: 3px;
+      bottom: 7px;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
-      height: 4px;
-      background: #444;
-      border-radius: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .tablet-screen {
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .tablet-screen img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* ===== CONTENT SECTIONS ===== */
@@ -727,13 +719,12 @@
             <span class="pill">Figma</span>
           </div>
         </div>
-        <div class="laptop-mockup">
-          <div class="laptop-frame">
-            <div class="laptop-screen">
-              <img src="pt-hero.jpg" alt="ProgressTeaching observation form interface">
+        <div class="tablet-mockup">
+          <div class="tablet-frame">
+            <div class="tablet-screen">
+              <img src="pt-card-screenshot.jpg" alt="ProgressTeaching observation form interface">
             </div>
           </div>
-          <div class="laptop-bottom"></div>
         </div>
       </div>
     </div>
